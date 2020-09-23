@@ -136,14 +136,14 @@ class waf_custom_rule(models.Model):
 class waf_owasp_check(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     domain = models.CharField(null=False, max_length=500)
-    owasp_protection_mode = models.CharField(default="true", max_length=50)
-    sql_check = models.CharField(max_length=100, default="true")
-    xss_check = models.CharField(max_length=100, default="true")
-    command_inject_check = models.CharField(max_length=100, default="true")
-    code_exec_check = models.CharField(max_length=100, default="true")
-    directory_traversal_check = models.CharField(max_length=100, default="true")
-    sensitive_file_check = models.CharField(max_length=100, default="true")
-    upload_check = models.CharField(max_length=100, default="false")
+    owasp_protection_mode = models.CharField(default="block", max_length=50)
+    sql_check = models.CharField(max_length=100, default="block")
+    xss_check = models.CharField(max_length=100, default="block")
+    command_inject_check = models.CharField(max_length=100, default="block")
+    code_exec_check = models.CharField(max_length=100, default="block")
+    directory_traversal_check = models.CharField(max_length=100, default="block")
+    sensitive_file_check = models.CharField(max_length=100, default="block")
+    upload_check = models.CharField(max_length=100, default="close")
     upload_check_rule = models.CharField(max_length=1000, default="(.jpg|.png)$")
 
 class waf_global(models.Model):
