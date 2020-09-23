@@ -1,2 +1,1 @@
-# jxwaf-mini-server
- 
+# jxwaf-server-devel
