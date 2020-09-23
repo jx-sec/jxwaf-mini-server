@@ -38,9 +38,16 @@ def waf_sync_update_get_jxcheck_update(request):
         json_data = json.loads(request.body)
         jxcheck_code = json_data['jxcheck_code']
         try:
-            waf_jxcheck.objects.create(user_id='jxwaf',jxcheck_code=jxcheck_code)
-        except:
+            waf_jxcheck.objects.get(user_id='jxwaf')
             waf_jxcheck.objects.filter(user_id='jxwaf').update(jxcheck_code=jxcheck_code)
+            return_result['result'] = True
+            return_result['message'] = "update success"
+            return JsonResponse(return_result, safe=False)
+        except:
+            waf_jxcheck.objects.create(user_id='jxwaf',jxcheck_code=jxcheck_code)
+            return_result['result'] = True
+            return_result['message'] = "create success"
+            return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
@@ -80,11 +87,17 @@ def waf_sync_update_get_botcheck_update(request):
         user_id = request.session['user_id']
         json_data = json.loads(request.body)
         botcheck_code = json_data['botcheck_code']
-        version = json_data['version']
         try:
-            waf_botcheck.objects.create(user_id=version,botcheck_code=botcheck_code)
+            waf_botcheck.objects.get(user_id='jxwaf')
+            waf_botcheck.objects.filter(user_id='jxwaf').update(botcheck_code=botcheck_code)
+            return_result['result'] = True
+            return_result['message'] = "update success"
+            return JsonResponse(return_result, safe=False)
         except:
-            waf_botcheck.objects.filter(user_id='jxwaf').update(jxcheck_code=botcheck_code)
+            waf_botcheck.objects.create(user_id='jxwaf', botcheck_code=botcheck_code)
+            return_result['result'] = True
+            return_result['message'] = "create success"
+            return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
@@ -101,7 +114,6 @@ def waf_sync_update_get_botcheck_key_update(request):
             result = r.json()
             if result['result'] == True:
                 for bot_key in result['message']:
-                    print bot_key
                     uuid = bot_key['uuid']
                     key = bot_key['key']
                     bot_check_mode = bot_key['bot_check_mode']
