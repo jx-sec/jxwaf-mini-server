@@ -229,6 +229,13 @@ def waf_copy_domain(request):
         old_domain = json_data['old_domain']
         new_domain = json_data['new_domain']
         waf_domain_result = waf_domain.objects.get(Q(domain=old_domain) & Q(user_id=user_id))
+        try:
+            waf_domain.objects.get(Q(domain=new_domain) & Q(user_id=user_id))
+            return_result['result'] = False
+            return_result['message'] = "domain exist"
+            return JsonResponse(return_result, safe=False)
+        except:
+            pass
         if waf_domain_result.https == 'true':
             waf_domain.objects.create(user_id=user_id, email=waf_domain_result.email, domain=new_domain,
                                       http=waf_domain_result.http, https=waf_domain_result.https,
@@ -248,7 +255,7 @@ def waf_copy_domain(request):
                                       proxy_pass_https=waf_domain_result.proxy_pass_https)
         waf_protection.objects.create(user_id=user_id, domain=new_domain, email=waf_domain_result.email)
         waf_cc_protection.objects.create(user_id=user_id, domain=new_domain)
-        waf_cc_attack_ip_conf.objects.create(user_id=user_id, domain=new_domain, domain_qps='1000')
+        waf_cc_attack_ip_conf.objects.create(user_id=user_id, domain=new_domain)
         waf_owasp_check.objects.create(user_id=user_id, domain=new_domain)
         waf_page_custom.objects.create(user_id=user_id, domain=new_domain)
         waf_evil_ip_conf.objects.create(user_id=user_id, domain=new_domain)
