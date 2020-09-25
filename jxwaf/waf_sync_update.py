@@ -110,6 +110,7 @@ def waf_sync_update_get_botcheck_key_update(request):
     try:
         user_id = request.session['user_id']
         try:
+            waf_cc_bot_html_key.objects.filter(user_id="jxwaf").delete()
             r = requests.get('https://api.jxwaf.com/open/waf_get_open_botcheck_key' )
             result = r.json()
             if result['result'] == True:

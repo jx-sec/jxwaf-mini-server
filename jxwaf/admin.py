@@ -72,7 +72,7 @@ class waf_monitor_log_admin(admin.ModelAdmin):
 
 class waf_cc_bot_html_key_admin(admin.ModelAdmin):
     list_display = (
-        'user_id', 'uuid', 'key', 'create_time')
+        'user_id', 'uuid', 'key','bot_check_mode', 'create_time')
 
 
 class waf_botcheck_admin(admin.ModelAdmin):
