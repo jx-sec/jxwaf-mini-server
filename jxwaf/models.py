@@ -170,6 +170,7 @@ class waf_global(models.Model):
 class waf_jxcheck(models.Model):
     user_id = models.CharField(null=False, max_length=50, default="1")
     jxcheck_code = models.TextField(blank=True, null=True)
+    version= models.CharField(max_length=100, default="null")
 
     def __unicode__(self):
         return self.user_id
@@ -178,6 +179,7 @@ class waf_jxcheck(models.Model):
 class waf_botcheck(models.Model):
     user_id = models.CharField(null=False, max_length=50, default="1")
     botcheck_code = models.TextField(blank=True, null=True)
+    version = models.CharField(max_length=100, default="null")
 
     def __unicode__(self):
         return self.user_id

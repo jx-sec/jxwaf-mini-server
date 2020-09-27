@@ -13,8 +13,15 @@ def waf_sync_update_get_jxcheck_list(request):
             r = requests.get('https://api.jxwaf.com/open/waf_get_open_jxcheck' )
             result = r.json()
             if result['result'] == True:
+                now_version = ''
+                try:
+                    jxcheck_result = waf_jxcheck.objects.get(user_id='jxwaf')
+                    now_version = jxcheck_result.version
+                except:
+                    now_version = ''
                 return_result['result'] = True
                 return_result['message'] = result['message']
+                return_result['now_version'] = now_version
                 return JsonResponse(return_result, safe=False)
             else:
                 return_result['result'] = False
@@ -37,9 +44,10 @@ def waf_sync_update_get_jxcheck_update(request):
         user_id = request.session['user_id']
         json_data = json.loads(request.body)
         jxcheck_code = json_data['jxcheck_code']
+        version = json_data['version']
         try:
             waf_jxcheck.objects.get(user_id='jxwaf')
-            waf_jxcheck.objects.filter(user_id='jxwaf').update(jxcheck_code=jxcheck_code)
+            waf_jxcheck.objects.filter(user_id='jxwaf').update(jxcheck_code=jxcheck_code,version=version)
             return_result['result'] = True
             return_result['message'] = "update success"
             return JsonResponse(return_result, safe=False)
@@ -63,8 +71,15 @@ def waf_sync_update_get_botcheck_list(request):
             r = requests.get('https://api.jxwaf.com/open/waf_get_open_botcheck' )
             result = r.json()
             if result['result'] == True:
+                now_version = ''
+                try:
+                    botcheck_result = waf_botcheck.objects.get(user_id='jxwaf')
+                    now_version = botcheck_result.version
+                except:
+                    now_version = ''
                 return_result['result'] = True
                 return_result['message'] = result['message']
+                return_result['now_version'] = now_version
                 return JsonResponse(return_result, safe=False)
             else:
                 return_result['result'] = False
@@ -87,9 +102,10 @@ def waf_sync_update_get_botcheck_update(request):
         user_id = request.session['user_id']
         json_data = json.loads(request.body)
         botcheck_code = json_data['botcheck_code']
+        version = json_data['version']
         try:
             waf_botcheck.objects.get(user_id='jxwaf')
-            waf_botcheck.objects.filter(user_id='jxwaf').update(botcheck_code=botcheck_code)
+            waf_botcheck.objects.filter(user_id='jxwaf').update(botcheck_code=botcheck_code,version=version)
             return_result['result'] = True
             return_result['message'] = "update success"
             return JsonResponse(return_result, safe=False)
