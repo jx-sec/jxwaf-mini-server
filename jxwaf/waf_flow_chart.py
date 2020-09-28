@@ -227,13 +227,13 @@ def flow_chart_get_upstream_count_trend(request):
         except:
             if time_zone == "7day":
                 from_time = int(time() - 604800)
-                req_sql = UPSTREAM_INPUT_TREND_7D
+                req_sql = UPSTREAM_COUNT_TREND_7D
             elif time_zone == "24hour":
                 from_time = int(time() - 86400)
-                req_sql = UPSTREAM_INPUT_TREND_24H
+                req_sql = UPSTREAM_COUNT_TREND_24H
             elif time_zone == "1hour":
                 from_time = int(time() - 3600)
-                req_sql = UPSTREAM_INPUT_TREND_1H
+                req_sql = UPSTREAM_COUNT_TREND_1H
         global_result = waf_global.objects.get(user_id=user_id)
         endpoint = global_result.aliyun_log_endpoint.replace('https://', '').replace('http://', '')
         accessKeyId = global_result.aliyun_access_id

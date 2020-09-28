@@ -276,10 +276,10 @@ def waf_update(request):
             if protection_data['cc_attack_ip_protection'] == "true":
                 waf_cc_attack_ip_conf_result = waf_cc_attack_ip_conf.objects.get(
                     Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
-                block_option = {}
+                cc_block_option = {}
                 for tmp_block_option in waf_cc_attack_ip_conf_result.block_option.split(','):
-                    block_option[tmp_block_option] = True
-                cc_attack_ip_data['block_option'] = block_option
+                    cc_block_option[tmp_block_option] = True
+                cc_attack_ip_data['block_option'] = cc_block_option
                 cc_attack_ip_data['check_period'] = waf_cc_attack_ip_conf_result.check_period
                 cc_attack_ip_data['check_count'] = waf_cc_attack_ip_conf_result.check_count
                 cc_attack_ip_data['block_time'] = waf_cc_attack_ip_conf_result.block_time
@@ -315,15 +315,14 @@ def waf_update(request):
             if protection_data['evil_ip_handle'] == "true":
                 waf_evil_ip_conf_result = waf_evil_ip_conf.objects.get(
                     Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
-                block_option = {}
+                owasp_block_option = {}
                 for tmp_block_option in waf_evil_ip_conf_result.block_option.split(','):
-                    block_option[tmp_block_option] = True
-                cc_attack_ip_data['block_option'] = block_option
+                    owasp_block_option[tmp_block_option] = True
                 evil_ip_handle_data['period'] = waf_evil_ip_conf_result.period
                 evil_ip_handle_data['count'] = waf_evil_ip_conf_result.count
                 evil_ip_handle_data['mode'] = waf_evil_ip_conf_result.mode
                 evil_ip_handle_data['handle'] = waf_evil_ip_conf_result.handle
-                evil_ip_handle_data['block_option'] = block_option
+                evil_ip_handle_data['block_option'] = owasp_block_option
                 global_data['evil_ip_handle_set'] = evil_ip_handle_data
             if protection_data['ip_config'] == "true":
                 ip_config_results = waf_ip_rule.objects.filter(user_id=user_result.user_id).filter(
