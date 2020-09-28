@@ -149,7 +149,7 @@ class waf_owasp_check(models.Model):
 class waf_global(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     auto_update = models.CharField(max_length=100, default="true")
-    auto_update_period = models.CharField(max_length=100, default="300")
+    auto_update_period = models.CharField(max_length=100, default="3")
     monitor = models.CharField(max_length=100, default="true")
     monitor_alert_period = models.CharField(max_length=100, default="120")
     log_local = models.CharField(max_length=100, default="true")
