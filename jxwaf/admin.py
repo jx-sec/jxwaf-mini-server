@@ -48,7 +48,7 @@ class waf_global_admin(admin.ModelAdmin):
 
 class waf_jxcheck_admin(admin.ModelAdmin):
     list_display = (
-        'user_id', 'jxcheck_code')
+        'user_id', 'version')
 
 
 class waf_owasp_check_admin(admin.ModelAdmin):
