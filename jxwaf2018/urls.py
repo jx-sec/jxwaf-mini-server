@@ -26,12 +26,12 @@ from jxwaf.waf_owasp_jxcheck import *
 from jxwaf.waf_page_custom import *
 from jxwaf.waf_monitor import *
 from jxwaf.waf_login_log import *
-from jxwaf.waf_chart import *
 from jxwaf.waf_attack_ip_heandle import *
 from jxwaf.waf_ip_config import *
 from jxwaf.waf_flow_chart import *
 from jxwaf.waf_cc_attack_ip import *
 from jxwaf.waf_sync_update import *
+from jxwaf.waf_attack_chart import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -76,16 +76,6 @@ urlpatterns = [
     url(r'^waf/waf_edit_monitor_alert$', waf_edit_monitor_alert),
     url(r'^waf/waf_delete_monitor$', waf_delete_monitor),
 
-    url(r'^chart/chart_get_attack_geoip', chart_get_attack_geoip),
-    url(r'^chart/chart_get_attack_type', chart_get_attack_type),
-    url(r'^chart/chart_get_attack_ip_count', chart_get_attack_ip_count),
-    url(r'^chart/chart_get_attack_black_ip_count', chart_get_attack_black_ip_count),
-    url(r'^chart/chart_get_cc_type', chart_get_cc_type),
-    url(r'^chart/chart_get_cc_ip_count', chart_get_cc_ip_count),
-    url(r'^chart/chart_get_cc_black_ip_count', chart_get_cc_black_ip_count),
-    url(r'^chart/chart_get_attack_totle_black_ip_count', chart_get_attack_totle_black_ip_count),
-    url(r'^chart/chart_get_cc_totle_black_ip_count', chart_get_cc_totle_black_ip_count),
-
     url(r'^waf/waf_get_jxcheck_version', waf_get_jxcheck_version),
     url(r'^waf/waf_get_jxwaf_jxcheck_version', waf_get_jxwaf_jxcheck_version),
     url(r'^waf/waf_download_jxwaf_jxcheck', waf_download_jxwaf_jxcheck),
@@ -111,10 +101,18 @@ urlpatterns = [
     url(r'^waf/flow_chart_get_upstream_process_time_trend', flow_chart_get_upstream_process_time_trend),
     url(r'^waf/flow_chart_get_bad_req_count_trend', flow_chart_get_bad_req_count_trend),
     url(r'^waf/flow_chart_get_bad_upstream_count_trend', flow_chart_get_bad_upstream_count_trend),
-
+    url(r'^waf/flow_chart_get_ip_trend', flow_chart_get_ip_trend),
     url(r'^waf/waf_sync_update_get_jxcheck_list', waf_sync_update_get_jxcheck_list),
     url(r'^waf/waf_sync_update_get_botcheck_list', waf_sync_update_get_botcheck_list),
     url(r'^waf/waf_sync_update_get_botcheck_key_update', waf_sync_update_get_botcheck_key_update),
     url(r'^waf/waf_sync_update_get_jxcheck_update', waf_sync_update_get_jxcheck_update),
     url(r'^waf/waf_sync_update_get_botcheck_update', waf_sync_update_get_botcheck_update),
+
+    url(r'^chart/attack_chart_get_type_trend', attack_chart_get_type_trend),
+    url(r'^chart/attack_chart_get_ip_trend', attack_chart_get_ip_trend),
+    url(r'^chart/attack_chart_get_black_ip_trend', attack_chart_get_black_ip_trend),
+    url(r'^chart/attack_chart_get_req_count_and_ip_count', attack_chart_get_req_count_and_ip_count),
+    url(r'^chart/attack_chart_get_black_ip_count', attack_chart_get_black_ip_count),
+    url(r'^chart/attack_chart_get_type_top10', attack_chart_get_type_top10),
+    url(r'^chart/attack_chart_get_uri_top10', attack_chart_get_uri_top10)
 ]
