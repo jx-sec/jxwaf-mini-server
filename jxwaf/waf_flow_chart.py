@@ -533,7 +533,7 @@ def flow_chart_get_process_time_trend(request):
         for log_result in res.get_logs():
             try:
                 data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
+                             'count': round(float(log_result.get_contents()['count']),4),
                              }
                             )
             except:
@@ -591,7 +591,7 @@ def flow_chart_get_upstream_process_time_trend(request):
         for log_result in res.get_logs():
             try:
                 data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
+                             'count': round(float(log_result.get_contents()['count']),4),
                              }
                             )
             except:
