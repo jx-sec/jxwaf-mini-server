@@ -174,7 +174,7 @@ def cc_chart_get_type(request):
             result[tmp] = ss * len(x)
         for log_result in res.get_logs():
             for tmp in y:
-                if log_result.get_contents()['protecion_type'] == tmp:
+                if log_result.get_contents()['protection_type'] == tmp:
                     tt = result[tmp]
                     tt[x_exist[log_result.get_contents()['time']]] = log_result.get_contents()['count']
                     result[tmp] = tt
