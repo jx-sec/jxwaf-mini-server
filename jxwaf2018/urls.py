@@ -118,7 +118,7 @@ urlpatterns = [
     url(r'^chart/attack_chart_get_uri_top10', attack_chart_get_uri_top10),
 
     url(r'^chart/cc_chart_get_type', cc_chart_get_type),
-    url(r'^chart/cc_chart_get_type_top10', cc_chart_get_type_top10),
+    url(r'^chart/cc_chart_get_type_top10$', cc_chart_get_type_top10),
     url(r'^chart/cc_chart_get_black_ip_count', cc_chart_get_black_ip_count),
     url(r'^chart/cc_chart_get_black_ip_trend', cc_chart_get_black_ip_trend),
     url(r'^chart/cc_chart_get_botauth_ip_count', cc_chart_get_botauth_ip_count),
