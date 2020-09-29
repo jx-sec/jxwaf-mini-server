@@ -304,7 +304,7 @@ def flow_chart_get_input_byte_trend(request):
         for log_result in res.get_logs():
             try:
                 data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
+                             'count': round((float(log_result.get_contents()['count'])/1024)/1024,2),
                              }
                             )
             except:
@@ -362,7 +362,7 @@ def flow_chart_get_upstream_input_byte_trend(request):
         for log_result in res.get_logs():
             try:
                 data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
+                             'count': round((float(log_result.get_contents()['count'])/1024)/1024,2),
                              }
                             )
             except:
@@ -398,13 +398,13 @@ def flow_chart_get_output_byte_trend(request):
         except:
             if time_zone == "7day":
                 from_time = int(time() - 604800)
-                req_sql = INPUT_TREND_7D
+                req_sql = OUTPUT_TREND_7D
             elif time_zone == "24hour":
                 from_time = int(time() - 86400)
-                req_sql = INPUT_TREND_24H
+                req_sql = OUTPUT_TREND_24H
             elif time_zone == "1hour":
                 from_time = int(time() - 3600)
-                req_sql = INPUT_TREND_1H
+                req_sql = OUTPUT_TREND_1H
         global_result = waf_global.objects.get(user_id=user_id)
         endpoint = global_result.aliyun_log_endpoint.replace('https://', '').replace('http://', '')
         accessKeyId = global_result.aliyun_access_id
@@ -418,7 +418,7 @@ def flow_chart_get_output_byte_trend(request):
         for log_result in res.get_logs():
             try:
                 data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
+                             'count': round((float(log_result.get_contents()['count'])/1024)/1024,2),
                              }
                             )
             except:
@@ -456,13 +456,13 @@ def flow_chart_get_upstream_output_byte_trend(request):
         except:
             if time_zone == "7day":
                 from_time = int(time() - 604800)
-                req_sql = UPSTREAM_INPUT_TREND_7D
+                req_sql = UPSTREAM_OUTPUT_TREND_7D
             elif time_zone == "24hour":
                 from_time = int(time() - 86400)
-                req_sql = UPSTREAM_INPUT_TREND_24H
+                req_sql = UPSTREAM_OUTPUT_TREND_24H
             elif time_zone == "1hour":
                 from_time = int(time() - 3600)
-                req_sql = UPSTREAM_INPUT_TREND_1H
+                req_sql = UPSTREAM_OUTPUT_TREND_1H
         global_result = waf_global.objects.get(user_id=user_id)
         endpoint = global_result.aliyun_log_endpoint.replace('https://', '').replace('http://', '')
         accessKeyId = global_result.aliyun_access_id
@@ -476,7 +476,7 @@ def flow_chart_get_upstream_output_byte_trend(request):
         for log_result in res.get_logs():
             try:
                 data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
+                             'count': round((float(log_result.get_contents()['count'])/1024)/1024,2),
                              }
                             )
             except:
