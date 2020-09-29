@@ -76,16 +76,33 @@ def attack_chart_get_type_trend(request):
         req = GetLogsRequest(project=project, logstore=logstore, fromTime=from_time, toTime=int(time()), topic='',
                              query=req_sql)
         res = client.get_logs(req)
+        x = []
+        x_exist = {}
+        y = []
+        y_exist = {}
         for log_result in res.get_logs():
-            try:
-                data.append({'time': log_result.get_contents()['time'],
-                             'count': log_result.get_contents()['count'],
-                             }
-                            )
-            except:
-                pass
+            print log_result.get_contents()
+            if not x_exist.has_key(log_result.get_contents()['time']):
+                x.append(log_result.get_contents()['time'])
+                x_exist[log_result.get_contents()['time']] = len(x) - 1
+            if not y_exist.has_key(log_result.get_contents()['protection_type']):
+                if log_result.get_contents()['protection_type'] != 'null':
+                    y.append(log_result.get_contents()['protection_type'])
+                    y_exist[log_result.get_contents()['protection_type']] = True
+        result = {}
+        for tmp in y:
+            ss = [0]
+            result[tmp] = ss * len(x)
+        for log_result in res.get_logs():
+            for tmp in y:
+                if log_result.get_contents()['protection_type'] == tmp:
+                    tt = result[tmp]
+                    tt[x_exist[log_result.get_contents()['time']]] = log_result.get_contents()['count']
+                    result[tmp] = tt
         return_result['result'] = True
-        return_result['message'] = data
+        return_result['message'] = result
+        return_result['x'] = x
+        return_result['y'] = y
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
