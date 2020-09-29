@@ -32,6 +32,7 @@ from jxwaf.waf_flow_chart import *
 from jxwaf.waf_cc_attack_ip import *
 from jxwaf.waf_sync_update import *
 from jxwaf.waf_attack_chart import *
+from jxwaf.waf_cc_chart import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -114,5 +115,17 @@ urlpatterns = [
     url(r'^chart/attack_chart_get_req_count_and_ip_count', attack_chart_get_req_count_and_ip_count),
     url(r'^chart/attack_chart_get_black_ip_count', attack_chart_get_black_ip_count),
     url(r'^chart/attack_chart_get_type_top10', attack_chart_get_type_top10),
-    url(r'^chart/attack_chart_get_uri_top10', attack_chart_get_uri_top10)
+    url(r'^chart/attack_chart_get_uri_top10', attack_chart_get_uri_top10),
+
+    url(r'^chart/cc_chart_get_type', cc_chart_get_type),
+    url(r'^chart/cc_chart_get_type_top10', cc_chart_get_type_top10),
+    url(r'^chart/cc_chart_get_black_ip_count', cc_chart_get_black_ip_count),
+    url(r'^chart/cc_chart_get_black_ip_trend', cc_chart_get_black_ip_trend),
+    url(r'^chart/cc_chart_get_botauth_ip_count', cc_chart_get_botauth_ip_count),
+    url(r'^chart/cc_chart_get_botauth_ip_trend', cc_chart_get_botauth_ip_trend),
+    url(r'^chart/cc_chart_get_botcheck_ip_count', cc_chart_get_botcheck_ip_count),
+    url(r'^chart/cc_chart_get_botcheck_ip_trend', cc_chart_get_botcheck_ip_trend),
+    url(r'^chart/cc_chart_get_geoip', cc_chart_get_geoip),
+    url(r'^chart/cc_chart_get_ip_count', cc_chart_get_ip_count),
+    url(r'^chart/cc_chart_get_ip_trend', cc_chart_get_ip_trend),
 ]
