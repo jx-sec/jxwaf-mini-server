@@ -1,1 +1,1 @@
-yum install epel-release gcc make mysql mysql-devel python-devel python-pip
+yum install epel-release gcc make mysql mysql-devel python-devel python-pip -y
