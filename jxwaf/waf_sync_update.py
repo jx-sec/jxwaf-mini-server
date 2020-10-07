@@ -52,7 +52,7 @@ def waf_sync_update_get_jxcheck_update(request):
             return_result['message'] = "update success"
             return JsonResponse(return_result, safe=False)
         except:
-            waf_jxcheck.objects.create(user_id='jxwaf',jxcheck_code=jxcheck_code)
+            waf_jxcheck.objects.create(user_id='jxwaf',jxcheck_code=jxcheck_code,version=version)
             return_result['result'] = True
             return_result['message'] = "create success"
             return JsonResponse(return_result, safe=False)
@@ -110,7 +110,7 @@ def waf_sync_update_get_botcheck_update(request):
             return_result['message'] = "update success"
             return JsonResponse(return_result, safe=False)
         except:
-            waf_botcheck.objects.create(user_id='jxwaf', botcheck_code=botcheck_code)
+            waf_botcheck.objects.create(user_id='jxwaf', botcheck_code=botcheck_code,version=version)
             return_result['result'] = True
             return_result['message'] = "create success"
             return JsonResponse(return_result, safe=False)
