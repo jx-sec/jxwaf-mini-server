@@ -173,3 +173,6 @@ EMAIL_HOST_USER = 'demo@jxwaf.com'
 EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'demo@jxwaf.com'
 DATETIME_FORMAT = 'Y-m-d H:i:s'
+# regist control
+#OPEN_REGIST = False
+OPEN_REGIST = True

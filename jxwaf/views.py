@@ -13,6 +13,7 @@ import sys
 import datetime
 import re
 import dns.resolver
+from django.conf import settings
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -95,6 +96,11 @@ def regist(request):
     except:
         data['result'] = False
         data['errCode'] = 103
+        return JsonResponse(data, safe=False)
+    # 开启/关闭注册
+    if settings.OPEN_REGIST != True:
+        data['result'] = False
+        data['errCode'] = 111
         return JsonResponse(data, safe=False)
     try:
         result = jxwaf_user.objects.get(email=email)
