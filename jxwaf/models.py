@@ -92,7 +92,7 @@ class waf_cc_attack_ip_conf(models.Model):
     check_period = models.CharField(default='300', max_length=50)
     check_count = models.CharField(default='120', max_length=50)
     block_time = models.CharField(default='3600', max_length=50)
-    block_mode = models.CharField(default='block', max_length=50)
+    block_mode = models.CharField(default='block', max_length=500)
 
     def __unicode__(self):
         return self.user_id
@@ -114,7 +114,7 @@ class waf_evil_ip_conf(models.Model):
     count = models.CharField(default='60', max_length=50)
     mode = models.CharField(default='black', max_length=50)
     handle = models.CharField(default='none', max_length=50)
-    block_option = models.CharField(default='', max_length=50)
+    block_option = models.CharField(default='', max_length=500)
 
     def __unicode__(self):
         return self.domain
