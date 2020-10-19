@@ -54,18 +54,20 @@ def login(request):
         email = json_data['email']
         password = json_data['password']
         code = json_data['code']
-    except:
+    except Exception, e:
         data['result'] = False
-        data['errCode'] = 103
+        data['errCode'] = 400
+        data['message'] = str(e)
         return JsonResponse(data, safe=False)
 
     ca = Captcha(request)
     if ca.check(code):
         try:
             result = jxwaf_user.objects.get(email=email)
-        except:
+        except Exception, e:
             data['result'] = False
-            data['errCode'] = 102
+            data['errCode'] = 403
+            data['message'] = str(e)
             return JsonResponse(data, safe=False)
         md5 = hashlib.md5()
         md5.update(password)
@@ -79,11 +81,13 @@ def login(request):
         else:
             jxwaf_login_log.objects.create(user_id=result.user_id, email=result.email, status="false")
             data['result'] = False
-            data['errCode'] = 101
+            data['errCode'] = 401
+            data['message'] = 'password is wrong'
             return JsonResponse(data, safe=False)
     else:
         data['result'] = False
-        data['errCode'] = 104
+        data['errCode'] = 401
+        data['message'] = 'code is wrong'
         return JsonResponse(data, safe=False)
 
 
@@ -93,19 +97,22 @@ def regist(request):
         json_data = json.loads(request.body)
         email = json_data['email']
         password = json_data['password']
-    except:
+    except Exception, e:
         data['result'] = False
-        data['errCode'] = 103
+        data['errCode'] = 400
+        data['message'] = str(e)
         return JsonResponse(data, safe=False)
     # 开启/关闭注册
     if settings.OPEN_REGIST != True:
         data['result'] = False
-        data['errCode'] = 111
+        data['errCode'] = 403
+        data['message'] = 'The registration function is closed, you may not have permission to register'
         return JsonResponse(data, safe=False)
     try:
         result = jxwaf_user.objects.get(email=email)
         data['result'] = False
-        data['errCode'] = 105
+        data['errCode'] = 409
+        data['message'] = 'Account already exists'
         return JsonResponse(data, safe=False)
     except:
         md5 = hashlib.md5()
@@ -132,7 +139,8 @@ def logout(request):
         return render(request, 'login.html')
     except:
         data['result'] = False
-        data['errCode'] = 107
+        data['errCode'] = 504
+        data['message'] = 'Operation failed'
         return render(request, 'login.html')
 
 
@@ -147,18 +155,21 @@ def waf_monitor(request):
         remote_ip = request.META['REMOTE_ADDR']
     except Exception, e:
         data_result['result'] = False
+        data_result['errCode'] = 400
         data_result['message'] = str(e)
         return JsonResponse(data_result, safe=False)
     try:
         user_result = jxwaf_user.objects.get(Q(user_id=waf_api_key) & Q(api_password=waf_api_password))
     except:
         data_result['result'] = False
+        data_result['errCode'] = 401
         data_result['message'] = "api_key or api_password error"
         return JsonResponse(data_result, safe=False)
     try:
         waf_global_result = waf_global.objects.get(user_id=user_result.user_id)
     except Exception, e:
         data_result['result'] = False
+        data_result['errCode'] = 401
         data_result['message'] = str(e)
         return JsonResponse(data_result, safe=False)
     if waf_global_result.monitor == "true":
@@ -174,6 +185,7 @@ def waf_monitor(request):
                 return JsonResponse(data_result, safe=False)
             except Exception, e:
                 data_result['result'] = False
+                data_result['errCode'] = 504
                 data_result['message'] = str(e)
                 return JsonResponse(data_result, safe=False)
         except:
@@ -185,6 +197,7 @@ def waf_monitor(request):
                 return JsonResponse(data_result, safe=False)
             except Exception, e:
                 data_result['result'] = False
+                data_result['errCode'] = 504
                 data_result['message'] = str(e)
                 return JsonResponse(data_result, safe=False)
     data_result['result'] = True
@@ -201,12 +214,14 @@ def waf_update(request):
         waf_md5 = request.POST['md5']
     except Exception, e:
         data_result['result'] = False
+        data_result['errCode'] = 400
         data_result['message'] = "param error"
         return JsonResponse(data_result, safe=False)
     try:
         user_result = jxwaf_user.objects.get(Q(user_id=waf_api_key) & Q(api_password=waf_api_password))
     except:
         data_result['result'] = False
+        data_result['errCode'] = 401
         data_result['message'] = "api_key or api_password error"
         return JsonResponse(data_result, safe=False)
     try:
@@ -383,5 +398,6 @@ def waf_update(request):
     except Exception, e:
         data_result = {}
         data_result['result'] = False
+        data_result['errCode'] = 504
         data_result['message'] = str(e)
         return JsonResponse(data_result, safe=False)
