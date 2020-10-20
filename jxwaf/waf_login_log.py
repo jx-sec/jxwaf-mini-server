@@ -23,5 +23,5 @@ def waf_get_login_log(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)

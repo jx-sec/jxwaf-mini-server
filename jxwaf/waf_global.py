@@ -37,12 +37,12 @@ def waf_edit_global(request):
         except:
             return_result['result'] = False
             return_result['message'] = 'edit error'
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except:
         return_result['result'] = False
         return_result['message'] = 'error'
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_get_global(request):
@@ -78,7 +78,7 @@ def waf_get_global(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 504
         return JsonResponse(return_result, safe=False)
 
 
@@ -94,11 +94,12 @@ def waf_get_jxcheck_version(request):
         except:
             return_result['result'] = False
             return_result['message'] = "not load"
+            return_result['errCode'] = 404
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)
 
 def waf_get_jxwaf_jxcheck_version(request):
@@ -124,7 +125,7 @@ def waf_get_jxwaf_jxcheck_version(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)
 
 def waf_download_jxwaf_jxcheck(request):
@@ -143,13 +144,15 @@ def waf_download_jxwaf_jxcheck(request):
             else:
                 return_result['result'] = False
                 return_result['message'] = "jxwaf server error"
+                return_result['errCode'] = 500
                 return JsonResponse(return_result, safe=False)
         except:
             return_result['result'] = False
             return_result['message'] = "network error"
+            return_result['errCode'] = 500
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)

@@ -30,12 +30,12 @@ def waf_edit_protection(request):
         except:
             return_result['result'] = False
             return_result['message'] = 'edit error'
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -61,5 +61,5 @@ def waf_get_protection(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)

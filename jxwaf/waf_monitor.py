@@ -25,7 +25,7 @@ def waf_get_monitor_list(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)
 
 
@@ -44,7 +44,7 @@ def waf_edit_monitor_alert(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -61,6 +61,6 @@ def waf_delete_monitor(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 

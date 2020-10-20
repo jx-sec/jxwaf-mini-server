@@ -27,7 +27,7 @@ def waf_get_cc_attack_ip(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -53,5 +53,5 @@ def waf_edit_cc_attack_ip(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)

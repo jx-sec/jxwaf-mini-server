@@ -33,7 +33,7 @@ def waf_get_domain_list(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -66,12 +66,12 @@ def waf_del_domain(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = str(e)
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -103,6 +103,7 @@ def waf_create_domain(request):
             result = waf_domain.objects.filter(user_id=user_id).filter(domain=domain)
             if len(result) != 0:
                 return_result['result'] = False
+                return_result['errCode'] = 409
                 return_result['message'] = 'create error,domain is exist'
                 return JsonResponse(return_result, safe=False)
             if https == 'true':
@@ -129,12 +130,12 @@ def waf_create_domain(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = str(e)
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -182,12 +183,12 @@ def waf_edit_domain(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = str(e)
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -217,7 +218,7 @@ def waf_get_domain(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -232,6 +233,7 @@ def waf_copy_domain(request):
         try:
             waf_domain.objects.get(Q(domain=new_domain) & Q(user_id=user_id))
             return_result['result'] = False
+            return_result['errCode'] = 409
             return_result['message'] = "domain exist"
             return JsonResponse(return_result, safe=False)
         except:
@@ -265,5 +267,5 @@ def waf_copy_domain(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)

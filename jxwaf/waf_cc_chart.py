@@ -111,7 +111,7 @@ def cc_chart_get_geoip(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -186,7 +186,7 @@ def cc_chart_get_type(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_type_top10(request):
@@ -238,7 +238,7 @@ def cc_chart_get_type_top10(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_black_ip_trend(request):
@@ -294,7 +294,7 @@ def cc_chart_get_black_ip_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_black_ip_count(request):
@@ -345,7 +345,7 @@ def cc_chart_get_black_ip_count(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_ip_trend(request):
@@ -401,7 +401,7 @@ def cc_chart_get_ip_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_ip_count(request):
@@ -452,7 +452,7 @@ def cc_chart_get_ip_count(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -510,7 +510,7 @@ def cc_chart_get_botcheck_ip_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_botcheck_ip_count(request):
@@ -560,7 +560,7 @@ def cc_chart_get_botcheck_ip_count(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -617,7 +617,7 @@ def cc_chart_get_botauth_ip_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def cc_chart_get_botauth_ip_count(request):
@@ -667,5 +667,5 @@ def cc_chart_get_botauth_ip_count(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)

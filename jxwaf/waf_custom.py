@@ -28,7 +28,7 @@ def waf_get_custom_rule_list(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_api_get_custom_rule_list(request):
@@ -57,7 +57,7 @@ def waf_api_get_custom_rule_list(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_del_custom_rule(request):
@@ -75,12 +75,12 @@ def waf_del_custom_rule(request):
         except:
             return_result['result'] = False
             return_result['message'] = 'del error'
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_api_del_custom_rule(request):
@@ -101,12 +101,12 @@ def waf_api_del_custom_rule(request):
         except:
             return_result['result'] = False
             return_result['message'] = 'del error'
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -132,12 +132,12 @@ def waf_create_custom_rule(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = str(e)
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_api_create_custom_rule(request):
@@ -165,12 +165,12 @@ def waf_api_create_custom_rule(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = str(e)
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_edit_custom_rule(request):
@@ -194,12 +194,12 @@ def waf_edit_custom_rule(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = 'edit error'
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_api_edit_custom_rule(request):
@@ -226,12 +226,12 @@ def waf_api_edit_custom_rule(request):
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = 'edit error'
-            return_result['errCode'] = 108
+            return_result['errCode'] = 504
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_get_custom_rule(request):
@@ -256,7 +256,7 @@ def waf_get_custom_rule(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_api_get_custom_rule(request):
@@ -284,5 +284,5 @@ def waf_api_get_custom_rule(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)

@@ -25,16 +25,18 @@ def waf_sync_update_get_jxcheck_list(request):
                 return JsonResponse(return_result, safe=False)
             else:
                 return_result['result'] = False
-                return_result['message'] = "error"
+                return_result['errCode'] = 504
+                return_result['message'] = "https://api.jxwaf.com/open/waf_get_open_jxcheck response result is false"
                 return JsonResponse(return_result, safe=False)
         except:
             return_result['result'] = False
-            return_result['message'] = "error"
+            return_result['errCode'] = 500
+            return_result['message'] = "get https://api.jxwaf.com/open/waf_get_open_jxcheck failed"
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)
 
 def waf_sync_update_get_jxcheck_update(request):
@@ -59,7 +61,7 @@ def waf_sync_update_get_jxcheck_update(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_sync_update_get_botcheck_list(request):
@@ -83,16 +85,18 @@ def waf_sync_update_get_botcheck_list(request):
                 return JsonResponse(return_result, safe=False)
             else:
                 return_result['result'] = False
-                return_result['message'] = "error"
+                return_result['errCode'] = 504
+                return_result['message'] = "https://api.jxwaf.com/open/waf_get_open_botcheck response result is false"
                 return JsonResponse(return_result, safe=False)
         except:
             return_result['result'] = False
-            return_result['message'] = "error"
+            return_result['errCode'] = 500
+            return_result['message'] = "get https://api.jxwaf.com/open/waf_get_open_botcheck failed"
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)
 
 def waf_sync_update_get_botcheck_update(request):
@@ -117,7 +121,7 @@ def waf_sync_update_get_botcheck_update(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def waf_sync_update_get_botcheck_key_update(request):
@@ -144,14 +148,16 @@ def waf_sync_update_get_botcheck_key_update(request):
                 return JsonResponse(return_result, safe=False)
             else:
                 return_result['result'] = False
-                return_result['message'] = "error"
+                return_result['errCode'] = 504
+                return_result['message'] = "https://api.jxwaf.com/open/waf_get_open_botcheck_key response result is false"
                 return JsonResponse(return_result, safe=False)
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = str(e)
+            return_result['errCode'] = 500
             return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 108
+        return_result['errCode'] = 401
         return JsonResponse(return_result, safe=False)

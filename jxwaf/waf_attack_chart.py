@@ -107,7 +107,7 @@ def attack_chart_get_type_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -165,7 +165,7 @@ def attack_chart_get_ip_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 
@@ -222,7 +222,7 @@ def attack_chart_get_black_ip_trend(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def attack_chart_get_req_count_and_ip_count(request):
@@ -275,7 +275,7 @@ def attack_chart_get_req_count_and_ip_count(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def attack_chart_get_black_ip_count(request):
@@ -326,7 +326,7 @@ def attack_chart_get_black_ip_count(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def attack_chart_get_type_top10(request):
@@ -378,7 +378,7 @@ def attack_chart_get_type_top10(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
 def attack_chart_get_uri_top10(request):
@@ -430,5 +430,5 @@ def attack_chart_get_uri_top10(request):
     except Exception, e:
         return_result['result'] = False
         return_result['message'] = str(e)
-        return_result['errCode'] = 103
+        return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
