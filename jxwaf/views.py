@@ -81,12 +81,12 @@ def login(request):
         else:
             jxwaf_login_log.objects.create(user_id=result.user_id, email=result.email, status="false")
             data['result'] = False
-            data['errCode'] = 401
+            data['errCode'] = 4011
             data['message'] = 'password is wrong'
             return JsonResponse(data, safe=False)
     else:
         data['result'] = False
-        data['errCode'] = 401
+        data['errCode'] = 4012
         data['message'] = 'code is wrong'
         return JsonResponse(data, safe=False)
 
