@@ -55,6 +55,7 @@ class waf_protection(models.Model):
     page_custom = models.CharField(default="false", max_length=50)
     evil_ip_handle = models.CharField(default="false", max_length=50)
     ip_config = models.CharField(default="false", max_length=50)
+    data_mask = models.CharField(default="false", max_length=50)
 
     def __unicode__(self):
         return self.email
@@ -207,3 +208,14 @@ class waf_cc_bot_html_key(models.Model):
     def __unicode__(self):
         return self.user_id
 
+class waf_data_mask_rule(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    domain = models.CharField(null=False, max_length=500)
+    uri = models.CharField(max_length=100, default="0")
+    header = models.CharField(max_length=100)
+    get = models.CharField(max_length=100, default="10")
+    post = models.CharField(max_length=1000, default="")
+
+
+    def __unicode__(self):
+        return self.rule_id
