@@ -17,13 +17,14 @@ def waf_edit_protection(request):
         page_custom = json_data['page_custom']
         evil_ip_handle = json_data['evil_ip_handle']
         ip_config = json_data['ip_config']
+        data_mask = json_data['data_mask']
         try:
             waf_protection.objects.get(Q(domain=domain) & Q(user_id=user_id))
             user = jxwaf_user.objects.get(user_id=user_id)
             waf_protection.objects.filter(domain=domain).filter(user_id=user_id).update(
                 owasp_protection=owasp_protection, cc_protection=cc_protection,cc_attack_ip_protection=cc_attack_ip_protection,
                 custom_protection=custom_protection,
-                page_custom=page_custom, email=user.email,evil_ip_handle=evil_ip_handle,ip_config=ip_config)
+                page_custom=page_custom, email=user.email,evil_ip_handle=evil_ip_handle,ip_config=ip_config,data_mask=data_mask)
             return_result['result'] = True
             return_result['message'] = 'edit success'
             return JsonResponse(return_result, safe=False)
@@ -55,6 +56,7 @@ def waf_get_protection(request):
         data['cc_protection'] = waf_protection_result.cc_protection
         data['evil_ip_handle'] = waf_protection_result.evil_ip_handle
         data['ip_config'] = waf_protection_result.ip_config
+        data['data_mask'] = waf_protection_result.data_mask
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)
