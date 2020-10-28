@@ -359,19 +359,28 @@ def waf_update(request):
                 for data_mask_result in data_mask_results:
                     get_data = data_mask_result.get
                     if len(get_data) == 0:
-                        get_data = True
+                        get_data = False
                     else:
-                        get_data = get_data.split(',')
+                        if get_data == '*':
+                            get_data = True
+                        else:
+                            get_data = get_data.split(',')
                     post_data = data_mask_result.post
                     if len(post_data) == 0:
-                        post_data = True
+                        post_data = False
                     else:
-                        post_data = post_data.split(',')
+                        if post_data == '*':
+                            post_data = True
+                        else:
+                            post_data = post_data.split(',')
                     header_data = data_mask_result.header
                     if len(header_data) == 0:
-                        header_data = True
+                        header_data = False
                     else:
-                        header_data = header_data.split(',')
+                        if header_data == '*':
+                            header_data = True
+                        else:
+                            header_data = header_data.split(',')
                     data_mask_data[data_mask_result.uri] = {
                         'get': get_data,
                         'post': post_data,
