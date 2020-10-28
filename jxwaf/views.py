@@ -237,6 +237,7 @@ def waf_update(request):
             page_custom_data = {}
             evil_ip_handle_data = {}
             ip_config_data = {}
+            data_mask_data = {}
             domain_data['domain'] = waf_domain_result.domain
             domain_data['http'] = waf_domain_result.http
             domain_data['https'] = waf_domain_result.https
@@ -269,6 +270,7 @@ def waf_update(request):
             protection_data['page_custom'] = protection_result.page_custom
             protection_data['evil_ip_handle'] = protection_result.evil_ip_handle
             protection_data['ip_config'] = protection_result.ip_config
+            protection_data['data_mask'] = protection_result.data_mask
             global_data['protection_set'] = protection_data
             if protection_data['page_custom'] == "true":
                 waf_page_custom_result = waf_page_custom.objects.get(
@@ -351,6 +353,40 @@ def waf_update(request):
                 for ip_config_result in ip_config_results:
                     ip_config_data[ip_config_result.ip] = ip_config_result.rule_action
                 global_data['ip_config_set'] = ip_config_data
+            if protection_data['data_mask'] == "true":
+                data_mask_results = waf_data_mask_rule.objects.filter(user_id=user_result.user_id).filter(
+                    domain=waf_domain_result.domain)
+                for data_mask_result in data_mask_results:
+                    get_data = data_mask_result.get
+                    if len(get_data) == 0:
+                        get_data = False
+                    else:
+                        if get_data == '*':
+                            get_data = True
+                        else:
+                            get_data = get_data.split(',')
+                    post_data = data_mask_result.post
+                    if len(post_data) == 0:
+                        post_data = False
+                    else:
+                        if post_data == '*':
+                            post_data = True
+                        else:
+                            post_data = post_data.split(',')
+                    header_data = data_mask_result.header
+                    if len(header_data) == 0:
+                        header_data = False
+                    else:
+                        if header_data == '*':
+                            header_data = True
+                        else:
+                            header_data = header_data.split(',')
+                    data_mask_data[data_mask_result.uri] = {
+                        'get': get_data,
+                        'post': post_data,
+                        'header': header_data
+                    }
+                global_data['data_mask_set'] = data_mask_data
             data[waf_domain_result.domain] = global_data
         data_result['waf_rule'] = data
         global_data_result = waf_global.objects.get(user_id=user_result.user_id)

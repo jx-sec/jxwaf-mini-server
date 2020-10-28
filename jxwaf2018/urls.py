@@ -33,6 +33,7 @@ from jxwaf.waf_cc_attack_ip import *
 from jxwaf.waf_sync_update import *
 from jxwaf.waf_attack_chart import *
 from jxwaf.waf_cc_chart import *
+from jxwaf.waf_data_mask import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -128,4 +129,9 @@ urlpatterns = [
     url(r'^chart/cc_chart_get_geoip', cc_chart_get_geoip),
     url(r'^chart/cc_chart_get_ip_count', cc_chart_get_ip_count),
     url(r'^chart/cc_chart_get_ip_trend', cc_chart_get_ip_trend),
+
+    url(r'^waf/waf_get_data_mask_list', waf_get_data_mask_list),
+    url(r'^waf/waf_del_data_mask_list', waf_del_data_mask_list),
+    url(r'^waf/waf_create_data_mask_list', waf_create_data_mask_list),
+    url(r'^waf/waf_edit_data_mask_list', waf_edit_data_mask_list),
 ]
