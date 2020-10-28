@@ -371,7 +371,7 @@ def waf_update(request):
                     if len(header_data) == 0:
                         header_data = True
                     else:
-                        header_data = header_data.split('|')
+                        header_data = header_data.split(',')
                     data_mask_data[data_mask_result.uri] = {
                         'get': get_data,
                         'post': post_data,
