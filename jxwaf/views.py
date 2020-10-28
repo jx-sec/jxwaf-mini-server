@@ -361,12 +361,12 @@ def waf_update(request):
                     if len(get_data) == 0:
                         get_data = True
                     else:
-                        get_data = get_data.split('|')
+                        get_data = get_data.split(',')
                     post_data = data_mask_result.post
                     if len(post_data) == 0:
                         post_data = True
                     else:
-                        post_data = post_data.split('|')
+                        post_data = post_data.split(',')
                     header_data = data_mask_result.header
                     if len(header_data) == 0:
                         header_data = True
