@@ -211,7 +211,7 @@ class waf_cc_bot_html_key(models.Model):
 class waf_data_mask_rule(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     domain = models.CharField(null=False, max_length=500)
-    uri = models.CharField(max_length=100, default="0")
+    uri = models.CharField(max_length=100, default="/")
     header = models.CharField(max_length=100,default="")
     get = models.CharField(max_length=100, default="")
     post = models.CharField(max_length=1000, default="")
