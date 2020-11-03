@@ -238,6 +238,7 @@ def waf_update(request):
             evil_ip_handle_data = {}
             ip_config_data = {}
             data_mask_data = {}
+            data_mask_global_data = {}
             domain_data['domain'] = waf_domain_result.domain
             domain_data['http'] = waf_domain_result.http
             domain_data['https'] = waf_domain_result.https
@@ -387,6 +388,30 @@ def waf_update(request):
                         'header': header_data
                     }
                 global_data['data_mask_set'] = data_mask_data
+                try:
+                    data_mask_global_result = waf_data_mask_global.objects.get(Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                except:
+                    waf_data_mask_global.objects.create(user_id=user_result.user_id, domain=waf_domain_result.domain)
+                    data_mask_global_result = waf_data_mask_global.objects.get(Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                global_get_data = data_mask_global_result.get
+                if len(global_get_data) == 0:
+                    global_get_data = False
+                else:
+                    global_get_data = global_get_data.split(',')
+                global_post_data = data_mask_global_result.post
+                if len(global_post_data) == 0:
+                    global_post_data = False
+                else:
+                    global_post_data = global_post_data.split(',')
+                global_header_data = data_mask_global_result.header
+                if len(global_header_data) == 0:
+                    global_header_data = False
+                else:
+                    global_header_data = global_header_data.split(',')
+                data_mask_global_data['get'] = global_get_data
+                data_mask_global_data['post'] = global_post_data
+                data_mask_global_data['header'] = global_header_data
+                global_data['data_mask_global_set'] = data_mask_global_data
             data[waf_domain_result.domain] = global_data
         data_result['waf_rule'] = data
         global_data_result = waf_global.objects.get(user_id=user_result.user_id)

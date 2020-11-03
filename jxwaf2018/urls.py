@@ -129,9 +129,10 @@ urlpatterns = [
     url(r'^chart/cc_chart_get_geoip', cc_chart_get_geoip),
     url(r'^chart/cc_chart_get_ip_count', cc_chart_get_ip_count),
     url(r'^chart/cc_chart_get_ip_trend', cc_chart_get_ip_trend),
-
     url(r'^waf/waf_get_data_mask_list', waf_get_data_mask_list),
     url(r'^waf/waf_del_data_mask_list', waf_del_data_mask_list),
     url(r'^waf/waf_create_data_mask_list', waf_create_data_mask_list),
     url(r'^waf/waf_edit_data_mask_list', waf_edit_data_mask_list),
+    url(r'^waf/waf_get_data_mask_global', waf_get_data_mask_global),
+    url(r'^waf/waf_edit_data_mask_global', waf_edit_data_mask_global),
 ]
