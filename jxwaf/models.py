@@ -219,3 +219,14 @@ class waf_data_mask_rule(models.Model):
 
     def __unicode__(self):
         return self.user_id
+
+class waf_data_mask_global(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    domain = models.CharField(null=False, max_length=500)
+    header = models.CharField(max_length=100,default="")
+    get = models.CharField(max_length=100, default="")
+    post = models.CharField(max_length=1000, default="")
+
+
+    def __unicode__(self):
+        return self.user_id

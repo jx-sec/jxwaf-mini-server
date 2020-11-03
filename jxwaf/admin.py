@@ -24,6 +24,7 @@ class waf_cc_protection_admin(admin.ModelAdmin):
     list_display = (
         'user_id', 'domain')
 
+
 class waf_cc_attack_ip_conf_admin(admin.ModelAdmin):
     list_display = (
         'user_id', 'domain')
@@ -63,7 +64,6 @@ class waf_page_custom_admin(admin.ModelAdmin):
         'user_id', 'domain', 'owasp_code', 'owasp_html')
 
 
-
 class waf_monitor_log_admin(admin.ModelAdmin):
     list_display = (
         'user_id', 'waf_monitor_node_uuid', 'waf_monitor_node_detail', 'waf_monitor_node_status',
@@ -72,7 +72,7 @@ class waf_monitor_log_admin(admin.ModelAdmin):
 
 class waf_cc_bot_html_key_admin(admin.ModelAdmin):
     list_display = (
-        'user_id', 'uuid', 'key','bot_check_mode', 'create_time')
+        'user_id', 'uuid', 'key', 'bot_check_mode', 'create_time')
 
 
 class waf_botcheck_admin(admin.ModelAdmin):
@@ -80,11 +80,19 @@ class waf_botcheck_admin(admin.ModelAdmin):
         'user_id', 'botcheck_code')
 
 
-
-
 class jxwaf_login_log_admin(admin.ModelAdmin):
     list_display = (
         'user_id', 'email', 'status')
+
+
+class waf_data_mask_rule_admin(admin.ModelAdmin):
+    list_display = (
+        'user_id', 'domain', 'uri', 'get', 'post', 'header')
+
+
+class waf_data_mask_global_admin(admin.ModelAdmin):
+    list_display = (
+        'user_id', 'domain', 'get', 'post', 'header')
 
 
 admin.site.register(jxwaf_user, UserAdmin)
@@ -101,3 +109,5 @@ admin.site.register(waf_page_custom, waf_page_custom_admin)
 admin.site.register(waf_monitor_log, waf_monitor_log_admin)
 admin.site.register(waf_cc_bot_html_key, waf_cc_bot_html_key_admin)
 admin.site.register(waf_botcheck, waf_botcheck_admin)
+admin.site.register(waf_data_mask_rule, waf_data_mask_rule_admin)
+admin.site.register(waf_data_mask_global, waf_data_mask_global_admin)
