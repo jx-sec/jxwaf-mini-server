@@ -94,6 +94,13 @@ class waf_data_mask_global_admin(admin.ModelAdmin):
     list_display = (
         'user_id', 'domain', 'get', 'post', 'header')
 
+class waf_rule_engine_admin(admin.ModelAdmin):
+    list_display = (
+        'user_id', 'domain', 'rule_name')
+
+class waf_keycheck_admin(admin.ModelAdmin):
+    list_display = (
+        'user_id', 'version')
 
 admin.site.register(jxwaf_user, UserAdmin)
 admin.site.register(jxwaf_login_log, jxwaf_login_log_admin)
@@ -111,3 +118,6 @@ admin.site.register(waf_cc_bot_html_key, waf_cc_bot_html_key_admin)
 admin.site.register(waf_botcheck, waf_botcheck_admin)
 admin.site.register(waf_data_mask_rule, waf_data_mask_rule_admin)
 admin.site.register(waf_data_mask_global, waf_data_mask_global_admin)
+
+admin.site.register(waf_rule_engine, waf_rule_engine_admin)
+admin.site.register(waf_keycheck, waf_keycheck_admin)

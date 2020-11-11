@@ -108,6 +108,12 @@ def regist(request):
         data['errCode'] = 403
         data['message'] = 'The registration function is closed, you may not have permission to register'
         return JsonResponse(data, safe=False)
+    regist_count = jxwaf_user.objects.all().count()
+    if regist_count > settings.REGIST_COUNT:
+        data['result'] = False
+        data['errCode'] = 403
+        data['message'] = 'Registration number exceeds the limit'
+        return JsonResponse(data, safe=False)
     try:
         result = jxwaf_user.objects.get(email=email)
         data['result'] = False
@@ -239,6 +245,8 @@ def waf_update(request):
             ip_config_data = {}
             data_mask_data = {}
             data_mask_global_data = {}
+            rule_engine_data = []
+            check_key_data = {}
             domain_data['domain'] = waf_domain_result.domain
             domain_data['http'] = waf_domain_result.http
             domain_data['https'] = waf_domain_result.https
@@ -272,6 +280,7 @@ def waf_update(request):
             protection_data['evil_ip_handle'] = protection_result.evil_ip_handle
             protection_data['ip_config'] = protection_result.ip_config
             protection_data['data_mask'] = protection_result.data_mask
+            protection_data['rule_engine'] = protection_result.rule_engine
             global_data['protection_set'] = protection_data
             if protection_data['page_custom'] == "true":
                 waf_page_custom_result = waf_page_custom.objects.get(
@@ -324,6 +333,59 @@ def waf_update(request):
                         }
                     )
                 global_data['custom_rule_set'] = custom_rule_data
+            if protection_data['rule_engine'] == "true":
+                rule_engine_results = waf_rule_engine.objects.filter(user_id=user_result.user_id).filter(
+                    domain=waf_domain_result.domain).filter(~Q(match_action='close'))
+                for rule_engine_result in rule_engine_results:
+                    if len(rule_engine_result.flow_filter) == 0:
+                        flow_filter_keys = []
+                    else:
+                        flow_filter_keys = rule_engine_result.flow_filter.split(',')
+                    for flow_filter_key in flow_filter_keys:
+                        flow_filter_key = unicode.upper(flow_filter_key)
+                        if check_key_data.has_key(flow_filter_key):
+                            if type(check_key_data[flow_filter_key]) == unicode or type(
+                                    check_key_data[flow_filter_key]) == str:
+                                tmp_list = []
+                                tmp_list.append(check_key_data[flow_filter_key])
+                                tmp_list.append(rule_engine_result.rule_name)
+                                check_key_data[flow_filter_key] = tmp_list
+                            else:
+                                tmp_list = check_key_data[flow_filter_key]
+                                tmp_list.append(rule_engine_result.rule_name)
+                                check_key_data[flow_filter_key] = tmp_list
+                        else:
+                            check_key_data[flow_filter_key] = rule_engine_result.rule_name
+
+                    check_contents = rule_engine_result.check_content.split(',')
+                    check_content_data = {}
+                    for check_content in check_contents:
+                        check_content_data[check_content] = True
+                    if len(rule_engine_result.check_uri) == 0:
+                        check_uri = False
+                    else:
+                        check_uri = rule_engine_result.check_uri
+                    if len(rule_engine_result.white_url) == 0:
+                        white_url = False
+                    else:
+                        white_url = rule_engine_result.white_url.split(',')
+                    flow_filter_count = 0
+                    if len(rule_engine_result.flow_filter) != 0:
+                        flow_filter_count = len(rule_engine_result.flow_filter.split(','))
+                    rule_engine_data.append(
+                        {
+                            'rule_name': rule_engine_result.rule_name,
+                            'check_uri': check_uri,
+                            'flow_filter_count': flow_filter_count,
+                            'content_handle': rule_engine_result.content_handle.split(','),
+                            'check_content': check_content_data,
+                            'content_match': json.loads(rule_engine_result.content_match),
+                            'match_action': rule_engine_result.match_action,
+                            'white_url': white_url,
+                        }
+                    )
+                global_data['check_key_set'] = check_key_data
+                global_data['rule_engine_set'] = rule_engine_data
             if protection_data['owasp_protection'] == "true":
                 waf_owasp_check_result = waf_owasp_check.objects.get(
                     Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
@@ -389,10 +451,12 @@ def waf_update(request):
                     }
                 global_data['data_mask_set'] = data_mask_data
                 try:
-                    data_mask_global_result = waf_data_mask_global.objects.get(Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                    data_mask_global_result = waf_data_mask_global.objects.get(
+                        Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
                 except:
                     waf_data_mask_global.objects.create(user_id=user_result.user_id, domain=waf_domain_result.domain)
-                    data_mask_global_result = waf_data_mask_global.objects.get(Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                    data_mask_global_result = waf_data_mask_global.objects.get(
+                        Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
                 global_get_data = data_mask_global_result.get
                 if len(global_get_data) == 0:
                     global_get_data = False
@@ -426,6 +490,8 @@ def waf_update(request):
         data_result['jxcheck'] = jxcheck_result.jxcheck_code
         botcheck_result = waf_botcheck.objects.get(user_id="jxwaf")
         data_result['botcheck'] = botcheck_result.botcheck_code
+        keycheck_result = waf_keycheck.objects.get(user_id="jxwaf")
+        data_result['keycheck'] = keycheck_result.keycheck_code
         bot_data = {}
         bot_standard_data = {}
         bot_image_data = {}

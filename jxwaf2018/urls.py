@@ -34,6 +34,7 @@ from jxwaf.waf_sync_update import *
 from jxwaf.waf_attack_chart import *
 from jxwaf.waf_cc_chart import *
 from jxwaf.waf_data_mask import *
+from jxwaf.waf_rule_engine import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -135,4 +136,12 @@ urlpatterns = [
     url(r'^waf/waf_edit_data_mask_list', waf_edit_data_mask_list),
     url(r'^waf/waf_get_data_mask_global', waf_get_data_mask_global),
     url(r'^waf/waf_edit_data_mask_global', waf_edit_data_mask_global),
+
+    url(r'^waf/waf_get_rule_engine_list', waf_get_rule_engine_list),
+    url(r'^waf/waf_del_rule_engine', waf_del_rule_engine),
+    url(r'^waf/waf_edit_rule_engine', waf_edit_rule_engine),
+    url(r'^waf/waf_sync_update_create_rule_engine', waf_sync_update_create_rule_engine),
+    url(r'^waf/waf_sync_update_get_rule_engine_list', waf_sync_update_get_rule_engine_list),
+    url(r'^waf/waf_sync_update_get_keycheck_update', waf_sync_update_get_keycheck_update),
+    url(r'^waf/waf_sync_update_get_keycheck_list', waf_sync_update_get_keycheck_list),
 ]

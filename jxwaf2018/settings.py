@@ -23,7 +23,7 @@ SECRET_KEY = '1@g7)-yf_@zh1k1w0a@0*qaw9ery-0p0jhyiu*n9a3mhnsyf65'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#DEBUG = False
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -112,7 +112,7 @@ DATABASES = {
     }
 }
 
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
 #        'NAME': 'jxwaf',
@@ -121,7 +121,7 @@ DATABASES = {
 #        'HOST': '',
 #        'PORT': '',
 #    }
-#}
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -174,5 +174,6 @@ EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'demo@jxwaf.com'
 DATETIME_FORMAT = 'Y-m-d H:i:s'
 # regist control
-#OPEN_REGIST = False
+# OPEN_REGIST = False
 OPEN_REGIST = True
+REGIST_COUNT = 1

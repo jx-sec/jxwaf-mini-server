@@ -56,6 +56,7 @@ class waf_protection(models.Model):
     evil_ip_handle = models.CharField(default="false", max_length=50)
     ip_config = models.CharField(default="false", max_length=50)
     data_mask = models.CharField(default="false", max_length=50)
+    rule_engine = models.CharField(default="false", max_length=50)
 
     def __unicode__(self):
         return self.email
@@ -185,6 +186,13 @@ class waf_botcheck(models.Model):
     def __unicode__(self):
         return self.user_id
 
+class waf_keycheck(models.Model):
+    user_id = models.CharField(null=False, max_length=50, default="jxwaf")
+    keycheck_code = models.TextField(blank=True, null=True)
+    version = models.CharField(max_length=100, default="null")
+
+    def __unicode__(self):
+        return self.user_id
 
 class waf_monitor_log(models.Model):
     user_id = models.CharField(null=False, max_length=50)
@@ -227,6 +235,22 @@ class waf_data_mask_global(models.Model):
     get = models.CharField(max_length=100, default="")
     post = models.CharField(max_length=1000, default="")
 
+
+    def __unicode__(self):
+        return self.user_id
+
+class waf_rule_engine(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    domain = models.CharField(null=False, max_length=500)
+    rule_name = models.CharField(max_length=1000, default="jxwaf")
+    flow_filter = models.CharField(max_length=2000,default="")
+    detail = models.CharField(max_length=2000,default="")
+    check_uri = models.CharField(max_length=1000,default="")
+    check_content = models.CharField(max_length=1000,default="")
+    content_handle = models.CharField(max_length=1000,default="")
+    content_match = models.CharField(max_length=2000)
+    match_action = models.CharField(max_length=1000)
+    white_url = models.CharField(max_length=2000,default="")
 
     def __unicode__(self):
         return self.user_id
