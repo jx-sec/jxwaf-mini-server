@@ -109,7 +109,7 @@ def regist(request):
         data['message'] = 'The registration function is closed, you may not have permission to register'
         return JsonResponse(data, safe=False)
     regist_count = jxwaf_user.objects.all().count()
-    if regist_count > settings.REGIST_COUNT:
+    if regist_count >= settings.REGIST_COUNT:
         data['result'] = False
         data['errCode'] = 403
         data['message'] = 'Registration number exceeds the limit'

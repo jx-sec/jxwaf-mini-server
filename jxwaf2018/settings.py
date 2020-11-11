@@ -176,4 +176,4 @@ DATETIME_FORMAT = 'Y-m-d H:i:s'
 # regist control
 # OPEN_REGIST = False
 OPEN_REGIST = True
-REGIST_COUNT = 1
+REGIST_COUNT = 2
