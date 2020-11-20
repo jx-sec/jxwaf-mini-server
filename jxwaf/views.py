@@ -490,8 +490,11 @@ def waf_update(request):
         data_result['jxcheck'] = jxcheck_result.jxcheck_code
         botcheck_result = waf_botcheck.objects.get(user_id="jxwaf")
         data_result['botcheck'] = botcheck_result.botcheck_code
-        keycheck_result = waf_keycheck.objects.get(user_id="jxwaf")
-        data_result['keycheck'] = keycheck_result.keycheck_code
+        try:
+            keycheck_result = waf_keycheck.objects.get(user_id="jxwaf")
+            data_result['keycheck'] = keycheck_result.keycheck_code
+        except:
+            data_result['keycheck'] = ""
         bot_data = {}
         bot_standard_data = {}
         bot_image_data = {}
