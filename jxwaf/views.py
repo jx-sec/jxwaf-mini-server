@@ -511,6 +511,14 @@ def waf_update(request):
         bot_data['standard'] = bot_standard_data
         bot_data['image'] = bot_image_data
         bot_data['slipper'] = bot_slipper_data
+
+        jxwaf_website_default = {}
+        jxwaf_website_default_data = waf_default_config.objects.get(user_id=user_result.user_id)
+        jxwaf_website_default['type'] = jxwaf_website_default_data.type
+        jxwaf_website_default['owasp_code'] = jxwaf_website_default_data.owasp_code
+        jxwaf_website_default['owasp_html'] = jxwaf_website_default_data.owasp_html
+        data_result['jxwaf_website_default'] = jxwaf_website_default
+
         data_result['bot_auth_key'] = bot_data
         data_result['auto_update'] = global_data_result.auto_update
         data_result['auto_update_period'] = global_data_result.auto_update_period
@@ -531,3 +539,4 @@ def waf_update(request):
         data_result['errCode'] = 504
         data_result['message'] = str(e)
         return JsonResponse(data_result, safe=False)
+

@@ -18,6 +18,7 @@ from django.contrib import admin
 from jxwaf.views import *
 from jxwaf.waf_cc import *
 from jxwaf.waf_domain import *
+from jxwaf.waf_default import *
 from jxwaf.waf_protection import *
 from jxwaf.waf_custom import *
 from jxwaf.waf_global import *
@@ -144,4 +145,11 @@ urlpatterns = [
     url(r'^waf/waf_sync_update_get_rule_engine_list', waf_sync_update_get_rule_engine_list),
     url(r'^waf/waf_sync_update_get_keycheck_update', waf_sync_update_get_keycheck_update),
     url(r'^waf/waf_sync_update_get_keycheck_list', waf_sync_update_get_keycheck_list),
+
+    url(r'^waf/waf_get_default_domain$', waf_get_default_domain),
+    url(r'^waf/waf_create_default_domain$', waf_create_default_domain),
+    url(r'^waf/waf_edit_default_domain$', waf_edit_default_domain),
+    url(r'^waf/waf_get_default_config$', waf_get_default_config),
+    url(r'^waf/waf_edit_default_config$', waf_edit_default_config),
+    url(r'^waf/waf_create_default_config$', waf_create_default_config),
 ]
