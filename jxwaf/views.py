@@ -513,7 +513,11 @@ def waf_update(request):
         bot_data['slipper'] = bot_slipper_data
 
         jxwaf_website_default = {}
-        jxwaf_website_default_data = waf_default_config.objects.get(user_id=user_result.user_id)
+        try:
+            jxwaf_website_default_data = waf_default_config.objects.get(user_id=user_result.user_id)
+        except:
+            waf_default_config.objects.create(user_id=user_result.user_id, type='false', owasp_code='404', owasp_html='')
+            jxwaf_website_default_data = waf_default_config.objects.get(user_id=user_result.user_id)
         jxwaf_website_default['type'] = jxwaf_website_default_data.type
         jxwaf_website_default['owasp_code'] = jxwaf_website_default_data.owasp_code
         jxwaf_website_default['owasp_html'] = jxwaf_website_default_data.owasp_html
