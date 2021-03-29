@@ -259,8 +259,8 @@ class waf_rule_engine(models.Model):
 class waf_default_config(models.Model):
     user_id = models.CharField(null=False, max_length=100)
     type = models.CharField(default="true", max_length=50)
-    owasp_code = models.CharField(null=False, max_length=500)
-    owasp_html = models.CharField(null=False, max_length=500)
+    owasp_code = models.CharField(null=False, max_length=500, default="404")
+    owasp_html = models.CharField(null=False, max_length=500, default="")
 
     def __unicode__(self):
         return self.email
