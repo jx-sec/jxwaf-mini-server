@@ -3,6 +3,7 @@ from django.http import JsonResponse
 import json
 from jxwaf.models import *
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 
 def waf_get_domain_list(request):
@@ -10,8 +11,15 @@ def waf_get_domain_list(request):
     data = []
     try:
         user_id = request.session['user_id']
-        waf_domain_results = waf_domain.objects.filter(user_id=user_id)
-        for result in waf_domain_results:
+        json_data = json.loads(request.body)
+        try:
+            page = json_data['page']
+        except:
+            page = 1
+        results = waf_domain.objects.filter(user_id=user_id)
+        paginator = Paginator(results, 50)
+        waf_domain_results = paginator.page(page)
+        for result in waf_domain_results.object_list:
             try:
                 waf_protection_result = waf_protection.objects.get(Q(user_id=user_id) & Q(domain=result.domain))
             except:
@@ -29,6 +37,10 @@ def waf_get_domain_list(request):
                         )
         return_result['result'] = True
         return_result['message'] = data
+        return_result['count'] = paginator.count
+        return_result['num_pages'] = paginator.num_pages
+        return_result['page_range'] = paginator.page_range
+        return_result['now_page'] = waf_domain_results.number
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
