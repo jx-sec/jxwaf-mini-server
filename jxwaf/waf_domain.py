@@ -11,8 +11,8 @@ def waf_get_domain_list(request):
     data = []
     try:
         user_id = request.session['user_id']
-        json_data = json.loads(request.body)
         try:
+            json_data = json.loads(request.body)
             page = json_data['page']
         except:
             page = 1
@@ -39,7 +39,6 @@ def waf_get_domain_list(request):
         return_result['message'] = data
         return_result['count'] = paginator.count
         return_result['num_pages'] = paginator.num_pages
-        return_result['page_range'] = paginator.page_range
         return_result['now_page'] = waf_domain_results.number
         return JsonResponse(return_result, safe=False)
     except Exception, e:
