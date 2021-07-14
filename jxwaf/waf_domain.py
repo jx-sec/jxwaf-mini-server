@@ -14,11 +14,24 @@ def waf_get_domain_list(request):
         try:
             json_data = json.loads(request.body)
             page = json_data['page']
+            search = json_data['search']
         except:
             page = 1
-        results = waf_domain.objects.filter(user_id=user_id)
+            search = ""
+        is_search = False
+        if len(search) > 0:
+            is_search = True
+        if is_search == False:
+            results = waf_domain.objects.filter(user_id=user_id)
+        else:
+            results = waf_domain.objects.filter(user_id=user_id).filter(domain__contains=search)
         paginator = Paginator(results, 50)
-        waf_domain_results = paginator.page(page)
+        is_error = False
+        try:
+            waf_domain_results = paginator.page(int(page))
+        except:
+            is_error = True
+            waf_domain_results = paginator.page(1)
         for result in waf_domain_results.object_list:
             try:
                 waf_protection_result = waf_protection.objects.get(Q(user_id=user_id) & Q(domain=result.domain))
@@ -39,7 +52,10 @@ def waf_get_domain_list(request):
         return_result['message'] = data
         return_result['count'] = paginator.count
         return_result['num_pages'] = paginator.num_pages
-        return_result['now_page'] = waf_domain_results.number
+        if is_error == True:
+            return_result['now_page'] = 1
+        else:
+            return_result['now_page'] = waf_domain_results.number
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -274,6 +290,48 @@ def waf_copy_domain(request):
         waf_evil_ip_conf.objects.create(user_id=user_id, domain=new_domain)
         return_result['result'] = True
         return_result['message'] = "success"
+        return JsonResponse(return_result, safe=False)
+    except Exception, e:
+        return_result['result'] = False
+        return_result['message'] = str(e)
+        return_result['errCode'] = 400
+        return JsonResponse(return_result, safe=False)
+
+
+def waf_get_domain_search_list(request):
+    return_result = {}
+    data = []
+    try:
+        user_id = request.session['user_id']
+        try:
+            json_data = json.loads(request.body)
+            page = json_data['page']
+        except:
+            page = 1
+        results = waf_domain.objects.filter(user_id=user_id)
+        paginator = Paginator(results, 50)
+        waf_domain_results = paginator.page(page)
+        for result in waf_domain_results.object_list:
+            try:
+                waf_protection_result = waf_protection.objects.get(Q(user_id=user_id) & Q(domain=result.domain))
+            except:
+                return_result['result'] = True
+                return_result['message'] = data
+                return JsonResponse(return_result, safe=False)
+            data.append({'domain': result.domain,
+                         'http': result.http,
+                         'https': result.https,
+                         'owasp_protection': waf_protection_result.owasp_protection,
+                         'evil_ip_handle': waf_protection_result.evil_ip_handle,
+                         'cc_protection': waf_protection_result.cc_protection,
+                         'cc_attack_ip_protection': waf_protection_result.cc_attack_ip_protection,
+                         }
+                        )
+        return_result['result'] = True
+        return_result['message'] = data
+        return_result['count'] = paginator.count
+        return_result['num_pages'] = paginator.num_pages
+        return_result['now_page'] = waf_domain_results.number
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
