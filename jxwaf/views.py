@@ -271,8 +271,15 @@ def waf_update(request):
             if domain_data['proxy'] == "true":
                 domain_data['proxy_ip'] = waf_domain_result.proxy_ip.split(",")
             global_data['domain_set'] = domain_data
-            protection_result = waf_protection.objects.get(
-                Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+            try:
+                protection_result = waf_protection.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+            except Exception, e:
+                data_result = {}
+                data_result['result'] = False
+                data_result['errDomain'] = waf_domain_result.domain
+                data_result['message'] = str(e)
+                return JsonResponse(data_result, safe=False)
             protection_data['owasp_protection'] = protection_result.owasp_protection
             protection_data['cc_protection'] = protection_result.cc_protection
             protection_data['cc_attack_ip_protection'] = protection_result.cc_attack_ip_protection
