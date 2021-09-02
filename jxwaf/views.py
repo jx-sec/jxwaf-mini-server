@@ -272,8 +272,7 @@ def waf_update(request):
                 domain_data['proxy_ip'] = waf_domain_result.proxy_ip.split(",")
             global_data['domain_set'] = domain_data
             try:
-                protection_result = waf_protection.objects.get(
-                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                protection_result = waf_protection.objects.get(Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
             except Exception, e:
                 data_result = {}
                 data_result['result'] = False
