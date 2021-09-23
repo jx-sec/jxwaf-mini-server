@@ -259,11 +259,15 @@ def waf_update(request):
                 if isIP(process_domain):
                     source_ip.append(process_domain)
                 else:
-                    resolve_ips = dns.resolver.query(process_domain, 'A')
-                    for i in resolve_ips.response.answer:
-                        for j in i.items:
-                            if j.rdtype == 1:
-                                source_ip.append(j.address)
+                    try:
+                        resolve_ips = dns.resolver.query(process_domain, 'A')
+                        for i in resolve_ips.response.answer:
+                            for j in i.items:
+                                if j.rdtype == 1:
+                                    source_ip.append(j.address)
+                    except:
+                        data_result['error_domain'] = waf_domain_result.domain
+                        source_ip.append(process_domain)
             domain_data['source_ip'] = source_ip
             domain_data['source_http_port'] = waf_domain_result.source_http_port
             domain_data['proxy'] = waf_domain_result.proxy
