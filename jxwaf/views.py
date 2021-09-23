@@ -256,11 +256,11 @@ def waf_update(request):
                 domain_data['public_key'] = waf_domain_result.public_key
             source_ip = []
             for process_domain in waf_domain_result.source_ip.split(","):
-                if isIP(process_domain):
-                    source_ip.append(process_domain)
+                if isIP(process_domain.strip()):
+                    source_ip.append(process_domain.strip())
                 else:
                     try:
-                        resolve_ips = dns.resolver.query(process_domain, 'A')
+                        resolve_ips = dns.resolver.query(process_domain.strip(), 'A')
                         for i in resolve_ips.response.answer:
                             for j in i.items:
                                 if j.rdtype == 1:
