@@ -156,6 +156,7 @@ urlpatterns = [
     url(r'^waf/waf_get_default_config$', waf_get_default_config),
     url(r'^waf/waf_edit_default_config$', waf_edit_default_config),
     url(r'^waf/waf_create_default_config$', waf_create_default_config),
+    url(r'^waf/waf_update_repair', waf_update_repair),
 
 #   api
     url(r'^api/waf_get_domain_list$', api_get_domain_list),
