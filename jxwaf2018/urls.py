@@ -36,6 +36,10 @@ from jxwaf.waf_attack_chart import *
 from jxwaf.waf_cc_chart import *
 from jxwaf.waf_data_mask import *
 from jxwaf.waf_rule_engine import *
+from jxwaf.api_domain import *
+from jxwaf.api_protection import *
+from jxwaf.api_cc import *
+from jxwaf.api_owasp_jxcheck import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -152,4 +156,18 @@ urlpatterns = [
     url(r'^waf/waf_get_default_config$', waf_get_default_config),
     url(r'^waf/waf_edit_default_config$', waf_edit_default_config),
     url(r'^waf/waf_create_default_config$', waf_create_default_config),
+    url(r'^waf/waf_update_repair', waf_update_repair),
+
+#   api
+    url(r'^api/waf_get_domain_list$', api_get_domain_list),
+    url(r'^api/waf_get_domain$', api_get_domain),
+    url(r'^api/waf_del_domain$', api_del_domain),
+    url(r'^api/waf_create_domain$', api_create_domain),
+    url(r'^api/waf_edit_domain$', api_edit_domain),
+    url(r'^api/waf_get_cc_protection$', api_get_cc_protection),
+    url(r'^api/waf_edit_cc_protection$', api_edit_cc_protection),
+    url(r'^api/waf_edit_owasp_check$', api_edit_owasp_check),
+    url(r'^api/waf_get_owasp_check$', api_get_owasp_check),
+    url(r'^api/waf_edit_protection$', api_edit_protection),
+    url(r'^api/waf_get_protection$', api_get_protection),
 ]

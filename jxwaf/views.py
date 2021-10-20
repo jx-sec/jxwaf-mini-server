@@ -256,14 +256,21 @@ def waf_update(request):
                 domain_data['public_key'] = waf_domain_result.public_key
             source_ip = []
             for process_domain in waf_domain_result.source_ip.split(","):
-                if isIP(process_domain):
-                    source_ip.append(process_domain)
+                if isIP(process_domain.strip()):
+                    source_ip.append(process_domain.strip())
                 else:
-                    resolve_ips = dns.resolver.query(process_domain, 'A')
-                    for i in resolve_ips.response.answer:
-                        for j in i.items:
-                            if j.rdtype == 1:
-                                source_ip.append(j.address)
+                    try:
+                        resolver = dns.resolver.Resolver()
+                        resolver.timeout = 2
+                        resolver.lifetime = 2
+                        query = resolver.query(process_domain.strip(),'A')
+                        for i in query.response.answer:
+                            for j in i.items:
+                                if j.rdtype == 1:
+                                    source_ip.append(j.address)
+                    except:
+                        data_result['error_domain'] = waf_domain_result.domain
+                        source_ip.append(process_domain)
             domain_data['source_ip'] = source_ip
             domain_data['source_http_port'] = waf_domain_result.source_http_port
             domain_data['proxy'] = waf_domain_result.proxy
@@ -271,8 +278,15 @@ def waf_update(request):
             if domain_data['proxy'] == "true":
                 domain_data['proxy_ip'] = waf_domain_result.proxy_ip.split(",")
             global_data['domain_set'] = domain_data
-            protection_result = waf_protection.objects.get(
-                Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+            try:
+                protection_result = waf_protection.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+            except Exception, e:
+                data_result = {}
+                data_result['result'] = False
+                data_result['errDomain'] = waf_domain_result.domain
+                data_result['message'] = str(e)
+                return JsonResponse(data_result, safe=False)
             protection_data['owasp_protection'] = protection_result.owasp_protection
             protection_data['cc_protection'] = protection_result.cc_protection
             protection_data['cc_attack_ip_protection'] = protection_result.cc_attack_ip_protection
@@ -517,7 +531,8 @@ def waf_update(request):
         try:
             jxwaf_website_default_data = waf_default_config.objects.get(user_id=user_result.user_id)
         except:
-            waf_default_config.objects.create(user_id=user_result.user_id, type='false', owasp_code='404', owasp_html='')
+            waf_default_config.objects.create(user_id=user_result.user_id, type='false', owasp_code='404',
+                                              owasp_html='')
             jxwaf_website_default_data = waf_default_config.objects.get(user_id=user_result.user_id)
         jxwaf_website_default['type'] = jxwaf_website_default_data.type
         jxwaf_website_default['owasp_code'] = jxwaf_website_default_data.owasp_code
@@ -545,3 +560,88 @@ def waf_update(request):
         data_result['message'] = str(e)
         return JsonResponse(data_result, safe=False)
 
+
+def waf_update_repair(request):
+    data_result = {}
+    data = {}
+    error_domain = []
+    try:
+        waf_api_key = request.POST['api_key']
+        waf_api_password = request.POST['api_password']
+        operator = request.POST['operator']
+        if operator != 'check' and operator != 'repair':
+            data_result['result'] = False
+            data_result['errCode'] = 400
+            data_result['message'] = "param error"
+            return JsonResponse(data_result, safe=False)
+    except Exception, e:
+        data_result['result'] = False
+        data_result['errCode'] = 400
+        data_result['message'] = "param error"
+        return JsonResponse(data_result, safe=False)
+    try:
+        user_result = jxwaf_user.objects.get(Q(user_id=waf_api_key) & Q(api_password=waf_api_password))
+    except:
+        data_result['result'] = False
+        data_result['errCode'] = 401
+        data_result['message'] = "api_key or api_password error"
+        return JsonResponse(data_result, safe=False)
+    try:
+        waf_domain_results = waf_domain.objects.filter(user_id=user_result.user_id)
+        for waf_domain_result in waf_domain_results:
+            source_ip = []
+            for process_domain in waf_domain_result.source_ip.split(","):
+                if isIP(process_domain.strip()):
+                    source_ip.append(process_domain.strip())
+                else:
+                    try:
+                        resolver = dns.resolver.Resolver()
+                        resolver.timeout = 2
+                        resolver.lifetime = 2
+                        query = resolver.query(process_domain.strip(),'A')
+                        for i in query.response.answer:
+                            for j in i.items:
+                                if j.rdtype == 1:
+                                    source_ip.append(j.address)
+                    except:
+                        error_domain.append(waf_domain_result.domain)
+            try:
+                protection_result = waf_protection.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                waf_page_custom_result = waf_page_custom.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                waf_cc_protection_result = waf_cc_protection.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                waf_cc_attack_ip_conf_result = waf_cc_attack_ip_conf.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                waf_owasp_check_result = waf_owasp_check.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+                waf_evil_ip_conf_result = waf_evil_ip_conf.objects.get(
+                    Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
+            except Exception, e:
+                error_domain.append(waf_domain_result.domain)
+        if operator == 'repair':
+            for domain in error_domain:
+                waf_domain.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_protection.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_cc_protection.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_cc_attack_ip_conf.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_ip_rule.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_evil_ip_conf.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_owasp_check.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_custom_rule.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+                waf_page_custom.objects.filter(domain=domain).filter(user_id=user_result.user_id).delete()
+        if len(error_domain) == 0:
+            data_result['result'] = True
+            data_result['message'] = "error_domain count is 0"
+        else:
+            data_result['result'] = True
+            data_result['message'] = "error_domain count is "+str(len(error_domain))
+            data_result['error_domain'] = error_domain
+        return JsonResponse(data_result, safe=False)
+    except Exception, e:
+        data_result = {}
+        data_result['result'] = False
+        data_result['errCode'] = 504
+        data_result['message'] = str(e)
+        return JsonResponse(data_result, safe=False)
