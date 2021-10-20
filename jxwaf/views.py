@@ -260,8 +260,11 @@ def waf_update(request):
                     source_ip.append(process_domain.strip())
                 else:
                     try:
-                        resolve_ips = dns.resolver.query(process_domain.strip(), 'A')
-                        for i in resolve_ips.response.answer:
+                        resolver = dns.resolver.Resolver()
+                        resolver.timeout = 2
+                        resolver.lifetime = 2
+                        query = resolver.query(process_domain.strip(),'A')
+                        for i in query.response.answer:
                             for j in i.items:
                                 if j.rdtype == 1:
                                     source_ip.append(j.address)
@@ -592,8 +595,11 @@ def waf_update_repair(request):
                     source_ip.append(process_domain.strip())
                 else:
                     try:
-                        resolve_ips = dns.resolver.query(process_domain.strip(), 'A')
-                        for i in resolve_ips.response.answer:
+                        resolver = dns.resolver.Resolver()
+                        resolver.timeout = 2
+                        resolver.lifetime = 2
+                        query = resolver.query(process_domain.strip(),'A')
+                        for i in query.response.answer:
                             for j in i.items:
                                 if j.rdtype == 1:
                                     source_ip.append(j.address)
