@@ -605,6 +605,36 @@ def waf_update_repair(request):
                                     source_ip.append(j.address)
                     except:
                         error_domain.append(waf_domain_result.domain)
+                        if len(error_domain) >= 5:
+                            if operator == 'repair':
+                                for domain in error_domain:
+                                    waf_domain.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_protection.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_cc_protection.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_cc_attack_ip_conf.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_ip_rule.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_evil_ip_conf.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_owasp_check.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_custom_rule.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                                    waf_page_custom.objects.filter(domain=domain).filter(
+                                        user_id=user_result.user_id).delete()
+                            if len(error_domain) == 0:
+                                data_result['result'] = True
+                                data_result['message'] = "error_domain count is 0"
+                            else:
+                                data_result['result'] = True
+                                data_result['message'] = "you must re-execution,error_domain count is " + str(
+                                    len(error_domain))
+                                data_result['error_domain'] = error_domain
+                            return JsonResponse(data_result, safe=False)
             try:
                 protection_result = waf_protection.objects.get(
                     Q(user_id=user_result.user_id) & Q(domain=waf_domain_result.domain))
