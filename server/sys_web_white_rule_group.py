@@ -112,12 +112,6 @@ def waf_create_sys_web_white_rule_group(request):
         rule_group_name = json_data['rule_group_name']
         rule_group_detail = json_data['rule_group_detail']
         try:
-            sys_web_rule_protection_count = sys_web_rule_protection.objects.filter(user_id=user_id).filter(
-                rule_group_name=rule_group_name).count()
-            if sys_web_rule_protection_count > 0:
-                return_result['result'] = False
-                return_result['message'] = 'del error,exist rule'
-                return JsonResponse(return_result, safe=False)
             result = sys_web_white_rule_group.objects.filter(user_id=user_id).filter(
                 rule_group_name=rule_group_name)
             if len(result) == 0:
