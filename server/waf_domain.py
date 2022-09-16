@@ -161,10 +161,10 @@ def waf_create_domain(request):
                                           proxy_pass_https=proxy_pass_https)
             waf_protection.objects.filter(user_id=user_id).filter(domain=domain).delete()
             waf_protection.objects.create(user_id=user_id, domain=domain)
-            waf_web_deny_page.objects.filter(user_id=user_id).filter(domain=domain).delete()
-            waf_web_deny_page.objects.create(user_id=user_id, domain=domain)
-            waf_flow_deny_page.objects.filter(user_id=user_id).filter(domain=domain).delete()
-            waf_flow_deny_page.objects.create(user_id=user_id, domain=domain)
+            waf_web_engine_protection.objects.filter(user_id=user_id).filter(domain=domain).delete()
+            waf_web_engine_protection.objects.create(user_id=user_id, domain=domain)
+            waf_flow_engine_protection.objects.filter(user_id=user_id).filter(domain=domain).delete()
+            waf_flow_engine_protection.objects.create(user_id=user_id, domain=domain)
             return_result['result'] = True
             return_result['message'] = 'create success'
             return JsonResponse(return_result, safe=False)
