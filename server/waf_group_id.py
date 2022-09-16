@@ -96,9 +96,12 @@ def waf_create_group(request):
                 return JsonResponse(return_result, safe=False)
             waf_group_id.objects.create(user_id=user_id, group_name=group_name, group_detail=group_detail)
             waf_group_id_result = waf_group_id.objects.get(Q(user_id=user_id) & Q(group_name=group_name))
+            waf_group_protection.objects.filter(user_id=user_id).filter(group_id=waf_group_id_result.group_id).delete()
             waf_group_protection.objects.create(user_id=user_id, group_id=waf_group_id_result.group_id)
-            waf_group_web_deny_page.objects.create(user_id=user_id, group_id=waf_group_id_result.group_id)
-            waf_group_flow_deny_page.objects.create(user_id=user_id, group_id=waf_group_id_result.group_id)
+            waf_group_web_engine_protection.objects.filter(user_id=user_id).filter(group_id=waf_group_id_result.group_id).delete()
+            waf_group_web_engine_protection.objects.create(user_id=user_id, group_id=waf_group_id_result.group_id)
+            waf_group_flow_engine_protection.objects.filter(user_id=user_id).filter(group_id=waf_group_id_result.group_id).delete()
+            waf_group_flow_engine_protection.objects.create(user_id=user_id, group_id=waf_group_id_result.group_id)
             return_result['result'] = True
             return_result['message'] = 'create success'
             return JsonResponse(return_result, safe=False)
