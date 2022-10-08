@@ -581,6 +581,21 @@ def waf_update(request):
             "log_port": sys_log_conf_result.log_port,
             "log_all": sys_log_conf_result.log_all
         }
+
+        try:
+            sys_mimetic_defense_conf.objects.get(user_id=user_result.api_key)
+        except:
+            sys_mimetic_defense_conf.objects.filter(user_id=user_result.api_key).delete()
+            sys_mimetic_defense_conf.objects.create(user_id=user_result.api_key)
+        sys_mimetic_defense_conf_result = sys_mimetic_defense_conf.objects.get(user_id=user_result.api_key)
+        mimetic_defense_conf = {
+            "mimetic_defense": sys_mimetic_defense_conf_result.mimetic_defense,
+            "proxy_host": sys_mimetic_defense_conf_result.proxy_host,
+            "proxy_port": sys_mimetic_defense_conf_result.proxy_port,
+            "token": sys_mimetic_defense_conf_result.token,
+        }
+        data_result['sys_action_data'] = {}
+        data_result['sys_action_data']['mimetic_defense_conf'] = mimetic_defense_conf
         sys_component_protection_data = {}
         sys_component_protection_results = sys_component_protection.objects.filter(user_id=user_result.api_key)
         for sys_component_protection_result in sys_component_protection_results:

@@ -614,6 +614,14 @@ class sys_base_conf(models.Model):
     proxie_site = models.CharField(default="", max_length=50)
 
 
+class sys_mimetic_defense_conf(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    mimetic_defense = models.CharField(default="false", max_length=50)
+    proxy_host = models.CharField(default="", max_length=100)
+    proxy_port = models.CharField(default="", max_length=100)
+    token = models.CharField(default="", max_length=100)
+
+
 class sys_log_conf(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     log_local_debug = models.CharField(max_length=100, default="false")
@@ -622,9 +630,10 @@ class sys_log_conf(models.Model):
     log_port = models.CharField(max_length=100, default="5555")
     log_all = models.CharField(max_length=100, default="false")
 
+
 class sys_report_conf(models.Model):
     user_id = models.CharField(null=False, max_length=50)
-    log_source = models.CharField(max_length=100, default="") # cls sls
+    log_source = models.CharField(max_length=100, default="")  # cls sls
     cls_SecretId = models.CharField(max_length=100, default="")
     cls_SecretKey = models.CharField(max_length=100, default="")
     cls_Region = models.CharField(max_length=100, default="")
@@ -634,7 +643,6 @@ class sys_report_conf(models.Model):
     sls_endpoint = models.CharField(max_length=100, default="")
     sls_project = models.CharField(max_length=100, default="")
     sls_logstore = models.CharField(max_length=100, default="")
-
 
 
 class node_monitor(models.Model):
@@ -648,6 +656,7 @@ class node_monitor(models.Model):
     node_name_list_data_update_time = models.CharField(max_length=100, default="")
     node_status = models.CharField(max_length=100, default="true")
     node_status_update_time = models.CharField(max_length=100, default="")
+
 
 class report_name_list_item_action_log(models.Model):
     user_id = models.CharField(null=False, max_length=50)

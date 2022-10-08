@@ -15,19 +15,18 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-def waf_edit_sys_log_conf(request):
+def waf_edit_sys_mimetic_defense_conf(request):
     return_result = {}
     try:
         user_id = request.session['user_id']
         json_data = json.loads(request.body)
-        log_local_debug = json_data['log_local_debug']
-        log_remote = json_data['log_remote']
-        log_ip = json_data['log_ip']
-        log_port = json_data['log_port']
-        log_all = json_data['log_all']
-        sys_log_conf.objects.filter(user_id=user_id).update(
-            log_local_debug=log_local_debug,
-            log_remote=log_remote, log_ip=log_ip, log_port=log_port, log_all=log_all)
+        mimetic_defense = json_data['mimetic_defense']
+        proxy_host = json_data['proxy_host']
+        proxy_port = json_data['proxy_port']
+        token = json_data['token']
+        sys_mimetic_defense_conf.objects.filter(user_id=user_id).update(
+            mimetic_defense=mimetic_defense,
+            proxy_host=proxy_host, proxy_port=proxy_port, token=token)
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
@@ -38,21 +37,20 @@ def waf_edit_sys_log_conf(request):
         return JsonResponse(return_result, safe=False)
 
 
-def waf_get_sys_log_conf(request):
+def waf_get_sys_mimetic_defense_conf(request):
     return_result = {}
     data = {}
     try:
         user_id = request.session['user_id']
         try:
-            sys_log_result = sys_log_conf.objects.get(user_id=user_id)
+            sys_mimetic_defense_conf_result = sys_mimetic_defense_conf.objects.get(user_id=user_id)
         except:
-            sys_log_conf.objects.create(user_id=user_id)
-            sys_log_result = sys_log_conf.objects.get(user_id=user_id)
-        data['log_local_debug'] = sys_log_result.log_local_debug
-        data['log_remote'] = sys_log_result.log_remote
-        data['log_ip'] = sys_log_result.log_ip
-        data['log_port'] = sys_log_result.log_port
-        data['log_all'] = sys_log_result.log_all
+            sys_mimetic_defense_conf.objects.create(user_id=user_id)
+            sys_mimetic_defense_conf_result = sys_mimetic_defense_conf.objects.get(user_id=user_id)
+        data['mimetic_defense'] = sys_mimetic_defense_conf_result.mimetic_defense
+        data['proxy_host'] = sys_mimetic_defense_conf_result.proxy_host
+        data['proxy_port'] = sys_mimetic_defense_conf_result.proxy_port
+        data['token'] = sys_mimetic_defense_conf_result.token
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)

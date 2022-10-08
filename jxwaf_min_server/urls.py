@@ -68,6 +68,7 @@ from server.service_center_engine_update import *
 from server.node_monitor import *
 from server.sys_report_conf import *
 from server.sys_log_conf import *
+from server.sys_mimetic_defense_conf import *
 from server.report_name_list_item_action_log import *
 from server.report_raw_log_cls import *
 from server.report_raw_log_sls import *
@@ -323,6 +324,9 @@ urlpatterns = [
 
     url(r'^waf/waf_edit_sys_log_conf$', waf_edit_sys_log_conf),
     url(r'^waf/waf_get_sys_log_conf$', waf_get_sys_log_conf),
+
+    url(r'^waf/waf_edit_sys_mimetic_defense_conf$', waf_edit_sys_mimetic_defense_conf),
+    url(r'^waf/waf_get_sys_mimetic_defense_conf$', waf_get_sys_mimetic_defense_conf),
 
     url(r'^report/get_name_list_item_action_log$', report_get_name_list_item_action_log),
 
