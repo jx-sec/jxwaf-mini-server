@@ -35,11 +35,17 @@ def waf_edit_sys_report_conf(request):
         sls_endpoint = json_data['sls_endpoint']
         sls_project = json_data['sls_project']
         sls_logstore = json_data['sls_logstore']
+        ch_host = json_data['ch_host']
+        ch_port = json_data['ch_port']
+        ch_user = json_data['ch_user']
+        ch_password = json_data['ch_password']
+        ch_database = json_data['ch_database']
         sys_report_conf.objects.filter(user_id=user_id).update(
             log_source=log_source,
             cls_SecretId=cls_SecretId, cls_SecretKey=cls_SecretKey, cls_Region=cls_Region, cls_TopicId=cls_TopicId,
             sls_AccessKey_ID=sls_AccessKey_ID, sls_AccessKey_Secret=sls_AccessKey_Secret, sls_endpoint=sls_endpoint,
-            sls_project=sls_project, sls_logstore=sls_logstore)
+            sls_project=sls_project, sls_logstore=sls_logstore, ch_host=ch_host, ch_port=ch_port, ch_user=ch_user,
+            ch_password=ch_password, ch_database=ch_database)
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
@@ -70,6 +76,11 @@ def waf_get_sys_report_conf(request):
         data['sls_endpoint'] = sys_report_conf_result.sls_endpoint
         data['sls_project'] = sys_report_conf_result.sls_project
         data['sls_logstore'] = sys_report_conf_result.sls_logstore
+        data['ch_host'] = sys_report_conf_result.ch_host
+        data['ch_port'] = sys_report_conf_result.ch_port
+        data['ch_user'] = sys_report_conf_result.ch_user
+        data['ch_password'] = sys_report_conf_result.ch_password
+        data['ch_database'] = sys_report_conf_result.ch_database
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)

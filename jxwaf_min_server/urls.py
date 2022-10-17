@@ -78,6 +78,11 @@ from server.report_flow_cls import *
 from server.report_flow_sls import *
 from server.report_web_cls import *
 from server.report_web_sls import *
+from server.report_web_ch import *
+from server.report_flow_ch import *
+from server.report_name_list_ch import *
+from server.report_raw_log_ch import *
+
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -386,4 +391,33 @@ urlpatterns = [
     url(r'^report/sls_web_att_ip_top10$', sls_report_web_att_ip_top10),
     url(r'^report/sls_web_att_uri_top10$', sls_report_web_att_uri_top10),
     url(r'^report/sls_web_att_ip_country_top10$', sls_report_web_att_ip_country_top10),
+
+    url(r'^report/ch_web_request_count_trend$', ch_report_web_request_count_trend),
+    url(r'^report/ch_web_ip_count_trend$', ch_report_web_ip_count_trend),
+    url(r'^report/ch_web_request_count_totle$', ch_report_web_request_count_totle),
+    url(r'^report/ch_web_request_ip_totle$', ch_report_web_request_ip_totle),
+    url(r'^report/ch_web_att_type_top10$', ch_report_web_att_type_top10),
+    url(r'^report/ch_web_att_ip_top10$', ch_report_web_att_ip_top10),
+    url(r'^report/ch_web_att_uri_top10$', ch_report_web_att_uri_top10),
+    url(r'^report/ch_web_att_ip_country_top10$', ch_report_web_att_ip_country_top10),
+
+    url(r'^report/ch_flow_request_count_trend$', ch_report_flow_request_count_trend),
+    url(r'^report/ch_flow_ip_count_trend$', ch_report_flow_ip_count_trend),
+    url(r'^report/ch_flow_request_count_totle$', ch_report_flow_request_count_totle),
+    url(r'^report/ch_flow_request_ip_totle$', ch_report_flow_request_ip_totle),
+    url(r'^report/ch_flow_att_type_top10$', ch_report_flow_att_type_top10),
+    url(r'^report/ch_flow_att_ip_top10$', ch_report_flow_att_ip_top10),
+    url(r'^report/ch_flow_att_uri_top10$', ch_report_flow_att_uri_top10),
+    url(r'^report/ch_flow_att_ip_country_top10$', ch_report_flow_att_ip_country_top10),
+
+    url(r'^report/ch_name_list_request_count_trend$', ch_report_name_list_request_count_trend),
+    url(r'^report/ch_name_list_ip_count_trend$', ch_report_name_list_ip_count_trend),
+    url(r'^report/ch_name_list_request_count_totle$', ch_report_name_list_request_count_totle),
+    url(r'^report/ch_name_list_request_ip_totle$', ch_report_name_list_request_ip_totle),
+    url(r'^report/ch_name_list_att_type_top10$', ch_report_name_list_att_type_top10),
+    url(r'^report/ch_name_list_att_ip_top10$', ch_report_name_list_att_ip_top10),
+    url(r'^report/ch_name_list_att_uri_top10$', ch_report_name_list_att_uri_top10),
+    url(r'^report/ch_name_list_att_ip_country_top10$', ch_report_name_list_att_ip_country_top10),
+
+    url(r'^report/ch_get_raw_log$', ch_report_get_raw_log),
 ]

@@ -633,7 +633,7 @@ class sys_log_conf(models.Model):
 
 class sys_report_conf(models.Model):
     user_id = models.CharField(null=False, max_length=50)
-    log_source = models.CharField(max_length=100, default="")  # cls sls
+    log_source = models.CharField(max_length=100, default="")  # cls sls  ch
     cls_SecretId = models.CharField(max_length=100, default="")
     cls_SecretKey = models.CharField(max_length=100, default="")
     cls_Region = models.CharField(max_length=100, default="")
@@ -643,6 +643,13 @@ class sys_report_conf(models.Model):
     sls_endpoint = models.CharField(max_length=100, default="")
     sls_project = models.CharField(max_length=100, default="")
     sls_logstore = models.CharField(max_length=100, default="")
+    ch_host = models.CharField(max_length=100, default="")
+    ch_port = models.CharField(max_length=100, default="")
+    ch_user = models.CharField(max_length=100, default="")
+    ch_password = models.CharField(max_length=100, default="")
+    ch_database = models.CharField(max_length=100, default="")
+
+
 
 
 class node_monitor(models.Model):
