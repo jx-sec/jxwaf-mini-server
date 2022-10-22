@@ -20,9 +20,9 @@ def waf_get_sys_name_list_list(request):
         results = sys_name_list.objects.filter(user_id=user_id)
         for result in results:
             waf_domain_count = waf_name_list.objects.filter(user_id=user_id).filter(
-                uuid=result.name_list_uuid).count()
+                name_list_uuid=result.name_list_uuid).count()
             waf_group_domain_count = waf_group_name_list.objects.filter(user_id=user_id).filter(
-                uuid=result.name_list_uuid).count()
+                name_list_uuid=result.name_list_uuid).count()
             data.append({'name_list_uuid': result.name_list_uuid,
                          'name_list_name': result.name_list_name,
                          'name_list_detail': result.name_list_detail,
