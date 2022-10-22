@@ -21,10 +21,11 @@ def waf_get_sys_flow_rule_protection_list(request):
         rule_type = json_data['rule_type']
         if rule_type == "single_rule":
             results = sys_flow_rule_protection.objects.filter(user_id=user_id).filter(rule_type=rule_type)
-            waf_domain_count = waf_flow_rule_protection.objects.filter(user_id=user_id).filter(uuid).count()
-            waf_group_domain_count = waf_group_flow_rule_protection.objects.filter(user_id=user_id).filter(
-                uuid).count()
             for result in results:
+                waf_domain_count = waf_flow_rule_protection.objects.filter(user_id=user_id).filter(
+                    uuid=result.rule_uuid).count()
+                waf_group_domain_count = waf_group_flow_rule_protection.objects.filter(user_id=user_id).filter(
+                    uuid=result.rule_uuid).count()
                 data.append({'rule_uuid': result.rule_uuid,
                              'rule_name': result.rule_name,
                              'rule_detail': result.rule_detail,
