@@ -19,6 +19,10 @@ def waf_get_sys_name_list_list(request):
         user_id = request.session['user_id']
         results = sys_name_list.objects.filter(user_id=user_id)
         for result in results:
+            waf_domain_count = waf_name_list.objects.filter(user_id=user_id).filter(
+                name_list_uuid=result.name_list_uuid).count()
+            waf_group_domain_count = waf_group_name_list.objects.filter(user_id=user_id).filter(
+                name_list_uuid=result.name_list_uuid).count()
             data.append({'name_list_uuid': result.name_list_uuid,
                          'name_list_name': result.name_list_name,
                          'name_list_detail': result.name_list_detail,
@@ -28,8 +32,8 @@ def waf_get_sys_name_list_list(request):
                          'name_list_action': result.name_list_action,
                          'action_value': result.action_value,
                          'repeated_writing_suppression': result.repeated_writing_suppression,
-                         'waf_domain_count': 0,
-                         'waf_group_domain_count': 0
+                         'waf_domain_count': waf_domain_count,
+                         'waf_group_domain_count': waf_group_domain_count
                          }
                         )
         return_result['result'] = True
