@@ -22,9 +22,9 @@ def waf_get_sys_flow_white_rule_group_list(request):
             sys_flow_white_rule_count = sys_flow_white_rule.objects.filter(user_id=user_id).filter(
                 rule_group_uuid=result.rule_group_uuid).count()
             waf_domain_count = waf_flow_rule_protection.objects.filter(user_id=user_id).filter(
-                uuid=result.rule_group_uuid).count()
+                uuid=result.rule_group_uuid).distinct('domain').count()
             waf_group_domain_count = waf_group_flow_rule_protection.objects.filter(user_id=user_id).filter(
-                uuid=result.rule_group_uuid).count()
+                uuid=result.rule_group_uuid).distinct('domain').count()
             data.append({'rule_group_uuid': result.rule_group_uuid,
                          'rule_group_name': result.rule_group_name,
                          'rule_group_detail': result.rule_group_detail,
@@ -114,7 +114,7 @@ def waf_create_sys_flow_white_rule_group(request):
                 rule_group_name=rule_group_name)
             if len(result) == 0:
                 sys_flow_white_rule_group.objects.create(user_id=user_id, rule_group_name=rule_group_name,
-                                                             rule_group_detail=rule_group_detail)
+                                                         rule_group_detail=rule_group_detail)
             else:
                 return_result['result'] = False
                 return_result['message'] = 'rule_group_name is exist'
@@ -184,6 +184,7 @@ def waf_search_sys_flow_white_rule_group(request):
         return_result['message'] = str(e)
         return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
+
 
 def waf_get_sys_flow_white_rule_group(request):
     return_result = {}

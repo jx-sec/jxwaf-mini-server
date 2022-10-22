@@ -21,6 +21,10 @@ def waf_get_sys_flow_white_rule_list(request):
         rule_type = json_data['rule_type']
         if rule_type == "single_rule":
             results = sys_flow_white_rule.objects.filter(user_id=user_id).filter(rule_type=rule_type)
+            waf_domain_count = waf_flow_white_rule.objects.filter(user_id=user_id).filter(uuid).distinct(
+                'domain').count()
+            waf_group_domain_count = waf_group_flow_white_rule.objects.filter(user_id=user_id).filter(
+                uuid).distinct('group_id').count()
             for result in results:
                 data.append({'rule_uuid': result.rule_uuid,
                              'rule_name': result.rule_name,

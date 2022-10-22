@@ -22,9 +22,9 @@ def waf_get_sys_web_rule_protection_group_list(request):
             sys_web_rule_protection_count = sys_web_rule_protection.objects.filter(user_id=user_id).filter(
                 rule_group_uuid=result.rule_group_uuid).count()
             waf_domain_count = waf_web_rule_protection.objects.filter(user_id=user_id).filter(
-                uuid=result.rule_group_uuid).count()
+                uuid=result.rule_group_uuid).distinct('domain').count()
             waf_group_domain_count = waf_group_web_rule_protection.objects.filter(user_id=user_id).filter(
-                uuid=result.rule_group_uuid).count()
+                uuid=result.rule_group_uuid).distinct('group_id').count()
             data.append({'rule_group_uuid': result.rule_group_uuid,
                          'rule_group_name': result.rule_group_name,
                          'rule_group_detail': result.rule_group_detail,
