@@ -574,12 +574,24 @@ def waf_update(request):
             sys_log_conf.objects.filter(user_id=user_result.api_key).delete()
             sys_log_conf.objects.create(user_id=user_result.api_key)
         sys_log_conf_result = sys_log_conf.objects.get(user_id=user_result.api_key)
+        kafka_bootstrap_servers_data = []
+        kafka_bootstrap_servers = sys_log_conf_result.kafka_bootstrap_servers.split(',')
+        for kafka_bootstrap_server in kafka_bootstrap_servers:
+            kafka_bootstrap_servers_data.append(
+                {
+                    'host': kafka_bootstrap_server.split(':')[0],
+                    'port': kafka_bootstrap_server.split(':')[1]
+                }
+            )
         data_result['sys_log_conf_data'] = {
             "log_local_debug": sys_log_conf_result.log_local_debug,
             "log_remote": sys_log_conf_result.log_remote,
             "log_ip": sys_log_conf_result.log_ip,
             "log_port": sys_log_conf_result.log_port,
-            "log_all": sys_log_conf_result.log_all
+            "log_all": sys_log_conf_result.log_all,
+            "log_remote_type": sys_log_conf_result.log_remote_type,
+            "kafka_bootstrap_servers": kafka_bootstrap_servers_data,
+            "kafka_topic": sys_log_conf_result.kafka_topic
         }
 
         try:
