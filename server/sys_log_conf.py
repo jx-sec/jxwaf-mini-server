@@ -25,9 +25,12 @@ def waf_edit_sys_log_conf(request):
         log_ip = json_data['log_ip']
         log_port = json_data['log_port']
         log_all = json_data['log_all']
+        kafka_bootstrap_servers = json_data['kafka_bootstrap_servers']
+        kafka_topic = json_data['kafka_topic']
         sys_log_conf.objects.filter(user_id=user_id).update(
             log_local_debug=log_local_debug,
-            log_remote=log_remote, log_ip=log_ip, log_port=log_port, log_all=log_all)
+            log_remote=log_remote, log_ip=log_ip, log_port=log_port, log_all=log_all,
+            kafka_bootstrap_servers=kafka_bootstrap_servers, kafka_topic=kafka_topic)
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
@@ -53,6 +56,8 @@ def waf_get_sys_log_conf(request):
         data['log_ip'] = sys_log_result.log_ip
         data['log_port'] = sys_log_result.log_port
         data['log_all'] = sys_log_result.log_all
+        data['kafka_bootstrap_servers'] = sys_log_result.kafka_bootstrap_servers
+        data['kafka_topic'] = sys_log_result.kafka_topic
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)

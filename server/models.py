@@ -626,6 +626,9 @@ class sys_log_conf(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     log_local_debug = models.CharField(max_length=100, default="false")
     log_remote = models.CharField(max_length=100, default="false")
+    log_remote_type = models.CharField(max_length=100, default="syslog") # syslog or kafka
+    kafka_bootstrap_servers = models.CharField(max_length=1000, default="")
+    kafka_topic = models.CharField(max_length=1000, default="")
     log_ip = models.CharField(max_length=100, default="127.0.0.1")
     log_port = models.CharField(max_length=100, default="5555")
     log_all = models.CharField(max_length=100, default="false")
