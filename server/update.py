@@ -577,12 +577,15 @@ def waf_update(request):
         kafka_bootstrap_servers_data = []
         kafka_bootstrap_servers = sys_log_conf_result.kafka_bootstrap_servers.split(',')
         for kafka_bootstrap_server in kafka_bootstrap_servers:
-            kafka_bootstrap_servers_data.append(
-                {
-                    'host': kafka_bootstrap_server.split(':')[0],
-                    'port': kafka_bootstrap_server.split(':')[1]
-                }
-            )
+            try:
+                kafka_bootstrap_servers_data.append(
+                    {
+                        'host': kafka_bootstrap_server.split(':')[0],
+                        'port': kafka_bootstrap_server.split(':')[1]
+                    }
+                )
+            except:
+                pass
         data_result['sys_log_conf_data'] = {
             "log_local_debug": sys_log_conf_result.log_local_debug,
             "log_remote": sys_log_conf_result.log_remote,
