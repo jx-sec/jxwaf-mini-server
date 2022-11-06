@@ -34,15 +34,16 @@ def waf_edit_sys_log_conf(request):
             kafka_topic = ""
             log_remote_type = "syslog"
         try:
-            kafka_bootstrap_servers_data = []
-            bootstrap_servers = kafka_bootstrap_servers.split(',')
-            for kafka_bootstrap_server in bootstrap_servers:
-                kafka_bootstrap_servers_data.append(
-                    {
-                        'host': kafka_bootstrap_server.split(':')[0],
-                        'port': kafka_bootstrap_server.split(':')[1]
-                    }
-                )
+            if len(kafka_bootstrap_servers) > 0:
+                kafka_bootstrap_servers_data = []
+                bootstrap_servers = kafka_bootstrap_servers.split(',')
+                for kafka_bootstrap_server in bootstrap_servers:
+                    kafka_bootstrap_servers_data.append(
+                        {
+                            'host': kafka_bootstrap_server.split(':')[0],
+                            'port': kafka_bootstrap_server.split(':')[1]
+                        }
+                    )
         except:
             return_result['result'] = False
             return_result['message'] = "kafka_bootstrap_servers error"
