@@ -425,5 +425,27 @@ urlpatterns = [
 
     url(r'^report/ch_get_raw_log$', ch_report_get_raw_log),
 
+    url(r'^waf/waf_get_identity_cheat_custom_response_list$', waf_get_identity_cheat_custom_response_list),
+    url(r'^waf/waf_edit_identity_cheat_custom_response$', waf_edit_identity_cheat_custom_response),
+    url(r'^waf/waf_get_identity_cheat_custom_response$', waf_get_identity_cheat_custom_response),
+    url(r'^waf/waf_del_identity_cheat_custom_response$', waf_del_identity_cheat_custom_response),
+    url(r'^waf/waf_create_identity_cheat_custom_response$', waf_create_identity_cheat_custom_response),
 
+    url(r'^waf/waf_get_identity_cheat_request_replace_list$', waf_get_identity_cheat_request_replace_list),
+    url(r'^waf/waf_edit_identity_cheat_request_replace$', waf_edit_identity_cheat_request_replace),
+    url(r'^waf/waf_get_identity_cheat_request_replace$', waf_get_identity_cheat_request_replace),
+    url(r'^waf/waf_del_identity_cheat_request_replace$', waf_del_identity_cheat_request_replace),
+    url(r'^waf/waf_create_identity_cheat_request_replace$', waf_create_identity_cheat_request_replace),
+
+    url(r'^waf/waf_get_identity_cheat_response_replace_list$', waf_get_identity_cheat_response_replace_list),
+    url(r'^waf/waf_edit_identity_cheat_response_replace$', waf_edit_identity_cheat_response_replace),
+    url(r'^waf/waf_get_identity_cheat_response_replace$', waf_get_identity_cheat_response_replace),
+    url(r'^waf/waf_del_identity_cheat_response_replace$', waf_del_identity_cheat_response_replace),
+    url(r'^waf/waf_create_identity_cheat_response_replace$', waf_create_identity_cheat_response_replace),
+
+    url(r'^waf/waf_get_identity_cheat_traffic_forward_list$', waf_get_identity_cheat_traffic_forward_list),
+    url(r'^waf/waf_edit_identity_cheat_traffic_forward$', waf_edit_identity_cheat_traffic_forward),
+    url(r'^waf/waf_get_identity_cheat_traffic_forward$', waf_get_identity_cheat_traffic_forward),
+    url(r'^waf/waf_del_identity_cheat_traffic_forward$', waf_del_identity_cheat_traffic_forward),
+    url(r'^waf/waf_create_identity_cheat_traffic_forward$', waf_create_identity_cheat_traffic_forward),
 ]

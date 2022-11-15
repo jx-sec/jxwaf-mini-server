@@ -611,6 +611,54 @@ def waf_update(request):
         }
         data_result['sys_action_data'] = {}
         data_result['sys_action_data']['mimetic_defense_conf'] = mimetic_defense_conf
+
+        identity_cheat_custom_response_conf = {}
+        identity_cheat_custom_response_results = identity_cheat_custom_response.objects.filter(user_id=user_result.api_key)
+        for identity_cheat_custom_response_result in identity_cheat_custom_response_results:
+            identity_cheat_custom_response_conf[identity_cheat_custom_response_result.name] = {
+                'set_return_header_status': identity_cheat_custom_response_result.set_return_header_status,
+                'set_return_header_value': json.loads(identity_cheat_custom_response_result.set_return_header_value),
+                'return_code': identity_cheat_custom_response_result.return_code,
+                'return_html': identity_cheat_custom_response_result.return_html
+            }
+        data_result['sys_action_data']['identity_cheat_custom_response_conf'] = identity_cheat_custom_response_conf
+
+        identity_cheat_request_replace_conf = {}
+        identity_cheat_request_replace_results = identity_cheat_request_replace.objects.filter(user_id=user_result.api_key)
+        for identity_cheat_request_replace_result in identity_cheat_request_replace_results:
+            identity_cheat_request_replace_conf[identity_cheat_request_replace_result.name] = {
+                'get_status': identity_cheat_request_replace_result.get_status,
+                'header_replace_data': json.loads(identity_cheat_request_replace_result.header_replace_data),
+                'get_replace_match': identity_cheat_request_replace_result.get_replace_match,
+                'get_replace_data': identity_cheat_request_replace_result.get_replace_data,
+                'header_status': identity_cheat_request_replace_result.header_status,
+                'post_status': identity_cheat_request_replace_result.post_status,
+                'post_replace_match': identity_cheat_request_replace_result.post_replace_match,
+                'post_replace_data': identity_cheat_request_replace_result.post_replace_data
+            }
+        data_result['sys_action_data']['identity_cheat_request_replace_conf'] = identity_cheat_request_replace_conf
+
+        identity_cheat_response_replace_conf = {}
+        identity_cheat_response_replace_results = identity_cheat_response_replace.objects.filter(user_id=user_result.api_key)
+        for identity_cheat_response_replace_result in identity_cheat_response_replace_results:
+            identity_cheat_response_replace_conf[identity_cheat_response_replace_result.name] = {
+                'response_header_status': identity_cheat_response_replace_result.response_header_status,
+                'response_header_replace_data': json.loads(identity_cheat_response_replace_result.response_header_replace_data),
+                'response_data_status': identity_cheat_response_replace_result.response_data_status,
+                'response_data_replace_match': identity_cheat_response_replace_result.response_data_replace_match,
+                'response_data_replace_data': identity_cheat_response_replace_result.response_data_replace_data
+            }
+        data_result['sys_action_data']['identity_cheat_response_replace_conf'] = identity_cheat_response_replace_conf
+
+        iidentity_cheat_traffic_forward_conf = {}
+        identity_cheat_traffic_forward_results = identity_cheat_traffic_forward.objects.filter(user_id=user_result.api_key)
+        for identity_cheat_traffic_forward_result in identity_cheat_traffic_forward_results:
+            iidentity_cheat_traffic_forward_conf[identity_cheat_traffic_forward_result.name] = {
+                'traffic_forward_ip': identity_cheat_traffic_forward_result.traffic_forward_ip,
+                'traffic_forward_port': identity_cheat_traffic_forward_result.traffic_forward_port
+            }
+        data_result['sys_action_data']['iidentity_cheat_traffic_forward_conf'] = iidentity_cheat_traffic_forward_conf
+
         sys_component_protection_data = {}
         sys_component_protection_results = sys_component_protection.objects.filter(user_id=user_result.api_key)
         for sys_component_protection_result in sys_component_protection_results:
