@@ -654,7 +654,7 @@ def waf_update(request):
         identity_cheat_traffic_forward_results = identity_cheat_traffic_forward.objects.filter(user_id=user_result.api_key)
         for identity_cheat_traffic_forward_result in identity_cheat_traffic_forward_results:
             iidentity_cheat_traffic_forward_conf[identity_cheat_traffic_forward_result.name] = {
-                'traffic_forward_ip': identity_cheat_traffic_forward_result.traffic_forward_ip,
+                'traffic_forward_ip': identity_cheat_traffic_forward_result.traffic_forward_ip.split(','),
                 'traffic_forward_port': identity_cheat_traffic_forward_result.traffic_forward_port
             }
         data_result['sys_action_data']['identity_cheat_traffic_forward_conf'] = iidentity_cheat_traffic_forward_conf
