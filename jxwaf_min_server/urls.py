@@ -82,6 +82,10 @@ from server.report_web_ch import *
 from server.report_flow_ch import *
 from server.report_name_list_ch import *
 from server.report_raw_log_ch import *
+from server.identity_cheat_custom_response import *
+from server.identity_cheat_request_replace import *
+from server.identity_cheat_response_replace import *
+from server.identity_cheat_traffic_forward import *
 
 
 urlpatterns = [
@@ -420,4 +424,6 @@ urlpatterns = [
     url(r'^report/ch_name_list_att_ip_country_top10$', ch_report_name_list_att_ip_country_top10),
 
     url(r'^report/ch_get_raw_log$', ch_report_get_raw_log),
+
+
 ]
