@@ -657,7 +657,7 @@ def waf_update(request):
                 'traffic_forward_ip': identity_cheat_traffic_forward_result.traffic_forward_ip,
                 'traffic_forward_port': identity_cheat_traffic_forward_result.traffic_forward_port
             }
-        data_result['sys_action_data']['iidentity_cheat_traffic_forward_conf'] = iidentity_cheat_traffic_forward_conf
+        data_result['sys_action_data']['identity_cheat_traffic_forward_conf'] = iidentity_cheat_traffic_forward_conf
 
         sys_component_protection_data = {}
         sys_component_protection_results = sys_component_protection.objects.filter(user_id=user_result.api_key)
