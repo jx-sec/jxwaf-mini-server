@@ -20,7 +20,7 @@ def ch_report_get_raw_log(request):
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
                         password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
-        start_sql_query = 'select RequestTime,SrcIP,Method,Host,URI,UserAgent,Status,WafModule,WafPolicy,WafAction,RequestID from jxwaf.jxlog where'
+        start_sql_query = 'select RequestTime,SrcIP,Method,Host,URI,UserAgent,Status,WafModule,WafPolicy,WafAction,RequestID from jxwaf.jxlog'
         end_sql_query = "RequestTime > '{}' and RequestTime < '{}' limit {},{} ".format(start_time, end_time,
                                                                                         limit_start, limit_end)
         rules = json.loads(sql_query_rule)
