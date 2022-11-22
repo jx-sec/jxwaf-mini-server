@@ -42,9 +42,20 @@ def ch_report_get_raw_log(request):
             return_result['exception'] = str(e)
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
+        try:
+            totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
+            totle_sql_query = totle_start_sql_query + rule_sql_query + end_sql_query
+            totle_result = client.execute(totle_sql_query)
+        except Exception, e:
+            return_result['result'] = False
+            return_result['message'] = "sql exec error:" + totle_sql_query
+            return_result['exception'] = str(e)
+            return_result['errCode'] = 400
+            return JsonResponse(return_result, safe=False)
         return_result['result'] = True
         return_result['message'] = result
         return_result['sql_query'] = sql_query
+        return_result['totle'] = totle_result
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -90,9 +101,20 @@ def ch_report_get_raw_full_log(request):
             return_result['exception'] = str(e)
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
+        try:
+            totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
+            totle_sql_query = totle_start_sql_query + rule_sql_query + end_sql_query
+            totle_result = client.execute(totle_sql_query)
+        except Exception, e:
+            return_result['result'] = False
+            return_result['message'] = "sql exec error:" + totle_sql_query
+            return_result['exception'] = str(e)
+            return_result['errCode'] = 400
+            return JsonResponse(return_result, safe=False)
         return_result['result'] = True
         return_result['message'] = result
         return_result['sql_query'] = sql_query
+        return_result['totle'] = totle_result
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -127,9 +149,20 @@ def ch_report_custom_get_raw_log(request):
             return_result['exception'] = str(e)
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
+        try:
+            totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
+            totle_sql_query = totle_start_sql_query + custom_sql_query + end_sql_query
+            totle_result = client.execute(totle_sql_query)
+        except Exception, e:
+            return_result['result'] = False
+            return_result['message'] = "sql exec error:" + totle_sql_query
+            return_result['exception'] = str(e)
+            return_result['errCode'] = 400
+            return JsonResponse(return_result, safe=False)
         return_result['result'] = True
         return_result['message'] = result
         return_result['sql_query'] = sql_query
+        return_result['totle'] = totle_result
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -165,9 +198,20 @@ def ch_report_custom_get_raw_full_log(request):
             return_result['exception'] = str(e)
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
+        try:
+            totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
+            totle_sql_query = totle_start_sql_query + custom_sql_query + end_sql_query
+            totle_result = client.execute(totle_sql_query)
+        except Exception, e:
+            return_result['result'] = False
+            return_result['message'] = "sql exec error:" + totle_sql_query
+            return_result['exception'] = str(e)
+            return_result['errCode'] = 400
+            return JsonResponse(return_result, safe=False)
         return_result['result'] = True
         return_result['message'] = result
         return_result['sql_query'] = sql_query
+        return_result['totle'] = totle_result
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
