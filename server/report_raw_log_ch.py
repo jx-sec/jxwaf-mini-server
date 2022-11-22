@@ -56,6 +56,7 @@ def ch_report_get_raw_log(request):
         return_result['message'] = result
         return_result['sql_query'] = sql_query
         return_result['totle'] = totle_result
+        return_result['totle_sql_query'] = totle_sql_query
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -115,6 +116,7 @@ def ch_report_get_raw_full_log(request):
         return_result['message'] = result
         return_result['sql_query'] = sql_query
         return_result['totle'] = totle_result
+        return_result['totle_sql_query'] = totle_sql_query
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -163,6 +165,7 @@ def ch_report_custom_get_raw_log(request):
         return_result['message'] = result
         return_result['sql_query'] = sql_query
         return_result['totle'] = totle_result
+        return_result['totle_sql_query'] = totle_sql_query
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
@@ -212,6 +215,7 @@ def ch_report_custom_get_raw_full_log(request):
         return_result['message'] = result
         return_result['sql_query'] = sql_query
         return_result['totle'] = totle_result
+        return_result['totle_sql_query'] = totle_sql_query
         return JsonResponse(return_result, safe=False)
     except Exception, e:
         return_result['result'] = False
