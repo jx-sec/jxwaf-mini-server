@@ -82,7 +82,7 @@ def ch_report_get_raw_full_log(request):
         start_sql_query = 'select * from jxwaf.jxlog'
         end_sql_query = "RequestTime > '{}' and RequestTime < '{}' limit {},{} ".format(start_time, end_time,
                                                                                         limit_start, limit_end)
-        rules = json.loads(sql_query_rule, with_column_types=True)
+        rules = json.loads(sql_query_rule)
         rule_sql_query = ' where '
         for rule in rules:
             type = rule['type']
@@ -94,7 +94,7 @@ def ch_report_get_raw_full_log(request):
                 rule_sql_query = rule_sql_query + type + " " + action + " '" + value + "' and "
         sql_query = start_sql_query + rule_sql_query + end_sql_query
         try:
-            result = client.execute(sql_query)
+            result = client.execute(sql_query, with_column_types=True)
         except Exception, e:
             return_result['result'] = False
             return_result['message'] = "sql exec error:" + sql_query
