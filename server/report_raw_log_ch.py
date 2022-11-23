@@ -158,7 +158,7 @@ def ch_report_custom_get_raw_log(request):
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
         try:
-            end_sql_query = "RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
+            end_sql_query = " and RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
                 start_time, end_time,
                 limit_start, limit_end)
             totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
@@ -211,7 +211,7 @@ def ch_report_custom_get_raw_full_log(request):
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
         try:
-            end_sql_query = "RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
+            end_sql_query = " and RequestTime > '{}' and RequestTime < '{}' limit {},{} ".format(
                 start_time, end_time,
                 limit_start, limit_end)
             totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
