@@ -43,6 +43,9 @@ def ch_report_get_raw_log(request):
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
         try:
+            end_sql_query = "RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
+                start_time, end_time,
+                limit_start, limit_end)
             totle_start_sql_query = 'select count(*) from jxwaf.jxlog '
             totle_sql_query = totle_start_sql_query + rule_sql_query + end_sql_query
             totle_result = client.execute(totle_sql_query)
@@ -103,6 +106,9 @@ def ch_report_get_raw_full_log(request):
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
         try:
+            end_sql_query = "RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
+                start_time, end_time,
+                limit_start, limit_end)
             totle_start_sql_query = 'select count(*) from jxwaf.jxlog '
             totle_sql_query = totle_start_sql_query + rule_sql_query + end_sql_query
             totle_result = client.execute(totle_sql_query)
@@ -152,6 +158,9 @@ def ch_report_custom_get_raw_log(request):
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
         try:
+            end_sql_query = "RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
+                start_time, end_time,
+                limit_start, limit_end)
             totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
             totle_sql_query = totle_start_sql_query + custom_sql_query + end_sql_query
             totle_result = client.execute(totle_sql_query)
@@ -202,6 +211,9 @@ def ch_report_custom_get_raw_full_log(request):
             return_result['errCode'] = 400
             return JsonResponse(return_result, safe=False)
         try:
+            end_sql_query = "RequestTime > '{}' and RequestTime < '{}'  limit {},{} ".format(
+                start_time, end_time,
+                limit_start, limit_end)
             totle_start_sql_query = 'select count(*) from jxwaf.jxlog where '
             totle_sql_query = totle_start_sql_query + custom_sql_query + end_sql_query
             totle_result = client.execute(totle_sql_query)
