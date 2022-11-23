@@ -1,0 +1,11 @@
+../DjangoCaptcha/__init__.py
+../DjangoCaptcha/Menlo.ttc
+../DjangoCaptcha/words.list
+../DjangoCaptcha/__init__.pyc
+../DjangoCaptcha/timesbi.ttf
+.
+dependency_links.txt
+PKG-INFO
+top_level.txt
+requires.txt
+SOURCES.txt

@@ -1,0 +1,16 @@
+../../../bin/pipreqs,sha256=eP-KjBo9IyUrR68Smad7VYRWSFXFzjcGOHmiksKrzlo,214
+pipreqs-0.4.8.dist-info/DESCRIPTION.rst,sha256=l2GzsK6Sui9dCe9GLGrOiafmbXP6huwGJoMUUnpiPbE,5674
+pipreqs-0.4.8.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+pipreqs-0.4.8.dist-info/METADATA,sha256=YfMzwHce36hRaI6_2nyjC_Pbb0ehXOckT4olcbKmQ78,6556
+pipreqs-0.4.8.dist-info/RECORD,,
+pipreqs-0.4.8.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+pipreqs-0.4.8.dist-info/WHEEL,sha256=o2k-Qa-RMNIJmUdIc7KU6VWR_ErNRbWNlxDIpl7lm34,110
+pipreqs-0.4.8.dist-info/entry_points.txt,sha256=u4Lm0NhgIf5T7I896eiu3YmNpj3NRl_cb1FV1Vv339w,50
+pipreqs-0.4.8.dist-info/metadata.json,sha256=bn8X_VVFKR_xl1aux31cFyuL_pgiY0ESwBj0l6oFZGE,1173
+pipreqs-0.4.8.dist-info/top_level.txt,sha256=TKSK8EtP0u8u_-PPOTHEhEBImjPDvOpZts1mHljACJc,8
+pipreqs/__init__.py,sha256=4W-wlIjsfgZYh0PZH3E77yeK8L3fW2K4Z2sRYw86kzY,118
+pipreqs/__init__.pyc,,
+pipreqs/mapping,sha256=hi34QUafhJDAmBZcaG0IaH9SwEgVrC8HW2Jlw5MwNdo,26296
+pipreqs/pipreqs.py,sha256=_RSWduoPkOVnriEnKQe5C9ufkY6PMRKwNWhDIebpv4U,13821
+pipreqs/pipreqs.pyc,,
+pipreqs/stdlib,sha256=uSgvyA9kHkHI__yPV9TtZKxh-eOh4dp8QiKi9BPSiIo,12204

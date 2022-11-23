@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: DjangoCaptcha
+Version: 0.3.5
+Summary: A Captcha module for Django. Py3 supported
+Home-page: http://github.com/ty-me/DjangoCaptcha
+Author: TY
+Author-email: master@t-y.me
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: django,captcha
+Platform: UNKNOWN

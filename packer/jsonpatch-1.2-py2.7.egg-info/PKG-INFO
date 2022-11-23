@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: jsonpatch
+Version: 1.2
+Summary:  Apply JSON-Patches (RFC 6902) 
+Home-page: https://github.com/stefankoegl/python-json-patch
+Author: Stefan Kögl
+Author-email: stefan@skoegl.net
+License: Modified BSD License
+Description: UNKNOWN
+Platform: UNKNOWN

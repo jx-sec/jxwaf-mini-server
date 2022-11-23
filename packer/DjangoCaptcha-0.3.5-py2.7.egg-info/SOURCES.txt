@@ -1,0 +1,10 @@
+DjangoCaptcha/Menlo.ttc
+DjangoCaptcha/__init__.py
+DjangoCaptcha/__init__.pyc
+DjangoCaptcha/timesbi.ttf
+DjangoCaptcha/words.list
+DjangoCaptcha.egg-info/PKG-INFO
+DjangoCaptcha.egg-info/SOURCES.txt
+DjangoCaptcha.egg-info/dependency_links.txt
+DjangoCaptcha.egg-info/requires.txt
+DjangoCaptcha.egg-info/top_level.txt
