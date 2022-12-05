@@ -665,7 +665,13 @@ def waf_update(request):
         traffic_forward_conf = {}
         sys_traffic_forward_results = sys_traffic_forward.objects.filter(user_id=user_result.api_key)
         for sys_traffic_forward_result in sys_traffic_forward_results:
+            try:
+                set_request_header_value = json.loads(sys_traffic_forward_result.set_request_header_value)
+            except:
+                set_request_header_value = {}
             traffic_forward_conf[sys_traffic_forward_result.name] = {
+                'set_request_header_status': sys_traffic_forward_result.set_request_header_status,
+                'set_request_header_value': set_request_header_value,
                 'traffic_forward_ip': sys_traffic_forward_result.traffic_forward_ip.split(','),
                 'traffic_forward_port': sys_traffic_forward_result.traffic_forward_port
             }

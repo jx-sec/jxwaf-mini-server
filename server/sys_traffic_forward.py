@@ -25,7 +25,9 @@ def waf_get_sys_traffic_forward_list(request):
             data.append({'name': result.name,
                          'detail': result.detail,
                          'traffic_forward_ip': result.traffic_forward_ip,
-                         'traffic_forward_port': result.traffic_forward_port
+                         'traffic_forward_port': result.traffic_forward_port,
+                         'set_request_header_status': result.set_request_header_status,
+                         'set_request_header_value': result.set_request_header_value
                          }
                         )
         return_result['result'] = True
@@ -46,9 +48,13 @@ def waf_edit_sys_traffic_forward(request):
         name = json_data['name']
         traffic_forward_ip = json_data['traffic_forward_ip']
         traffic_forward_port = json_data['traffic_forward_port']
+        set_request_header_status = json_data['set_request_header_status']
+        set_request_header_value = json_data['set_request_header_value']
         sys_traffic_forward.objects.filter(user_id=user_id).filter(name=name).update(
             traffic_forward_ip=traffic_forward_ip,
-            traffic_forward_port=traffic_forward_port)
+            traffic_forward_port=traffic_forward_port,
+            set_request_header_status=set_request_header_status,
+            set_request_header_value=set_request_header_value)
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
@@ -72,6 +78,8 @@ def waf_get_sys_traffic_forward(request):
         data['detail'] = sys_traffic_forward_result.detail
         data['traffic_forward_ip'] = sys_traffic_forward_result.traffic_forward_ip
         data['traffic_forward_port'] = sys_traffic_forward_result.traffic_forward_port
+        data['set_request_header_status'] = sys_traffic_forward_result.set_request_header_status
+        data['set_request_header_value'] = sys_traffic_forward_result.set_request_header_value
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)
@@ -112,10 +120,14 @@ def waf_create_sys_traffic_forward(request):
         detail = json_data['detail']
         traffic_forward_ip = json_data['traffic_forward_ip']
         traffic_forward_port = json_data['traffic_forward_port']
+        set_request_header_status = json_data['set_request_header_status']
+        set_request_header_value = json_data['set_request_header_value']
         try:
             result = sys_traffic_forward.objects.create(user_id=user_id, name=name, detail=detail,
                                                                    traffic_forward_ip=traffic_forward_ip,
-                                                                   traffic_forward_port=traffic_forward_port)
+                                                                   traffic_forward_port=traffic_forward_port,
+                                                                   set_request_header_status=set_request_header_status,
+                                                                   set_request_header_value=set_request_header_value)
             return_result['result'] = True
             return_result['message'] = 'create success'
             return JsonResponse(return_result, safe=False)

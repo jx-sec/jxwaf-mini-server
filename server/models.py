@@ -730,6 +730,8 @@ class sys_traffic_forward(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     name = models.CharField(null=False, max_length=1000)
     detail = models.CharField(max_length=1000, default="")
+    set_request_header_status = models.CharField(default="false", max_length=50)
+    set_request_header_value = models.CharField(default="{}", max_length=2000) # [{"key":"","value":"","type":"set_value/del_value"}]
     traffic_forward_ip = models.CharField(null=False, max_length=1000)
     traffic_forward_port = models.CharField(null=False, max_length=1000)
 
