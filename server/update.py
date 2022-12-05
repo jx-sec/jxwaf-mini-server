@@ -611,6 +611,66 @@ def waf_update(request):
         }
         data_result['sys_action_data'] = {}
         data_result['sys_action_data']['mimetic_defense_conf'] = mimetic_defense_conf
+
+        custom_response_conf = {}
+        sys_custom_response_results = sys_custom_response.objects.filter(user_id=user_result.api_key)
+        for sys_custom_response_result in sys_custom_response_results:
+            try:
+                set_return_header_value = json.loads(sys_custom_response_result.set_return_header_value)
+            except:
+                set_return_header_value = {}
+            custom_response_conf[sys_custom_response_result.name] = {
+                'set_return_header_status': sys_custom_response_result.set_return_header_status,
+                'set_return_header_value': set_return_header_value,
+                'return_code': sys_custom_response_result.return_code,
+                'return_html': sys_custom_response_result.return_html
+            }
+        data_result['sys_action_data']['custom_response_conf'] = custom_response_conf
+
+        request_replace_conf = {}
+        request_replace_results = sys_request_replace.objects.filter(user_id=user_result.api_key)
+        for request_replace_result in request_replace_results:
+            try:
+                header_replace_data = json.loads(request_replace_result.header_replace_data)
+            except:
+                header_replace_data = {}
+            request_replace_conf[request_replace_result.name] = {
+                'get_status': request_replace_result.get_status,
+                'header_replace_data': header_replace_data,
+                'get_replace_match': request_replace_result.get_replace_match,
+                'get_replace_data': request_replace_result.get_replace_data,
+                'header_status': request_replace_result.header_status,
+                'post_status': request_replace_result.post_status,
+                'post_replace_match': request_replace_result.post_replace_match,
+                'post_replace_data': request_replace_result.post_replace_data
+            }
+        data_result['sys_action_data']['request_replace_conf'] = request_replace_conf
+
+        response_replace_conf = {}
+        response_replace_results = sys_response_replace.objects.filter(user_id=user_result.api_key)
+        for response_replace_result in response_replace_results:
+            try:
+                response_header_replace_data = json.loads(response_replace_result.response_header_replace_data)
+            except:
+                response_header_replace_data = {}
+            response_replace_conf[response_replace_result.name] = {
+                'response_header_status': response_replace_result.response_header_status,
+                'response_header_replace_data': response_header_replace_data,
+                'response_data_status': response_replace_result.response_data_status,
+                'response_data_replace_match': response_replace_result.response_data_replace_match,
+                'response_data_replace_data': response_replace_result.response_data_replace_data
+            }
+        data_result['sys_action_data']['response_replace_conf'] = response_replace_conf
+
+        traffic_forward_conf = {}
+        sys_traffic_forward_results = sys_traffic_forward.objects.filter(user_id=user_result.api_key)
+        for sys_traffic_forward_result in sys_traffic_forward_results:
+            traffic_forward_conf[sys_traffic_forward_result.name] = {
+                'traffic_forward_ip': sys_traffic_forward_result.traffic_forward_ip.split(','),
+                'traffic_forward_port': sys_traffic_forward_result.traffic_forward_port
+            }
+        data_result['sys_action_data']['traffic_forward_conf'] = traffic_forward_conf
+
         sys_component_protection_data = {}
         sys_component_protection_results = sys_component_protection.objects.filter(user_id=user_result.api_key)
         for sys_component_protection_result in sys_component_protection_results:

@@ -679,3 +679,59 @@ class report_name_list_item_action_log(models.Model):
 
     def __unicode__(self):
         return self.user_id
+
+class sys_custom_response(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    name = models.CharField(null=False, max_length=1000)
+    detail = models.CharField(max_length=1000, default="")
+    set_return_header_status = models.CharField(default="false", max_length=50)
+    set_return_header_value = models.CharField(default="{}", max_length=2000)  # {"key":"","value":""}
+    return_code = models.CharField(default="200", max_length=50)
+    return_html = models.TextField(blank=True, null=True, default="")
+
+    def __unicode__(self):
+        return self.user_id
+
+
+class sys_request_replace(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    name = models.CharField(null=False, max_length=1000)
+    detail = models.CharField(max_length=1000, default="")
+    get_status = models.CharField(default="false", max_length=50)
+    get_replace_match = models.CharField(default="", max_length=2000)
+    get_replace_data = models.CharField(default="", max_length=2000)
+    header_status = models.CharField(default="false", max_length=50)
+    header_replace_data = models.CharField(default="{}",
+                                           max_length=2000)  # {"cookie":{"replace_match":"","replace_data":""}}
+    post_status = models.CharField(default="false", max_length=50)
+    post_replace_match = models.CharField(default="", max_length=2000)
+    post_replace_data = models.CharField(default="", max_length=2000)
+
+    def __unicode__(self):
+        return self.user_id
+
+
+class sys_response_replace(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    name = models.CharField(null=False, max_length=1000)
+    detail = models.CharField(max_length=1000, default="")
+    response_header_status = models.CharField(default="false", max_length=50)
+    response_header_replace_data = models.CharField(default="{}",
+                                                    max_length=2000)  # {"cookie":{"replace_match":"","replace_data":""}}
+    response_data_status = models.CharField(default="false", max_length=50)
+    response_data_replace_match = models.CharField(default="", max_length=2000)
+    response_data_replace_data = models.CharField(default="", max_length=2000)
+
+    def __unicode__(self):
+        return self.user_id
+
+
+class sys_traffic_forward(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    name = models.CharField(null=False, max_length=1000)
+    detail = models.CharField(max_length=1000, default="")
+    traffic_forward_ip = models.CharField(null=False, max_length=1000)
+    traffic_forward_port = models.CharField(null=False, max_length=1000)
+
+    def __unicode__(self):
+        return self.user_id
