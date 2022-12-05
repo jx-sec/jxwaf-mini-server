@@ -82,6 +82,10 @@ from server.report_web_ch import *
 from server.report_flow_ch import *
 from server.report_name_list_ch import *
 from server.report_raw_log_ch import *
+from server.sys_custom_response import *
+from server.sys_request_replace import *
+from server.sys_response_replace import *
+from server.sys_traffic_forward import *
 
 
 urlpatterns = [
@@ -423,5 +427,29 @@ urlpatterns = [
     url(r'^report/ch_get_raw_full_log$', ch_report_get_raw_full_log),
     url(r'^report/ch_custom_get_raw_log$', ch_report_custom_get_raw_log),
     url(r'^report/ch_custom_get_raw_full_log$', ch_report_custom_get_raw_full_log),
+
+    url(r'^waf/waf_get_sys_custom_response_list$', waf_get_sys_custom_response_list),
+    url(r'^waf/waf_edit_sys_custom_response$', waf_edit_sys_custom_response),
+    url(r'^waf/waf_get_sys_custom_response$', waf_get_sys_custom_response),
+    url(r'^waf/waf_del_sys_custom_response$', waf_del_sys_custom_response),
+    url(r'^waf/waf_create_sys_custom_response$', waf_create_sys_custom_response),
+
+    url(r'^waf/waf_get_sys_request_replace_list$', waf_get_sys_request_replace_list),
+    url(r'^waf/waf_edit_sys_request_replace$', waf_edit_sys_request_replace),
+    url(r'^waf/waf_get_sys_request_replace$', waf_get_sys_request_replace),
+    url(r'^waf/waf_del_sys_request_replace$', waf_del_sys_request_replace),
+    url(r'^waf/waf_create_sys_request_replace$', waf_create_sys_request_replace),
+
+    url(r'^waf/waf_get_sys_response_replace_list$', waf_get_sys_response_replace_list),
+    url(r'^waf/waf_edit_sys_response_replace$', waf_edit_sys_response_replace),
+    url(r'^waf/waf_get_sys_response_replace$', waf_get_sys_response_replace),
+    url(r'^waf/waf_del_sys_response_replace$', waf_del_sys_response_replace),
+    url(r'^waf/waf_create_sys_response_replace$', waf_create_sys_response_replace),
+
+    url(r'^waf/waf_get_sys_traffic_forward_list$', waf_get_sys_traffic_forward_list),
+    url(r'^waf/waf_edit_sys_traffic_forward$', waf_edit_sys_traffic_forward),
+    url(r'^waf/waf_get_sys_traffic_forward$', waf_get_sys_traffic_forward),
+    url(r'^waf/waf_del_sys_traffic_forward$', waf_del_sys_traffic_forward),
+    url(r'^waf/waf_create_sys_traffic_forward$', waf_create_sys_traffic_forward),
 
 ]
