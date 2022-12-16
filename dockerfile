@@ -6,7 +6,7 @@ RUN wget https://openresty.org/download/openresty-1.21.4.1.tar.gz
 RUN tar zxvf openresty-1.21.4.1.tar.gz && cd openresty-1.21.4.1 && ./configure --prefix=/opt/server && gmake && gmake install
 RUN mv /opt/server/nginx/conf/nginx.conf  /opt/server/nginx/conf/nginx.conf.bak 
 COPY  nginx.conf /opt/server/nginx/conf/
-COPY  static /opt/server/nginx/html/static
+COPY  server/static /opt/server/nginx/html/static
 
 
 
