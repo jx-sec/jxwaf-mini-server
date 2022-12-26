@@ -180,6 +180,14 @@ class waf_component_protection(models.Model):
     order_time = models.BigIntegerField(default=0)
     status = models.CharField(max_length=1000, default="true")
 
+class waf_analysis_component(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    domain = models.CharField(null=False, max_length=500)
+    uuid = models.CharField(null=False, max_length=500)
+    conf = models.CharField(null=False, max_length=2000)
+    order_time = models.BigIntegerField(default=0)
+    status = models.CharField(max_length=1000, default="true")
+
 
 # group_domain
 
@@ -349,6 +357,14 @@ class waf_group_name_list(models.Model):
 
 
 class waf_group_component_protection(models.Model):
+    user_id = models.CharField(null=False, max_length=50)
+    group_id = models.CharField(null=False, max_length=500)
+    uuid = models.CharField(null=False, max_length=500)
+    conf = models.CharField(null=False, max_length=2000)
+    order_time = models.BigIntegerField(default=0)
+    status = models.CharField(max_length=1000, default="true")
+
+class waf_group_analysis_component(models.Model):
     user_id = models.CharField(null=False, max_length=50)
     group_id = models.CharField(null=False, max_length=500)
     uuid = models.CharField(null=False, max_length=500)
