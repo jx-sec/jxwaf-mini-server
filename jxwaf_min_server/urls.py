@@ -86,7 +86,8 @@ from server.sys_custom_response import *
 from server.sys_request_replace import *
 from server.sys_response_replace import *
 from server.sys_traffic_forward import *
-
+from server.waf_analysis_component import *
+from server.waf_group_analysis_component import *
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -298,12 +299,26 @@ urlpatterns = [
     url(r'^waf/waf_edit_component_protection_conf$', waf_edit_component_protection_conf),
     url(r'^waf/waf_exchange_component_protection_priority$', waf_exchange_component_protection_priority),
 
+    url(r'^waf/waf_get_analysis_component_list$', waf_get_analysis_component_list),
+    url(r'^waf/waf_del_analysis_component$', waf_del_analysis_component),
+    url(r'^waf/waf_load_analysis_component$', waf_load_analysis_component),
+    url(r'^waf/waf_edit_analysis_component_status$', waf_edit_analysis_component_status),
+    url(r'^waf/waf_edit_analysis_component_conf$', waf_edit_analysis_component_conf),
+    url(r'^waf/waf_exchange_analysis_component_priority$', waf_exchange_analysis_component_priority),
+
     url(r'^waf/waf_get_group_component_protection_list$', waf_get_group_component_protection_list),
     url(r'^waf/waf_del_group_component_protection$', waf_del_group_component_protection),
     url(r'^waf/waf_load_group_component_protection$', waf_load_group_component_protection),
     url(r'^waf/waf_edit_group_component_protection_status$', waf_edit_group_component_protection_status),
     url(r'^waf/waf_edit_group_component_protection_conf$', waf_edit_group_component_protection_conf),
     url(r'^waf/waf_exchange_group_component_protection_priority$', waf_exchange_group_component_protection_priority),
+
+    url(r'^waf/waf_get_group_analysis_component_list$', waf_get_group_analysis_component_list),
+    url(r'^waf/waf_del_group_analysis_component$', waf_del_group_analysis_component),
+    url(r'^waf/waf_load_group_analysis_component$', waf_load_group_analysis_component),
+    url(r'^waf/waf_edit_group_analysis_component_status$', waf_edit_group_analysis_component_status),
+    url(r'^waf/waf_edit_group_analysis_component_conf$', waf_edit_group_analysis_component_conf),
+    url(r'^waf/waf_exchange_group_analysis_component_priority$', waf_exchange_group_analysis_component_priority),
 
     url(r'^waf/waf_get_global_component_protection_list$', waf_get_global_component_protection_list),
     url(r'^waf/waf_del_global_component_protection$', waf_del_global_component_protection),
