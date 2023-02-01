@@ -19,6 +19,8 @@ def waf_edit_group_protection(request):
         flow_white_rule = json_data['flow_white_rule']
         flow_deny_page = json_data['flow_deny_page']
         name_list = json_data['name_list']
+        component_protection = json_data['component_protection']
+        analysis_component = json_data['analysis_component']
         try:
             waf_group_protection.objects.get(Q(group_id=group_id) & Q(user_id=user_id))
             waf_group_protection.objects.filter(group_id=group_id).filter(user_id=user_id).update(
@@ -27,7 +29,7 @@ def waf_edit_group_protection(request):
                 web_deny_page=web_deny_page,
                 flow_engine_protection=flow_engine_protection,
                 flow_rule_protection=flow_rule_protection, flow_white_rule=flow_white_rule,
-                flow_deny_page=flow_deny_page, name_list=name_list)
+                flow_deny_page=flow_deny_page, name_list=name_list,component_protection=component_protection,analysis_component=analysis_component)
             return_result['result'] = True
             return_result['message'] = 'edit success'
             return JsonResponse(return_result, safe=False)
@@ -60,6 +62,8 @@ def waf_get_group_protection(request):
         data['flow_white_rule'] = waf_group_protection_result.flow_white_rule
         data['flow_deny_page'] = waf_group_protection_result.flow_deny_page
         data['name_list'] = waf_group_protection_result.name_list
+        data['component_protection'] = waf_protection_result.component_protection
+        data['analysis_component'] = waf_protection_result.analysis_component
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)

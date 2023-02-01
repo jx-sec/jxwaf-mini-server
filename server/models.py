@@ -49,6 +49,8 @@ class waf_protection(models.Model):
     flow_deny_page = models.CharField(default="false", max_length=50)
     name_list = models.CharField(default="false", max_length=50)
     component_protection = models.CharField(default="false", max_length=50)
+    analysis_component = models.CharField(default="false", max_length=50)
+
 
     def __unicode__(self):
         return self.user_id
@@ -233,6 +235,7 @@ class waf_group_protection(models.Model):
     flow_deny_page = models.CharField(default="false", max_length=50)
     name_list = models.CharField(default="false", max_length=50)
     component_protection = models.CharField(default="false", max_length=50)
+    analysis_component = models.CharField(default="false", max_length=50)
 
     def __unicode__(self):
         return self.user_id
