@@ -89,7 +89,8 @@ def waf_update(request):
                 'flow_white_rule': result.flow_white_rule,
                 'flow_deny_page': result.flow_deny_page,
                 'name_list': result.name_list,
-                'component_protection': result.component_protection
+                'component_protection': result.component_protection,
+                'analysis_component': result.analysis_component
             }
             waf_domain_data[result.domain]['protection_data'] = data
 
@@ -232,6 +233,22 @@ def waf_update(request):
 
         for domain in component_protection_data.keys():
             waf_domain_data[domain]['component_protection_data'] = component_protection_data[domain]
+        data_result['waf_domain_data'] = waf_domain_data
+
+        analysis_component_results = waf_analysis_component.objects.filter(user_id=user_result.api_key).filter(
+            status='true').order_by(
+            'order_time')
+        analysis_component_data = {}
+        for result in analysis_component_results:
+            if not analysis_component_data.has_key(result.domain):
+                analysis_component_data[result.domain] = []
+            sys_component_protection_result = sys_component_protection.objects.get(
+                Q(user_id=user_result.api_key) & Q(uuid=result.uuid))
+            analysis_component_data[result.domain].append(
+                {"uuid": result.uuid, "conf": json.loads(result.conf), "name": sys_component_protection_result.name})
+
+        for domain in analysis_component_data.keys():
+            waf_domain_data[domain]['analysis_component_data'] = analysis_component_data[domain]
         data_result['waf_domain_data'] = waf_domain_data
 
         global_component_protection_results = waf_global_component_protection.objects.filter(
@@ -421,6 +438,22 @@ def waf_update(request):
 
         for group_id in group_component_protection_data.keys():
             waf_group_id_data[group_id]['group_component_protection_data'] = group_component_protection_data[group_id]
+        data_result['waf_group_id_data'] = waf_group_id_data
+
+        group_analysis_component_results = waf_group_analysis_component.objects.filter(
+            user_id=user_result.api_key).filter(status='true').order_by(
+            'order_time')
+        group_analysis_component_data = {}
+        for result in group_analysis_component_results:
+            if not group_analysis_component_data.has_key(result.group_id):
+                group_analysis_component_data[result.group_id] = []
+            sys_component_protection_result = sys_component_protection.objects.get(
+                Q(user_id=user_result.api_key) & Q(uuid=result.uuid))
+            group_analysis_component_data[result.group_id].append(
+                {"uuid": result.uuid, "conf": json.loads(result.conf), "name": sys_component_protection_result.name})
+
+        for group_id in group_analysis_component_data.keys():
+            waf_group_id_data[group_id]['group_analysis_component_data'] = group_analysis_component_data[group_id]
         data_result['waf_group_id_data'] = waf_group_id_data
 
         sys_web_rule_protection_results = sys_web_rule_protection.objects.filter(user_id=user_result.api_key)
