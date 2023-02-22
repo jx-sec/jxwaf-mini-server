@@ -20,7 +20,6 @@ elasticsearch==6.4.0
 enum34==1.1.6
 futures==3.2.0
 idna==2.10
-ipaddress==1.0.22
 Jinja2==2.7.2
 jmespath==0.9.4
 jsonpatch==1.2
