@@ -338,7 +338,7 @@ def waf_update(request):
             rule_status='true').order_by('rule_order_time')
         group_web_white_rule_data = {}
         for result in waf_group_web_white_rulee_results:
-            if not group_web_white_rule_data.has_key(result.domain):
+            if not group_web_white_rule_data.has_key(result.group_id):
                 group_web_white_rule_data[result.group_id] = []
             if result.rule_type == "group_rule":
                 group_id_results = sys_web_white_rule_group.objects.filter(
