@@ -62,6 +62,23 @@ def waf_update(request):
         waf_domain_data = {}
         domain_results = waf_domain.objects.filter(user_id=user_result.api_key)
         for result in domain_results:
+            source_ip = []
+            for process_domain in str(result.source_ip).split(','):
+                if isIP(process_domain.strip()):
+                    source_ip.append(process_domain.strip())
+                else:
+                    try:
+                        resolver = dns.resolver.Resolver()
+                        resolver.timeout = 2
+                        resolver.lifetime = 2
+                        query = resolver.query(process_domain.strip(),'A')
+                        for i in query.response.answer:
+                            for j in i.items:
+                                if j.rdtype == 1:
+                                    source_ip.append(j.address)
+                    except:
+                        data_result['error_domain'] = result.domain
+                        source_ip.append(process_domain)
             data = {
                 'http': result.http,
                 'https': result.https,
@@ -70,7 +87,7 @@ def waf_update(request):
                 'ssl_domain': result.ssl_domain,
                 'private_key': result.private_key,
                 'public_key': result.public_key,
-                'source_ip': str(result.source_ip).split(','),
+                'source_ip': source_ip,
                 'source_http_port': result.source_http_port,
                 'proxy_pass_https': result.proxy_pass_https
             }
@@ -269,6 +286,23 @@ def waf_update(request):
         waf_group_domain_data = {}
         group_domain_results = waf_group_domain.objects.filter(user_id=user_result.api_key)
         for result in group_domain_results:
+            source_ip = []
+            for process_domain in str(result.source_ip).split(','):
+                if isIP(process_domain.strip()):
+                    source_ip.append(process_domain.strip())
+                else:
+                    try:
+                        resolver = dns.resolver.Resolver()
+                        resolver.timeout = 2
+                        resolver.lifetime = 2
+                        query = resolver.query(process_domain.strip(),'A')
+                        for i in query.response.answer:
+                            for j in i.items:
+                                if j.rdtype == 1:
+                                    source_ip.append(j.address)
+                    except:
+                        data_result['error_domain'] = result.domain
+                        source_ip.append(process_domain)
             data = {
                 'http': result.http,
                 'https': result.https,
@@ -277,7 +311,7 @@ def waf_update(request):
                 'ssl_domain': result.ssl_domain,
                 'private_key': result.private_key,
                 'public_key': result.public_key,
-                'source_ip': str(result.source_ip).split(','),
+                'source_ip': source_ip,
                 'source_http_port': result.source_http_port,
                 'proxy_pass_https': result.proxy_pass_https,
                 'group_id': result.group_id
