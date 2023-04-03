@@ -70,7 +70,6 @@ def waf_update(request):
                     try:
                         resolver = dns.resolver.Resolver()
                         resolver.timeout = 2
-                        resolver.lifetime = 2
                         query = resolver.query(process_domain.strip(),'A')
                         for i in query.response.answer:
                             for j in i.items:
@@ -294,7 +293,6 @@ def waf_update(request):
                     try:
                         resolver = dns.resolver.Resolver()
                         resolver.timeout = 2
-                        resolver.lifetime = 2
                         query = resolver.query(process_domain.strip(),'A')
                         for i in query.response.answer:
                             for j in i.items:
