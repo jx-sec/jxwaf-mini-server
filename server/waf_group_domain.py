@@ -110,14 +110,12 @@ def waf_create_group_domain(request):
                     try:
                         resolver = dns.resolver.Resolver()
                         resolver.timeout = 3
-                        resolver.lifetime = 3
                         query = resolver.query(process_domain.strip(), 'A')
                         for i in query.response.answer:
                             for j in i.items:
                                 if j.rdtype == 1:
                                     pass
                     except:
-                        source_ip.append(process_domain)
                         return_result['result'] = False
                         return_result['message'] = 'edit error,%s dns resolver error' % (process_domain)
                         return JsonResponse(return_result, safe=False)
@@ -176,14 +174,12 @@ def waf_edit_group_domain(request):
                     try:
                         resolver = dns.resolver.Resolver()
                         resolver.timeout = 3
-                        resolver.lifetime = 3
                         query = resolver.query(process_domain.strip(), 'A')
                         for i in query.response.answer:
                             for j in i.items:
                                 if j.rdtype == 1:
                                     pass
                     except:
-                        source_ip.append(process_domain)
                         return_result['result'] = False
                         return_result['message'] = 'edit error,%s dns resolver error' % (process_domain)
                         return JsonResponse(return_result, safe=False)
