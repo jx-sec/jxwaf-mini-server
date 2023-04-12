@@ -110,7 +110,7 @@ def ch_report_web_request_count_trend(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
 
         return_result['result'] = True
@@ -155,7 +155,7 @@ def ch_report_web_ip_count_trend(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
 
         return_result['result'] = True
@@ -200,7 +200,7 @@ def ch_report_web_request_count_totle(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
         return_result['result'] = True
         return_result['message'] = result
@@ -244,7 +244,7 @@ def ch_report_web_request_ip_totle(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
         return_result['result'] = True
         return_result['message'] = result
@@ -288,7 +288,7 @@ def ch_report_web_att_type_top10(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
         return_result['result'] = True
         return_result['message'] = result
@@ -338,7 +338,7 @@ def ch_report_web_att_ip_top10(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
         return_result['result'] = True
         return_result['message'] = result
@@ -382,7 +382,7 @@ def ch_report_web_att_uri_top10(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
         return_result['result'] = True
         return_result['message'] = result
@@ -427,7 +427,7 @@ def ch_report_web_att_ip_country_top10(request):
         sys_report_conf_result = sys_report_conf.objects.get(user_id=user_id)
         client = Client(host=sys_report_conf_result.ch_host, port=int(sys_report_conf_result.ch_port),
                         user=sys_report_conf_result.ch_user,
-                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database)
+                        password=sys_report_conf_result.ch_password, database=sys_report_conf_result.ch_database,send_receive_timeout=30)
         result = client.execute(req_sql)
         return_result['result'] = True
         return_result['message'] = result
