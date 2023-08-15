@@ -198,9 +198,9 @@ def sys_init(request):
                 return_result['result'] = False
                 return_result['message'] = "web_engine_init_error"
                 return JsonResponse(return_result, safe=False)
-        except:
+        except Exception, e:
             return_result['result'] = False
-            return_result['message'] = "network_error"
+            return_result['message'] = str(e)
             return JsonResponse(return_result, safe=False)
         flow_engine_uri = "https://api.jxwaf.com/jxwaf/get_flow_engine"
         try:
@@ -219,9 +219,9 @@ def sys_init(request):
                 return_result['result'] = False
                 return_result['message'] = "flow_engine_init_error"
                 return JsonResponse(return_result, safe=False)
-        except:
+        except Exception, e:
             return_result['result'] = False
-            return_result['message'] = "network_error"
+            return_result['message'] = str(e)
             return JsonResponse(return_result, safe=False)
         return_result['result'] = True
         return_result['message'] = "sys_init_success"
