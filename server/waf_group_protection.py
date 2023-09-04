@@ -62,8 +62,8 @@ def waf_get_group_protection(request):
         data['flow_white_rule'] = waf_group_protection_result.flow_white_rule
         data['flow_deny_page'] = waf_group_protection_result.flow_deny_page
         data['name_list'] = waf_group_protection_result.name_list
-        data['component_protection'] = waf_protection_result.component_protection
-        data['analysis_component'] = waf_protection_result.analysis_component
+        data['component_protection'] = waf_group_protection_result.component_protection
+        data['analysis_component'] = waf_group_protection_result.analysis_component
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)
