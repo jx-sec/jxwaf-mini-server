@@ -93,6 +93,7 @@ def waf_create_group_domain(request):
         ssl_source = json_data['ssl_source']
         ssl_domain = json_data['ssl_domain']
         proxy_pass_https = json_data['proxy_pass_https']
+        balance_type = json_data['balance_type']
         if https == 'true':
             public_key = json_data['public_key']
             private_key = json_data['private_key']
@@ -126,13 +127,15 @@ def waf_create_group_domain(request):
                                                 public_key=public_key, private_key=private_key,
                                                 redirect_https=redirect_https,
                                                 ssl_source=ssl_source, ssl_domain=ssl_domain,
-                                                proxy_pass_https=proxy_pass_https, group_id=group_id)
+                                                proxy_pass_https=proxy_pass_https, group_id=group_id,
+                                                balance_type=balance_type)
             else:
                 waf_group_domain.objects.create(user_id=user_id, domain=domain, http=http, https=https,
                                                 source_ip=source_ip,
                                                 source_http_port=source_http_port,
                                                 ssl_source=ssl_source, ssl_domain=ssl_domain,
-                                                proxy_pass_https=proxy_pass_https, group_id=group_id)
+                                                proxy_pass_https=proxy_pass_https, group_id=group_id,
+                                                balance_type=balance_type)
             return_result['result'] = True
             return_result['message'] = 'create success'
             return JsonResponse(return_result, safe=False)
@@ -161,6 +164,7 @@ def waf_edit_group_domain(request):
         ssl_source = json_data['ssl_source']
         ssl_domain = json_data['ssl_domain']
         proxy_pass_https = json_data['proxy_pass_https']
+        balance_type = json_data['balance_type']
         if https == 'true':
             public_key = json_data['public_key']
             private_key = json_data['private_key']
@@ -189,13 +193,14 @@ def waf_edit_group_domain(request):
                     source_http_port=source_http_port, public_key=public_key,
                     private_key=private_key, redirect_https=redirect_https, ssl_source=ssl_source,
                     ssl_domain=ssl_domain,
-                    proxy_pass_https=proxy_pass_https)
+                    proxy_pass_https=proxy_pass_https, balance_type=balance_type)
             else:
                 waf_group_domain.objects.filter(domain=domain).filter(user_id=user_id).filter(group_id=group_id).update(
                     http=http, https=https,
                     source_ip=source_ip,
                     source_http_port=source_http_port,
-                    ssl_source=ssl_source, ssl_domain=ssl_domain, proxy_pass_https=proxy_pass_https)
+                    ssl_source=ssl_source, ssl_domain=ssl_domain, proxy_pass_https=proxy_pass_https,
+                    balance_type=balance_type)
             return_result['result'] = True
             return_result['message'] = 'edit success'
             return JsonResponse(return_result, safe=False)
@@ -231,6 +236,7 @@ def waf_get_group_domain(request):
         data['ssl_domain'] = waf_group_domain_result.ssl_domain
         data['proxy_pass_https'] = waf_group_domain_result.proxy_pass_https
         data['group_id'] = waf_group_domain_result.group_id
+        data['balance_type'] = waf_group_domain_result.balance_type
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)

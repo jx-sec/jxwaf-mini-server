@@ -26,6 +26,7 @@ class waf_domain(models.Model):
     redirect_https = models.CharField(default="false", max_length=50)
     ssl_source = models.CharField(default="ssl_manage", max_length=50)  # ssl_manage  or custom
     ssl_domain = models.CharField(blank=True, null=True, max_length=1000)
+    balance_type = models.CharField(default="round_robin", max_length=100)
     private_key = models.TextField(blank=True, null=True)
     public_key = models.TextField(blank=True, null=True)
     source_ip = models.CharField(blank=True, max_length=500)
@@ -212,6 +213,7 @@ class waf_group_domain(models.Model):
     redirect_https = models.CharField(default="false", max_length=50)
     ssl_source = models.CharField(default="ssl_manage", max_length=50)  # ssl_manage  or custom
     ssl_domain = models.CharField(blank=True, null=True, max_length=1000)
+    balance_type = models.CharField(default="round_robin", max_length=100)
     private_key = models.TextField(blank=True, null=True)
     public_key = models.TextField(blank=True, null=True)
     source_ip = models.CharField(blank=True, max_length=500)

@@ -88,7 +88,9 @@ def waf_update(request):
                 'public_key': result.public_key,
                 'source_ip': source_ip,
                 'source_http_port': result.source_http_port,
-                'proxy_pass_https': result.proxy_pass_https
+                'proxy_pass_https': result.proxy_pass_https,
+                'balance_type': result.balance_type,
+                'domain': result.domain
             }
             waf_domain_data[result.domain] = {}
             waf_domain_data[result.domain]['domain_data'] = data
@@ -312,7 +314,9 @@ def waf_update(request):
                 'source_ip': source_ip,
                 'source_http_port': result.source_http_port,
                 'proxy_pass_https': result.proxy_pass_https,
-                'group_id': result.group_id
+                'group_id': result.group_id,
+                'balance_type': result.balance_type,
+                'domain': result.domain
             }
             waf_group_domain_data[result.domain] = data
         data_result['waf_group_domain_data'] = waf_group_domain_data

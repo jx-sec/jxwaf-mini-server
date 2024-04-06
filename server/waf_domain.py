@@ -40,6 +40,7 @@ def ip_check(request):
         return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
 
+
 def waf_get_domain_list(request):
     return_result = {}
     data = []
@@ -117,6 +118,7 @@ def waf_create_domain(request):
         ssl_source = json_data['ssl_source']
         ssl_domain = json_data['ssl_domain']
         proxy_pass_https = json_data['proxy_pass_https']
+        balance_type = json_data['balance_type']
         if https == 'true':
             public_key = json_data['public_key']
             private_key = json_data['private_key']
@@ -150,13 +152,13 @@ def waf_create_domain(request):
                                           public_key=public_key, private_key=private_key,
                                           redirect_https=redirect_https,
                                           ssl_source=ssl_source, ssl_domain=ssl_domain,
-                                          proxy_pass_https=proxy_pass_https)
+                                          proxy_pass_https=proxy_pass_https, balance_type=balance_type)
             else:
                 waf_domain.objects.create(user_id=user_id, domain=domain, http=http, https=https,
                                           source_ip=source_ip,
                                           source_http_port=source_http_port,
                                           ssl_source=ssl_source, ssl_domain=ssl_domain,
-                                          proxy_pass_https=proxy_pass_https)
+                                          proxy_pass_https=proxy_pass_https, balance_type=balance_type)
             waf_protection.objects.filter(user_id=user_id).filter(domain=domain).delete()
             waf_protection.objects.create(user_id=user_id, domain=domain)
             waf_web_engine_protection.objects.filter(user_id=user_id).filter(domain=domain).delete()
@@ -190,6 +192,7 @@ def waf_edit_domain(request):
         ssl_source = json_data['ssl_source']
         ssl_domain = json_data['ssl_domain']
         proxy_pass_https = json_data['proxy_pass_https']
+        balance_type = json_data['balance_type']
         if https == 'true':
             public_key = json_data['public_key']
             private_key = json_data['private_key']
@@ -218,13 +221,14 @@ def waf_edit_domain(request):
                     source_http_port=source_http_port, public_key=public_key,
                     private_key=private_key, redirect_https=redirect_https, ssl_source=ssl_source,
                     ssl_domain=ssl_domain,
-                    proxy_pass_https=proxy_pass_https)
+                    proxy_pass_https=proxy_pass_https, balance_type=balance_type)
             else:
                 waf_domain.objects.filter(domain=domain).filter(user_id=user_id).update(
                     http=http, https=https,
                     source_ip=source_ip,
                     source_http_port=source_http_port,
-                    ssl_source=ssl_source, ssl_domain=ssl_domain, proxy_pass_https=proxy_pass_https)
+                    ssl_source=ssl_source, ssl_domain=ssl_domain, proxy_pass_https=proxy_pass_https,
+                    balance_type=balance_type)
             return_result['result'] = True
             return_result['message'] = 'edit success'
             return JsonResponse(return_result, safe=False)
@@ -250,6 +254,7 @@ def waf_get_domain(request):
         data['http'] = waf_defense_domain_result.http
         data['https'] = waf_defense_domain_result.https
         data['redirect_https'] = waf_defense_domain_result.redirect_https
+        data['balance_type'] = waf_defense_domain_result.balance_type
         data['private_key'] = waf_defense_domain_result.private_key
         data['public_key'] = waf_defense_domain_result.public_key
         data['source_ip'] = waf_defense_domain_result.source_ip
