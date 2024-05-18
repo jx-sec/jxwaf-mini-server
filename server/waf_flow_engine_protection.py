@@ -45,7 +45,7 @@ def waf_edit_flow_engine_protection(request):
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
-    except Exception, e:
+    except Exception as e:
         return_result['result'] = False
         return_result['message'] = str(e)
         return_result['errCode'] = 400
@@ -96,7 +96,7 @@ def waf_get_flow_engine_protection(request):
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)
-    except Exception, e:
+    except Exception as e:
         return_result['result'] = False
         return_result['message'] = str(e)
         return_result['errCode'] = 400
