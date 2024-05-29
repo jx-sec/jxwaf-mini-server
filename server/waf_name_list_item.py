@@ -164,3 +164,46 @@ def waf_search_name_list_item(request):
         return_result['message'] = str(e)
         return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
+
+
+def api_add_name_list_item(request):
+    return_result = {}
+    try:
+        json_data = json.loads(request.body)
+        waf_auth = json_data['waf_auth']
+        name_list_name = json_data['name_list_name']
+        name_list_item = json_data['name_list_item']
+        try:
+            user_result = jxwaf_user.objects.get(waf_auth=waf_auth)
+        except:
+            return_result['result'] = False
+            return_result['message'] = "waf_auth error"
+            return JsonResponse(return_result, safe=False)
+        user_id = user_result.user_id
+        waf_name_list_result = waf_name_list.objects.get(
+            Q(user_id=user_id) & Q(name_list_name=name_list_name))
+        if waf_name_list_result.name_list_expire == "false":
+            name_list_expire_time = 0
+        else:
+            name_list_expire_time = int(time.time()) + int(waf_name_list_result.name_list_expire_time)
+        name_list_item_count = waf_name_list_item.objects.filter(user_id=user_id).filter(
+            name_list_name=name_list_name).filter(
+            name_list_item=name_list_item).count()
+        if name_list_item_count == 0:
+            waf_name_list_item.objects.create(user_id=user_id, name_list_name=name_list_name,
+                                              name_list_item=name_list_item,
+                                              name_list_expire=waf_name_list_result.name_list_expire,
+                                              name_list_item_expire_time=name_list_expire_time)
+        else:
+            waf_name_list_item.objects.filter(user_id=user_id).filter(name_list_name=name_list_name).filter(
+                name_list_item=name_list_item
+            ).update(name_list_item_expire_time=name_list_expire_time)
+        return_result['message'] = 'add_success'
+        return_result['name_list_item_count'] = name_list_item_count
+        return_result['result'] = True
+        return JsonResponse(return_result, safe=False)
+    except Exception as e:
+        return_result['result'] = False
+        return_result['message'] = str(traceback.format_exc())
+        return_result['errCode'] = 400
+        return JsonResponse(return_result, safe=False)
