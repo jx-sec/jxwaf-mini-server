@@ -112,6 +112,9 @@ USE_TZ = False
 
 TIME_ZONE = 'Asia/Shanghai'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_COOKIE_AGE = 86400
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
