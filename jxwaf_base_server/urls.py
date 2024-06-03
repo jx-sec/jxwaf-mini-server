@@ -189,6 +189,9 @@ urlpatterns = [
 
     url(r'^soc/soc_query_request_statistics$', soc_query_request_statistics),
     url(r'^soc/soc_query_request_statistics_detail$', soc_query_request_statistics_detail),
+    url(r'^soc/soc_query_domain_request_statistics', soc_query_domain_request_statistics),
+    url(r'^soc/soc_query_domain_request_statistics_detail', soc_query_domain_request_statistics_detail),
+
     url(r'^demo_env_init$', demo_env_init),
 
     url(r'^api/add_name_list_item$', api_add_name_list_item),
