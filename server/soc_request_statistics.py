@@ -55,7 +55,7 @@ def soc_query_request_statistics(request):
     round(AVG(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS avg_upstream_time_ms,
     round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms
         FROM jxlog
-        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)     
+        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0) AND Host != ''    
         """
 
         stats_results = client.execute(req_sql, query_params)
@@ -231,7 +231,7 @@ def soc_query_request_statistics_detail(request):
     ROUND(MAX(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS max_upstream_time_ms,
     ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms
         FROM jxlog  
-        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)   
+        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host != ''  
         GROUP BY Host, UpstreamAddr
         ORDER BY Host, UpstreamAddr
         """
