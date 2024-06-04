@@ -231,7 +231,7 @@ def soc_query_request_statistics_detail(request):
     ROUND(MAX(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS max_upstream_time_ms,
     ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms
         FROM jxlog  
-        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host != ''  
+        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host != ''  AND  UpstreamAddr != ''
         GROUP BY Host, UpstreamAddr
         ORDER BY Host, UpstreamAddr
         """
@@ -303,7 +303,7 @@ def soc_query_domain_request_statistics_detail(request):
     ROUND(MAX(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS max_upstream_time_ms,
     ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms
         FROM jxlog  
-        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0) AND Host = %(domain)s   
+        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0) AND Host = %(domain)s  AND  UpstreamAddr != '' 
         GROUP BY Host, UpstreamAddr
         ORDER BY Host, UpstreamAddr
         """
