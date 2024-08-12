@@ -15,9 +15,11 @@ def waf_edit_flow_engine_protection(request):
         req_count_stat_time_period = json_data['req_count_stat_time_period']
         req_count_block_mode = json_data['req_count_block_mode']
         req_count_block_mode_extra_parameter = json_data['req_count_block_mode_extra_parameter']
+        req_count_block_time = json_data['req_count_block_time']
         req_rate = json_data['req_rate']
         req_rate_block_mode = json_data['req_rate_block_mode']
         req_rate_block_mode_extra_parameter = json_data['req_rate_block_mode_extra_parameter']
+        req_rate_block_time = json_data['req_rate_block_time']
         slow_cc_check = json_data['slow_cc_check']
         domain_rate = json_data['domain_rate']
         slow_cc_block_mode = json_data['slow_cc_block_mode']
@@ -41,7 +43,9 @@ def waf_edit_flow_engine_protection(request):
             emergency_mode_check=emergency_mode_check, emergency_mode_block_mode=emergency_mode_block_mode,
             emergency_mode_block_mode_extra_parameter=emergency_mode_block_mode_extra_parameter, ip_count=ip_count,
             ip_count_stat_time_period=ip_count_stat_time_period, ip_count_block_mode=ip_count_block_mode,
-            ip_count_block_mode_extra_parameter=ip_count_block_mode_extra_parameter)
+            ip_count_block_mode_extra_parameter=ip_count_block_mode_extra_parameter,
+            req_count_block_time=req_count_block_time,
+            req_rate_block_time=req_rate_block_time)
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
@@ -93,6 +97,8 @@ def waf_get_flow_engine_protection(request):
         data['ip_count_block_mode'] = waf_flow_engine_protection_results.ip_count_block_mode
         data[
             'ip_count_block_mode_extra_parameter'] = waf_flow_engine_protection_results.ip_count_block_mode_extra_parameter
+        data['req_count_block_time'] = waf_flow_engine_protection_results.req_count_block_time
+        data['req_rate_block_time'] = waf_flow_engine_protection_results.req_rate_block_time
         return_result['result'] = True
         return_result['message'] = data
         return JsonResponse(return_result, safe=False)

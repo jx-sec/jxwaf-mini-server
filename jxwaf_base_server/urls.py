@@ -37,6 +37,9 @@ from server.soc_web_report import *
 from server.soc_flow_report import *
 from server.soc_attack_event import *
 from server.soc_request_statistics import *
+from server.waf_scan_attack_protection import *
+from server.waf_web_page_tamper_proof import *
+from server.waf_flow_black_ip import *
 
 urlpatterns = [
     #    url(r'^admin/', admin.site.urls),
@@ -195,4 +198,31 @@ urlpatterns = [
     url(r'^demo_env_init$', demo_env_init),
 
     url(r'^api/add_name_list_item$', api_add_name_list_item),
+
+    url(r'^waf/waf_get_scan_attack_protection_list', waf_get_scan_attack_protection_list),
+    url(r'^waf/waf_del_scan_attack_protection', waf_del_scan_attack_protection),
+    url(r'^waf/waf_edit_scan_attack_protection_status', waf_edit_scan_attack_protection_status),
+    url(r'^waf/waf_edit_scan_attack_protection', waf_edit_scan_attack_protection),
+    url(r'^waf/waf_get_scan_attack_protection', waf_get_scan_attack_protection),
+    url(r'^waf/waf_create_scan_attack_protection', waf_create_scan_attack_protection),
+    url(r'^waf/waf_exchange_scan_attack_protection_priority', waf_exchange_scan_attack_protection_priority),
+    url(r'^waf/waf_load_scan_attack_protection', waf_load_scan_attack_protection),
+    url(r'^waf/waf_backup_scan_attack_protection', waf_backup_scan_attack_protection),
+
+    url(r'^waf/waf_get_web_page_tamper_proof_list', waf_get_web_page_tamper_proof_list),
+    url(r'^waf/waf_del_web_page_tamper_proof', waf_del_web_page_tamper_proof),
+    url(r'^waf/waf_edit_web_page_tamper_proof_status', waf_edit_web_page_tamper_proof_status),
+    url(r'^waf/waf_edit_web_page_tamper_proof', waf_edit_web_page_tamper_proof),
+    url(r'^waf/waf_get_web_page_tamper_proof', waf_get_web_page_tamper_proof),
+    url(r'^waf/waf_create_web_page_tamper_proof', waf_create_web_page_tamper_proof),
+    url(r'^waf/waf_exchange_web_page_tamper_proof_priority', waf_exchange_web_page_tamper_proof_priority),
+    url(r'^waf/waf_load_web_page_tamper_proof', waf_load_web_page_tamper_proof),
+    url(r'^waf/waf_backup_web_page_tamper_proof', waf_backup_web_page_tamper_proof),
+
+    url(r'^waf/waf_get_flow_black_ip_list', waf_get_flow_black_ip_list),
+    url(r'^waf/waf_del_flow_black_ip', waf_del_flow_black_ip),
+    url(r'^waf/waf_create_flow_black_ip', waf_create_flow_black_ip),
+    url(r'^waf/waf_edit_flow_black_ip', waf_edit_flow_black_ip),
+    url(r'^waf/waf_search_flow_black_ip', waf_search_flow_black_ip),
+    url(r'^waf/api_add_flow_black_ip', api_add_flow_black_ip)
 ]
