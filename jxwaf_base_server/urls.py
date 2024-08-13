@@ -218,6 +218,7 @@ urlpatterns = [
     url(r'^waf/waf_exchange_web_page_tamper_proof_priority', waf_exchange_web_page_tamper_proof_priority),
     url(r'^waf/waf_load_web_page_tamper_proof', waf_load_web_page_tamper_proof),
     url(r'^waf/waf_backup_web_page_tamper_proof', waf_backup_web_page_tamper_proof),
+    url(r'^waf/waf_get_cache_page_url', waf_get_cache_page_url),
 
     url(r'^waf/waf_get_flow_black_ip_list', waf_get_flow_black_ip_list),
     url(r'^waf/waf_del_flow_black_ip', waf_del_flow_black_ip),

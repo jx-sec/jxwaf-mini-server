@@ -25,6 +25,7 @@ def waf_get_flow_rule_protection_list(request):
                          'exceed_count': result.exceed_count,
                          'rule_action': result.rule_action,
                          'action_value': result.action_value,
+                         'block_time': result.block_time,
                          'status': result.status,
                          'rule_order_time': result.rule_order_time
                          }
@@ -105,11 +106,12 @@ def waf_edit_flow_rule_protection(request):
         exceed_count = json_data['exceed_count']
         rule_action = json_data['rule_action']
         action_value = json_data['action_value']
+        block_time = json_data['block_time']
         try:
             waf_flow_rule_protection.objects.filter(domain=domain).filter(user_id=user_id).filter(
                 rule_name=rule_name).update(
                 rule_detail=rule_detail, rule_matchs=rule_matchs, rule_action=rule_action, action_value=action_value,
-                filter=filter,entity=entity,stat_time=stat_time,exceed_count=exceed_count
+                filter=filter, entity=entity, stat_time=stat_time, exceed_count=exceed_count, block_time=block_time
             )
             return_result['result'] = True
             return JsonResponse(return_result, safe=False)
@@ -142,6 +144,7 @@ def waf_get_flow_rule_protection(request):
         data['exceed_count'] = result.exceed_count
         data['rule_action'] = result.rule_action
         data['action_value'] = result.action_value
+        data['block_time'] = result.block_time
         data['rule_order_time'] = result.rule_order_time
         return_result['message'] = data
         return_result['result'] = True
@@ -161,9 +164,14 @@ def waf_create_flow_rule_protection(request):
         domain = json_data['domain']
         rule_name = json_data['rule_name']
         rule_detail = json_data['rule_detail']
+        filter = json_data['filter']
         rule_matchs = json_data['rule_matchs']
+        entity = json_data['entity']
+        stat_time = json_data['stat_time']
+        exceed_count = json_data['exceed_count']
         rule_action = json_data['rule_action']
         action_value = json_data['action_value']
+        block_time = json_data['block_time']
         rule_count = waf_flow_rule_protection.objects.filter(user_id=user_id).filter(domain=domain).filter(
             rule_name=rule_name).count()
         if rule_count != 0:
@@ -173,7 +181,9 @@ def waf_create_flow_rule_protection(request):
         waf_flow_rule_protection.objects.create(user_id=user_id, rule_name=rule_name, rule_detail=rule_detail,
                                                 rule_matchs=rule_matchs, rule_action=rule_action,
                                                 action_value=action_value,
-                                                rule_order_time=int(time.time()), domain=domain)
+                                                rule_order_time=int(time.time()), domain=domain, filter=filter,
+                                                entity=entity, stat_time=stat_time, exceed_count=exceed_count,
+                                                block_time=block_time)
 
         return_result['message'] = 'create_success'
         return_result['result'] = True

@@ -88,7 +88,7 @@ def waf_update(request):
                         source_ip.append(process_domain)
             white_ip_list = {}
             if result.advanced_conf == 'true' and result.pre_proxy == 'true':
-                #white_ip_list = list_to_dict(get_all_ips(str(result.white_ip_list).split(',')))
+                # white_ip_list = list_to_dict(get_all_ips(str(result.white_ip_list).split(',')))
                 white_ip_list = str(result.white_ip_list).split(',')
             data = {
                 'http': result.http,
@@ -115,10 +115,13 @@ def waf_update(request):
                 'web_engine_protection': result.web_engine_protection,
                 'web_rule_protection': result.web_rule_protection,
                 'web_white_rule': result.web_white_rule,
+                'scan_attack_protection': result.scan_attack_protection,
+                'web_page_tamper_proof': result.web_page_tamper_proof,
                 'flow_engine_protection': result.flow_engine_protection,
                 'flow_rule_protection': result.flow_rule_protection,
                 'flow_white_rule': result.flow_white_rule,
-                'flow_ip_region_block': result.flow_ip_region_block
+                'flow_ip_region_block': result.flow_ip_region_block,
+                'flow_black_ip': result.flow_black_ip
             }
             waf_protection_data[result.domain] = data
         data_result['waf_protection_data'] = waf_protection_data
@@ -158,6 +161,49 @@ def waf_update(request):
             waf_web_rule_protection_data[domain] = web_rule_protection_data[domain]
         data_result['waf_web_rule_protection_data'] = waf_web_rule_protection_data
 
+        waf_scan_attack_protection_data = {}
+        scan_attack_protection_results = waf_scan_attack_protection.objects.filter(user_id=user_id).filter(
+            status='true').order_by('rule_order_time')
+        scan_attack_protection_data = {}
+        for result in scan_attack_protection_results:
+            if not scan_attack_protection_data.has_key(result.domain):
+                scan_attack_protection_data[result.domain] = []
+            scan_attack_protection_data[result.domain].append(
+                {
+                    'rule_name': result.rule_name,
+                    'rule_module': json.loads(result.rule_module),
+                    'statics_object': json.loads(result.statics_object),
+                    'statics_time': result.statics_time,
+                    'statics_count': result.statics_count,
+                    'rule_action': result.rule_action,
+                    'action_value': result.action_value,
+                    'block_time': result.block_time
+                }
+            )
+        for domain in scan_attack_protection_data.keys():
+            waf_scan_attack_protection_data[domain] = scan_attack_protection_data[domain]
+        data_result['waf_scan_attack_protection_data'] = waf_scan_attack_protection_data
+
+        waf_web_page_tamper_proof_data = {}
+        web_page_tamper_proof_results = waf_web_page_tamper_proof.objects.filter(user_id=user_id).filter(
+            status='true').order_by('rule_order_time')
+        web_page_tamper_proof_data = {}
+        for result in web_page_tamper_proof_results:
+            if not web_page_tamper_proof_data.has_key(result.domain):
+                web_page_tamper_proof_data[result.domain] = []
+            web_page_tamper_proof_data[result.domain].append(
+                {
+                    'rule_name': result.rule_name,
+                    'rule_matchs': json.loads(result.rule_matchs),
+                    'cache_page_url': result.cache_page_url,
+                    'cache_content_type': result.cache_content_type,
+                    'cache_page_content': result.cache_page_content,
+                }
+            )
+        for domain in web_page_tamper_proof_data.keys():
+            waf_web_page_tamper_proof_data[domain] = web_page_tamper_proof_data[domain]
+        data_result['waf_web_page_tamper_proof_data'] = waf_web_page_tamper_proof_data
+
         waf_web_white_rule_data = {}
         web_white_rule_results = waf_web_white_rule.objects.filter(user_id=user_id).filter(
             status='true').order_by('rule_order_time')
@@ -186,9 +232,11 @@ def waf_update(request):
                 'req_count_stat_time_period': result.req_count_stat_time_period,
                 'req_count_block_mode': result.req_count_block_mode,
                 'req_count_block_mode_extra_parameter': result.req_count_block_mode_extra_parameter,
+                'req_count_block_time': result.req_count_block_time,
                 'req_rate': result.req_rate,
                 'req_rate_block_mode': result.req_rate_block_mode,
                 'req_rate_block_mode_extra_parameter': result.req_rate_block_mode_extra_parameter,
+                'req_rate_block_time': result.req_rate_block_time,
                 'slow_cc_check': result.slow_cc_check,
                 'domain_rate': result.domain_rate,
                 'slow_cc_block_mode': result.slow_cc_block_mode,
@@ -214,9 +262,14 @@ def waf_update(request):
             flow_rule_protection_data[result.domain].append(
                 {
                     'rule_name': result.rule_name,
+                    'filter': result.filter,
                     'rule_matchs': json.loads(result.rule_matchs),
+                    'entity': json.loads(result.entity),
+                    'stat_time': result.stat_time,
+                    'exceed_count': result.exceed_count,
                     'rule_action': result.rule_action,
-                    'action_value': result.action_value
+                    'action_value': result.action_value,
+                    'block_time': result.block_time
                 }
             )
         for domain in flow_rule_protection_data.keys():
@@ -257,6 +310,24 @@ def waf_update(request):
             }
             waf_flow_ip_region_block_data[result.domain] = data
         data_result['waf_flow_ip_region_block_data'] = waf_flow_ip_region_block_data
+
+        now_time = int(time.time())
+        waf_flow_black_ip.objects.filter(user_id=user_id).filter(expire_time__gt=0).filter(
+            expire_time__lt=now_time).delete()
+        waf_flow_black_ip_data = {}
+        flow_black_ip_results = waf_flow_black_ip.objects.filter(user_id=user_id)
+        flow_black_ip_data = {}
+        for result in flow_black_ip_results:
+            if not flow_black_ip_data.has_key(result.domain):
+                flow_black_ip_data[result.domain] = {}
+            flow_black_ip_data[result.domain][result.ip] = {
+                'block_action': result.block_action,
+                'action_value': result.action_value
+            }
+
+        for domain in flow_black_ip_data.keys():
+            waf_flow_black_ip_data[domain] = flow_black_ip_data[domain]
+        data_result['waf_flow_black_ip_data'] = waf_flow_black_ip_data
 
         waf_ssl_manage_data = {}
         waf_ssl_manage_results = waf_ssl_manage.objects.filter(user_id=user_id)

@@ -35,7 +35,7 @@ def waf_get_flow_black_ip_list(request):
                 expire_time = "永久生效"
             else:
                 expire_time = time.strftime('%Y-%m-%d %H:%M:%S',
-                                            time.localtime(int(result.name_list_item_expire_time)))
+                                            time.localtime(int(result.expire_time)))
             data.append({
                 'ip': result.ip,
                 'detail': result.detail,
@@ -100,10 +100,10 @@ def waf_create_flow_black_ip(request):
         count = waf_flow_black_ip.objects.filter(user_id=user_id).filter(
             domain=domain).filter(
             ip=ip).count()
-        if ip_expire == "true":
+        if ip_expire == "false":
             expire_time = 0
         else:
-            expire_time = int(time.time()) + expire_time
+            expire_time = int(time.time()) + int(expire_time)
         if count == 0:
             waf_flow_black_ip.objects.create(user_id=user_id, domain=domain,
                                              ip=ip,
@@ -132,10 +132,10 @@ def waf_edit_flow_black_ip(request):
         expire_time = json_data['expire_time']
         block_action = json_data['block_action']
         action_value = json_data['action_value']
-        if ip_expire == "true":
+        if ip_expire == "false":
             expire_time = 0
         else:
-            expire_time = int(time.time()) + expire_time
+            expire_time = int(time.time()) + int(expire_time)
         waf_flow_black_ip.objects.filter(user_id=user_id).filter(
             domain=domain).filter(
             ip=ip).update(

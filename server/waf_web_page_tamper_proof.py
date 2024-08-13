@@ -4,6 +4,7 @@ from server.models import *
 from django.db.models import Q
 import time
 from django.http import HttpResponse
+import urllib2
 
 
 def waf_get_web_page_tamper_proof_list(request):
@@ -169,6 +170,26 @@ def waf_create_web_page_tamper_proof(request):
                                                  rule_order_time=int(time.time()), domain=domain)
 
         return_result['message'] = 'create_success'
+        return_result['result'] = True
+        return JsonResponse(return_result, safe=False)
+    except Exception as e:
+        return_result['result'] = False
+        return_result['message'] = str(e)
+        return_result['errCode'] = 400
+        return JsonResponse(return_result, safe=False)
+
+
+def waf_get_cache_page_url(request):
+    return_result = {}
+    try:
+        user_id = request.session['user_id']
+        json_data = json.loads(request.body)
+        cache_page_url = json_data['cache_page_url']
+        response = urllib2.urlopen(cache_page_url)
+        cache_page_content = response.read()
+        cache_content_type = response.info().get('Content-Type')
+        return_result['cache_page_content'] = cache_page_content
+        return_result['cache_content_type'] = cache_content_type
         return_result['result'] = True
         return JsonResponse(return_result, safe=False)
     except Exception as e:

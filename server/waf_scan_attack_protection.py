@@ -25,7 +25,8 @@ def waf_get_scan_attack_protection_list(request):
                          'rule_action': result.rule_action,
                          'action_value': result.action_value,
                          'status': result.status,
-                         'rule_order_time': result.rule_order_time
+                         'rule_order_time': result.rule_order_time,
+                         'block_time': result.block_time
                          }
                         )
         return_result['result'] = True
@@ -103,12 +104,13 @@ def waf_edit_scan_attack_protection(request):
         statics_count = json_data['statics_count']
         rule_action = json_data['rule_action']
         action_value = json_data['action_value']
+        block_time = json_data['block_time']
         try:
             waf_scan_attack_protection.objects.filter(domain=domain).filter(user_id=user_id).filter(
                 rule_name=rule_name).update(
                 rule_detail=rule_detail, rule_module=rule_module, statics_object=statics_object,
                 statics_time=statics_time, statics_count=statics_count,
-                rule_action=rule_action, action_value=action_value
+                rule_action=rule_action, action_value=action_value, block_time=block_time
             )
             return_result['result'] = True
             return JsonResponse(return_result, safe=False)
@@ -141,6 +143,7 @@ def waf_get_scan_attack_protection(request):
         data['rule_action'] = result.rule_action
         data['action_value'] = result.action_value
         data['rule_order_time'] = result.rule_order_time
+        data['block_time'] = result.block_time
         return_result['message'] = data
         return_result['result'] = True
         return JsonResponse(return_result, safe=False)
@@ -165,6 +168,7 @@ def waf_create_scan_attack_protection(request):
         statics_count = json_data['statics_count']
         rule_action = json_data['rule_action']
         action_value = json_data['action_value']
+        block_time = json_data['block_time']
         rule_count = waf_scan_attack_protection.objects.filter(user_id=user_id).filter(domain=domain).filter(
             rule_name=rule_name).count()
         if rule_count != 0:
@@ -176,7 +180,8 @@ def waf_create_scan_attack_protection(request):
                                                   statics_time=statics_time, statics_count=statics_count,
                                                   rule_action=rule_action,
                                                   action_value=action_value,
-                                                  rule_order_time=int(time.time()), domain=domain)
+                                                  rule_order_time=int(time.time()), domain=domain,
+                                                  block_time=block_time)
 
         return_result['message'] = 'create_success'
         return_result['result'] = True
@@ -235,16 +240,22 @@ def waf_load_scan_attack_protection(request):
         for rule in rules:
             rule_name = rule['rule_name']
             rule_detail = rule['rule_detail']
-            rule_matchs = rule['rule_matchs']
+            rule_module = rule['rule_module']
+            statics_object = rule['statics_object']
+            statics_time = rule['statics_time']
+            statics_count = rule['statics_count']
             rule_action = rule['rule_action']
             action_value = rule['action_value']
+            block_time = rule['block_time']
             rule_count = waf_scan_attack_protection.objects.filter(user_id=user_id).filter(domain=domain).filter(
                 rule_name=rule_name).count()
             if rule_count != 0:
                 continue
             waf_scan_attack_protection.objects.create(user_id=user_id, rule_name=rule_name, rule_detail=rule_detail,
-                                                      rule_matchs=rule_matchs, rule_action=rule_action,
-                                                      action_value=action_value,
+                                                      rule_module=rule_module, statics_object=statics_object,
+                                                      statics_time=statics_time, statics_count=statics_count,
+                                                      rule_action=rule_action, action_value=action_value,
+                                                      block_time=block_time,
                                                       rule_order_time=int(time.time()), domain=domain)
         return_result['message'] = 'load_success'
         return_result['result'] = True
@@ -270,13 +281,17 @@ def waf_backup_scan_attack_protection(request):
             rules.append({
                 'rule_name': rule_name_result.rule_name,
                 'rule_detail': rule_name_result.rule_detail,
-                'rule_matchs': rule_name_result.rule_matchs,
+                'rule_module': rule_name_result.rule_module,
+                'statics_object': rule_name_result.statics_object,
+                'statics_time': rule_name_result.statics_time,
+                'statics_count': rule_name_result.statics_count,
                 'rule_action': rule_name_result.rule_action,
-                'action_value': rule_name_result.action_value
+                'action_value': rule_name_result.action_value,
+                'block_time': rule_name_result.block_time
             }
             )
         response = HttpResponse(json.dumps(rules), content_type='application/json')
-        response['Content-Disposition'] = 'attachment; filename="web_white_rule_data.json"'
+        response['Content-Disposition'] = 'attachment; filename="scan_attack_protection_data.json"'
         return response
     except Exception as e:
         return_result['result'] = False
