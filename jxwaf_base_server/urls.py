@@ -173,6 +173,9 @@ urlpatterns = [
     url(r'^soc/soc_web_report_attack_type_top$', soc_web_report_attack_type_top),
     url(r'^soc/soc_web_report_attack_ip_top$', soc_web_report_attack_ip_top),
     url(r'^soc/soc_web_report_attack_isocode_top$', soc_web_report_attack_isocode_top),
+    url(r'^soc/soc_web_report_attack_city_geoip', soc_web_report_attack_city_geoip),
+    url(r'^soc/soc_web_report_attack_city_top', soc_web_report_attack_city_top),
+    url(r'^soc/soc_web_report_attack_city_count_total', soc_web_report_attack_city_count_total),
 
     url(r'^soc/soc_flow_report_attack_count_total$', soc_flow_report_attack_count_total),
     url(r'^soc/soc_flow_report_attack_api_count_total$', soc_flow_report_attack_api_count_total),
@@ -184,6 +187,9 @@ urlpatterns = [
     url(r'^soc/soc_flow_report_attack_type_top$', soc_flow_report_attack_type_top),
     url(r'^soc/soc_flow_report_attack_ip_top$', soc_flow_report_attack_ip_top),
     url(r'^soc/soc_flow_report_attack_isocode_top$', soc_flow_report_attack_isocode_top),
+    url(r'^soc/soc_flow_report_attack_city_geoip', soc_flow_report_attack_city_geoip),
+    url(r'^soc/soc_flow_report_attack_city_top', soc_flow_report_attack_city_top),
+    url(r'^soc/soc_flow_report_attack_city_count_total', soc_flow_report_attack_city_count_total),
 
     url(r'^soc/soc_attack_event_get_list$', soc_attack_event_get_list),
     url(r'^soc/soc_attack_event_get_behave_track$', soc_attack_event_get_behave_track),

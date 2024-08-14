@@ -53,7 +53,8 @@ def soc_query_request_statistics(request):
     countIf(UpstreamStatus LIKE '4%%') AS error_4xx_upstream_requests,
     countIf(UpstreamStatus LIKE '5%%') AS error_5xx_upstream_requests,
     round(AVG(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS avg_upstream_time_ms,
-    round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms
+    round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms,
+    countIf(JxwafDevid != '') AS jxwaf_devid_count
         FROM jxlog
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0) AND Host != ''    
         """
@@ -80,7 +81,8 @@ def soc_query_request_statistics(request):
                 'error_4xx_upstream_requests': stats[14],
                 'error_5xx_upstream_requests': stats[15],
                 'avg_upstream_time_ms': stats[16],
-                'median_upstream_time_ms': stats[17]
+                'median_upstream_time_ms': stats[17],
+                'jxwaf_devid_count': stats[18]
             })
 
         else:
@@ -145,7 +147,8 @@ def soc_query_domain_request_statistics(request):
     countIf(UpstreamStatus LIKE '4%%') AS error_4xx_upstream_requests,
     countIf(UpstreamStatus LIKE '5%%') AS error_5xx_upstream_requests,
     round(AVG(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS avg_upstream_time_ms,
-    round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms
+    round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms,
+    countIf(JxwafDevid != '') AS jxwaf_devid_count
         FROM jxlog
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host = %(domain)s   
         """
@@ -172,7 +175,8 @@ def soc_query_domain_request_statistics(request):
                 'error_4xx_upstream_requests': stats[14],
                 'error_5xx_upstream_requests': stats[15],
                 'avg_upstream_time_ms': stats[16],
-                'median_upstream_time_ms': stats[17]
+                'median_upstream_time_ms': stats[17],
+                'jxwaf_devid_count': stats[18]
             })
 
         else:
@@ -229,7 +233,8 @@ def soc_query_request_statistics_detail(request):
     round(AVG(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS avg_upstream_time_ms,
     round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms,
     ROUND(MAX(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS max_upstream_time_ms,
-    ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms
+    ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms,
+    COUNT(DISTINCT IF(UpstreamAddr != '' and JxwafDevid != '', JxwafDevid, NULL)) AS upstream_jxwaf_devid_count
         FROM jxlog  
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host != ''  AND  UpstreamAddr != ''
         GROUP BY Host, UpstreamAddr
@@ -247,7 +252,8 @@ def soc_query_request_statistics_detail(request):
             'AvgUpstreamTimeMs': result[7],
             'MedianUpstreamTimeMs': result[8],
             'MaxUpstreamTimeMs': result[9],
-            'MinUpstreamTimeMs': result[10]
+            'MinUpstreamTimeMs': result[10],
+            'UpstreamJxwafDevidCount': result[11]
         } for result in stats_results]
         return_result.update({
             'result': True,
@@ -301,7 +307,8 @@ def soc_query_domain_request_statistics_detail(request):
     round(AVG(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS avg_upstream_time_ms,
     round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms,
     ROUND(MAX(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS max_upstream_time_ms,
-    ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms
+    ROUND(MIN(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS min_upstream_time_ms,
+    COUNT(DISTINCT IF(UpstreamAddr != '' and JxwafDevid != '', JxwafDevid, NULL)) AS upstream_jxwaf_devid_count
         FROM jxlog  
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0) AND Host = %(domain)s  AND  UpstreamAddr != '' 
         GROUP BY Host, UpstreamAddr
@@ -319,7 +326,9 @@ def soc_query_domain_request_statistics_detail(request):
             'AvgUpstreamTimeMs': result[7],
             'MedianUpstreamTimeMs': result[8],
             'MaxUpstreamTimeMs': result[9],
-            'MinUpstreamTimeMs': result[10]
+            'MinUpstreamTimeMs': result[10],
+            'UpstreamJxwafDevidCount': result[11]
+
         } for result in stats_results]
         return_result.update({
             'result': True,
