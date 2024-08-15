@@ -287,7 +287,7 @@ def waf_backup_web_page_tamper_proof(request):
             }
             )
         response = HttpResponse(json.dumps(rules), content_type='application/json')
-        response['Content-Disposition'] = 'attachment; filename="web_rule_protection_data.json"'
+        response['Content-Disposition'] = 'attachment; filename="web_page_tamper_proof_data.json"'
         return response
     except Exception as e:
         return_result['result'] = False
