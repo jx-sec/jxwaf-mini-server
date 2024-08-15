@@ -181,12 +181,12 @@ def waf_create_domain(request):
                         return_result['result'] = False
                         return_result['message'] = 'edit error,%s dns resolver error' % (process_domain)
                         return JsonResponse(return_result, safe=False)
-            if advanced_conf == 'true' and pre_proxy == 'true':
-                validate_ip_list_result = validate_ip_list(white_ip_list)
-                if not validate_ip_list_result:
-                    return_result['result'] = False
-                    return_result['message'] = 'validate_ip_list error'
-                    return JsonResponse(return_result, safe=False)
+            #if advanced_conf == 'true' and pre_proxy == 'true':
+            #    validate_ip_list_result = validate_ip_list(white_ip_list)
+            #    if not validate_ip_list_result:
+            #        return_result['result'] = False
+            #        return_result['message'] = 'validate_ip_list error'
+            #        return JsonResponse(return_result, safe=False)
             waf_domain.objects.create(user_id=user_id, domain=domain, http=http, https=https,
                                       source_ip=source_ip,
                                       source_http_port=source_http_port,
@@ -261,12 +261,12 @@ def waf_edit_domain(request):
                         return_result['result'] = False
                         return_result['message'] = 'edit error,%s dns resolver error' % (process_domain)
                         return JsonResponse(return_result, safe=False)
-            if advanced_conf == 'true' and pre_proxy == 'true':
-                validate_ip_list_result = validate_ip_list(white_ip_list)
-                if not validate_ip_list_result:
-                    return_result['result'] = False
-                    return_result['message'] = 'validate_ip_list error'
-                    return JsonResponse(return_result, safe=False)
+            #if advanced_conf == 'true' and pre_proxy == 'true':
+            #    validate_ip_list_result = validate_ip_list(white_ip_list)
+            #    if not validate_ip_list_result:
+            #        return_result['result'] = False
+            #        return_result['message'] = 'validate_ip_list error'
+            #        return JsonResponse(return_result, safe=False)
             waf_domain.objects.filter(domain=domain).filter(user_id=user_id).update(
                 http=http, https=https,
                 source_ip=source_ip,
