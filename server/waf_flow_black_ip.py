@@ -74,7 +74,6 @@ def waf_get_flow_black_ip(request):
         data['expire_time'] = result.expire_time
         data['block_action'] = result.block_action
         data['action_value'] = result.action_value
-        data['exceed_count'] = result.exceed_count
         return_result['message'] = data
         return_result['result'] = True
         return JsonResponse(return_result, safe=False)
