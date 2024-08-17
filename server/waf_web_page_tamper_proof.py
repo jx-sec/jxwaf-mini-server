@@ -247,15 +247,17 @@ def waf_load_web_page_tamper_proof(request):
             rule_name = rule['rule_name']
             rule_detail = rule['rule_detail']
             rule_matchs = rule['rule_matchs']
-            rule_action = rule['rule_action']
-            action_value = rule['action_value']
+            cache_page_url = rule['cache_page_url']
+            cache_content_type = rule['cache_content_type']
+            cache_page_content = rule['cache_page_content']
             rule_count = waf_web_page_tamper_proof.objects.filter(user_id=user_id).filter(domain=domain).filter(
                 rule_name=rule_name).count()
             if rule_count != 0:
                 continue
             waf_web_page_tamper_proof.objects.create(user_id=user_id, rule_name=rule_name, rule_detail=rule_detail,
-                                                     rule_matchs=rule_matchs, rule_action=rule_action,
-                                                     action_value=action_value,
+                                                     rule_matchs=rule_matchs, cache_page_url=cache_page_url,
+                                                     cache_content_type=cache_content_type,
+                                                     cache_page_content=cache_page_content,
                                                      rule_order_time=int(time.time()), domain=domain)
         return_result['message'] = 'load_success'
         return_result['result'] = True
@@ -282,8 +284,9 @@ def waf_backup_web_page_tamper_proof(request):
                 'rule_name': rule_name_result.rule_name,
                 'rule_detail': rule_name_result.rule_detail,
                 'rule_matchs': rule_name_result.rule_matchs,
-                'rule_action': rule_name_result.rule_action,
-                'action_value': rule_name_result.action_value
+                'cache_page_url': rule_name_result.cache_page_url,
+                'cache_content_type': rule_name_result.cache_content_type,
+                'cache_page_content': rule_name_result.cache_page_content
             }
             )
         response = HttpResponse(json.dumps(rules), content_type='application/json')
