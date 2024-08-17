@@ -60,6 +60,30 @@ def waf_get_flow_black_ip_list(request):
         return JsonResponse(return_result, safe=False)
 
 
+def waf_get_flow_black_ip(request):
+    return_result = {}
+    data = {}
+    try:
+        user_id = request.session['user_id']
+        json_data = json.loads(request.body)
+        domain = json_data['domain']
+        ip = json_data['ip']
+        result = waf_flow_black_ip.objects.get(Q(user_id=user_id) & Q(domain=domain) & Q(ip=ip))
+        data['ip'] = result.ip
+        data['detail'] = result.detail
+        data['expire_time'] = result.expire_time
+        data['block_action'] = result.block_action
+        data['action_value'] = result.action_value
+        return_result['message'] = data
+        return_result['result'] = True
+        return JsonResponse(return_result, safe=False)
+    except Exception as e:
+        return_result['result'] = False
+        return_result['message'] = str(e)
+        return_result['errCode'] = 400
+        return JsonResponse(return_result, safe=False)
+
+
 def waf_del_flow_black_ip(request):
     return_result = {}
     try:

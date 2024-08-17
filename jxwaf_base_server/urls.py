@@ -231,5 +231,6 @@ urlpatterns = [
     url(r'^waf/waf_create_flow_black_ip', waf_create_flow_black_ip),
     url(r'^waf/waf_edit_flow_black_ip', waf_edit_flow_black_ip),
     url(r'^waf/waf_search_flow_black_ip', waf_search_flow_black_ip),
+    url(r'^waf/waf_get_flow_black_ip', waf_get_flow_black_ip),
     url(r'^waf/api_add_flow_black_ip', api_add_flow_black_ip)
 ]
