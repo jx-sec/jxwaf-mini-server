@@ -50,7 +50,7 @@ def soc_query_log(request):
                              'AND toDateTime(%(to_time)s){additional_where}').format(additional_where=additional_where)
 
         req_sql = (
-            'SELECT Host,RequestUuid,WafNodeUUID,UpstreamAddr,UpstreamResponseTime,UpstreamStatus,Status,ProcessTime,RequestTime,RawHeaders,Scheme,Version,URI,RequestUri,Method,QueryString,RawBody,SrcIP,UserAgent,Cookie,RawRespHeaders,RawRespBody,IsoCode,City,WafModule,WafPolicy,WafAction,WafExtra FROM jxlog '
+            'SELECT Host,RequestUuid,WafNodeUUID,UpstreamAddr,UpstreamResponseTime,UpstreamStatus,Status,ProcessTime,RequestTime,RawHeaders,Scheme,Version,URI,RequestUri,Method,QueryString,RawBody,SrcIP,UserAgent,Cookie,RawRespHeaders,RawRespBody,IsoCode,City,WafModule,WafPolicy,WafAction,WafExtra,RawSrcIP FROM jxlog '
             'WHERE toDateTime(RequestTime) BETWEEN toDateTime(%(from_time)s) '
             'AND toDateTime(%(to_time)s){additional_where} order by toDateTime(RequestTime) desc LIMIT %(page_size)s OFFSET %(offset)s ').format(
             additional_where=additional_where)

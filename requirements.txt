@@ -4,3 +4,4 @@ Pillow==5.0.0
 DjangoCaptcha==0.3.5
 dnspython==1.16.0
 uwsgi==2.0.18
+requests==2.27.1
