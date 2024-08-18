@@ -305,7 +305,7 @@ def soc_flow_report_attack_city_count_total(request):
         req_sql = """
             SELECT COUNT(DISTINCT City)
             FROM jxlog
-            WHERE (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
+            WHERE City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
             {domain_filter}
             {time_filter}
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -862,7 +862,7 @@ def soc_flow_report_attack_city_top(request):
             City,
             COUNT(*) AS attack_count
             FROM jxlog
-            WHERE (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
+            WHERE City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
             {domain_filter}
             {time_filter} GROUP BY City  ORDER BY attack_count DESC LIMIT 5
         """.format(domain_filter=domain_filter, time_filter=time_filter)
