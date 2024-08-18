@@ -56,8 +56,8 @@ def soc_query_request_statistics(request):
     round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms,
     COUNT(DISTINCT IF(JxwafDevid != '', JxwafDevid, NULL)) AS jxwaf_devid_count,
     COUNT(DISTINCT IF(JxwafDevid != '' AND UpstreamAddr != '', JxwafDevid, NULL)) AS upstream_jxwaf_devid_count,
-    COUNT(DISTINCT IF(WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass'), JxwafDevid, NULL)) AS jxwaf_devid_attack,
-    COUNT(DISTINCT IF(WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass','watch'), JxwafDevid, NULL)) AS jxwaf_devid_intercepted
+    COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass'), JxwafDevid, NULL)) AS jxwaf_devid_attack,
+    COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass','watch'), JxwafDevid, NULL)) AS jxwaf_devid_intercepted
         FROM jxlog
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0) AND Host != ''    
         """
@@ -157,8 +157,8 @@ def soc_query_domain_request_statistics(request):
     round(quantileExact(0.5)(toFloat64(NULLIF(UpstreamResponseTime, ''))), 3) AS median_upstream_time_ms,
     COUNT(DISTINCT IF(JxwafDevid != '', JxwafDevid, NULL)) AS jxwaf_devid_count,
     COUNT(DISTINCT IF(JxwafDevid != '' AND UpstreamAddr != '', JxwafDevid, NULL)) AS upstream_jxwaf_devid_count,
-    COUNT(DISTINCT IF(WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass'), JxwafDevid, NULL)) AS jxwaf_devid_attack,
-    COUNT(DISTINCT IF(WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass','watch'), JxwafDevid, NULL)) AS jxwaf_devid_intercepted        FROM jxlog
+    COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass'), JxwafDevid, NULL)) AS jxwaf_devid_attack,
+    COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass','watch'), JxwafDevid, NULL)) AS jxwaf_devid_intercepted        FROM jxlog
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host = %(domain)s   
         """
 
@@ -340,7 +340,6 @@ def soc_query_domain_request_statistics_detail(request):
             'MaxUpstreamTimeMs': result[9],
             'MinUpstreamTimeMs': result[10],
             'UpstreamJxwafDevidCount': result[11]
-
         } for result in stats_results]
         return_result.update({
             'result': True,
