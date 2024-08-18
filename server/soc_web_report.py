@@ -240,7 +240,7 @@ def soc_web_report_attack_isocode_count_total(request):
         req_sql = """
             SELECT COUNT(DISTINCT IsoCode)
             FROM jxlog
-            WHERE (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
+            WHERE IsoCode != '' AND (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
             {domain_filter}
             {time_filter}
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -304,7 +304,7 @@ def soc_web_report_attack_city_count_total(request):
         req_sql = """
             SELECT COUNT(DISTINCT City)
             FROM jxlog
-            WHERE (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
+            WHERE City !='' AND (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
             {domain_filter}
             {time_filter}
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -794,7 +794,7 @@ def soc_web_report_attack_isocode_top(request):
             IsoCode,
             COUNT(*) AS attack_count
             FROM jxlog
-            WHERE (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
+            WHERE IsoCode != '' AND (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
             {domain_filter}
             {time_filter} GROUP BY IsoCode  ORDER BY attack_count DESC LIMIT 5
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -859,7 +859,7 @@ def soc_web_report_attack_city_top(request):
             City,
             COUNT(*) AS attack_count
             FROM jxlog
-            WHERE (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
+            WHERE City !='' AND (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
             {domain_filter}
             {time_filter} GROUP BY City  ORDER BY attack_count DESC LIMIT 5
         """.format(domain_filter=domain_filter, time_filter=time_filter)
