@@ -305,7 +305,7 @@ def soc_flow_report_attack_city_count_total(request):
         req_sql = """
             SELECT COUNT(DISTINCT City)
             FROM jxlog
-            WHERE City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
+            WHERE IsoCode = 'CN' AND City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
             {domain_filter}
             {time_filter}
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -444,7 +444,7 @@ def soc_flow_report_attack_city_geoip(request):
             City,
             COUNT(*) AS attack_count
             FROM jxlog
-            WHERE  City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
+            WHERE  IsoCode = 'CN' AND City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
             {domain_filter}
             {time_filter} GROUP BY  City ORDER BY attack_count DESC
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -462,7 +462,7 @@ def soc_flow_report_attack_city_geoip(request):
         attack_locations = []
         for City, attack_count in result:
             attack_locations.append({
-                'City': City,
+                'name': City,
                 'attack_count': attack_count
 
             })
@@ -862,7 +862,7 @@ def soc_flow_report_attack_city_top(request):
             City,
             COUNT(*) AS attack_count
             FROM jxlog
-            WHERE City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
+            WHERE IsoCode = 'CN' AND City !='' AND (WafModule = 'flow_engine_protection' or WafModule = 'flow_rule_protection' or WafModule = 'flow_ip_region_block')
             {domain_filter}
             {time_filter} GROUP BY City  ORDER BY attack_count DESC LIMIT 5
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -876,7 +876,7 @@ def soc_flow_report_attack_city_top(request):
             send_receive_timeout=30
         )
         result = client.execute(req_sql)
-        top_apis = [{"City": row[0], "attack_count": row[1]} for row in result]
+        top_apis = [{"name": row[0], "attack_count": row[1]} for row in result]
 
         return_result['result'] = True
         return_result['result'] = top_apis
