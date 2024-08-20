@@ -242,9 +242,14 @@ def waf_load_flow_rule_protection(request):
         for rule in rules:
             rule_name = rule['rule_name']
             rule_detail = rule['rule_detail']
+            filter = rule['filter']
             rule_matchs = rule['rule_matchs']
+            entity = rule['entity']
+            stat_time = rule['stat_time']
+            exceed_count = rule['exceed_count']
             rule_action = rule['rule_action']
             action_value = rule['action_value']
+            block_time = rule['block_time']
             rule_count = waf_flow_rule_protection.objects.filter(user_id=user_id).filter(domain=domain).filter(
                 rule_name=rule_name).count()
             if rule_count != 0:
@@ -252,7 +257,9 @@ def waf_load_flow_rule_protection(request):
             waf_flow_rule_protection.objects.create(user_id=user_id, rule_name=rule_name, rule_detail=rule_detail,
                                                     rule_matchs=rule_matchs, rule_action=rule_action,
                                                     action_value=action_value,
-                                                    rule_order_time=int(time.time()), domain=domain)
+                                                    rule_order_time=int(time.time()), domain=domain,filter=filter,
+                                                    entity=entity,stat_time=stat_time,exceed_count=exceed_count,
+                                                    block_time=block_time)
         return_result['message'] = 'load_success'
         return_result['result'] = True
         return JsonResponse(return_result, safe=False)
@@ -277,9 +284,14 @@ def waf_backup_flow_rule_protection(request):
             rules.append({
                 'rule_name': rule_name_result.rule_name,
                 'rule_detail': rule_name_result.rule_detail,
+                'filter': rule_name_result.filter,
                 'rule_matchs': rule_name_result.rule_matchs,
+                'entity': rule_name_result.entity,
+                'stat_time': rule_name_result.stat_time,
+                'exceed_count': rule_name_result.exceed_count,
                 'rule_action': rule_name_result.rule_action,
-                'action_value': rule_name_result.action_value
+                'action_value': rule_name_result.action_value,
+                'block_time': rule_name_result.block_time
             }
             )
         response = HttpResponse(json.dumps(rules), content_type='application/json')
@@ -290,3 +302,4 @@ def waf_backup_flow_rule_protection(request):
         return_result['message'] = str(e)
         return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
+
