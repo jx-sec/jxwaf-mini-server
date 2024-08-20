@@ -343,6 +343,18 @@ def waf_conf_load(request):
                     flow_ip_region_block=data['flow_ip_region_block'],
                     flow_black_ip=data['flow_black_ip']
                 )
+            else:
+                waf_protection.objects.create(
+                    user_id=user_id,
+                    domain=data['domain'],
+                    web_engine_protection=data['web_engine_protection'],
+                    web_rule_protection=data['web_rule_protection'],
+                    web_white_rule=data['web_white_rule'],
+                    flow_engine_protection=data['flow_engine_protection'],
+                    flow_rule_protection=data['flow_rule_protection'],
+                    flow_white_rule=data['flow_white_rule'],
+                    flow_ip_region_block=data['flow_ip_region_block']
+                )
         waf_web_engine_protection.objects.filter(user_id=user_id).delete()
         for data in waf_web_engine_protection_data:
             waf_web_engine_protection.objects.create(
