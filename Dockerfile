@@ -3,8 +3,8 @@ FROM python:2.7-stretch
 WORKDIR /app
 COPY .  .
 
-RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirements.txt
-
+#RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirements.txt
+RUN pip install -i --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
