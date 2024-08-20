@@ -209,7 +209,9 @@ def waf_conf_backup(request):
         waf_analysis_component_data = list(waf_analysis_component.objects.filter(user_id=user_id).values())
         waf_ssl_manage_data = list(waf_ssl_manage.objects.filter(user_id=user_id).values())
         sys_conf_data = list(sys_conf.objects.filter(user_id=user_id).values())
-
+        waf_scan_attack_protection_data = list(waf_scan_attack_protection.objects.filter(user_id=user_id).values())
+        waf_web_page_tamper_proof_data = list(waf_web_page_tamper_proof.objects.filter(user_id=user_id).values())
+        waf_flow_black_ip_data = list(waf_flow_black_ip.objects.filter(user_id=user_id).values())
         return_result['waf_domain_data'] = waf_domain_data
         return_result['waf_protection_data'] = waf_protection_data
         return_result['waf_web_engine_protection_data'] = waf_web_engine_protection_data
@@ -225,6 +227,9 @@ def waf_conf_backup(request):
         return_result['waf_analysis_component_data'] = waf_analysis_component_data
         return_result['waf_ssl_manage_data'] = waf_ssl_manage_data
         return_result['sys_conf_data'] = sys_conf_data
+        return_result['waf_scan_attack_protection_data'] = waf_scan_attack_protection_data
+        return_result['waf_web_page_tamper_proof_data'] = waf_web_page_tamper_proof_data
+        return_result['waf_flow_black_ip_data'] = waf_flow_black_ip_data
 
         waf_conf_data = json.dumps(return_result)
         response = HttpResponse(waf_conf_data, content_type='application/json')
@@ -257,6 +262,54 @@ def waf_conf_load(request):
         waf_analysis_component_data = waf_conf_data['waf_analysis_component_data']
         waf_ssl_manage_data = waf_conf_data['waf_ssl_manage_data']
         sys_conf_data = waf_conf_data['sys_conf_data']
+        try:
+            waf_scan_attack_protection_data = waf_conf_data['waf_scan_attack_protection_data']
+            waf_scan_attack_protection.objects.filter(user_id=user_id).delete()
+            for data in waf_scan_attack_protection_data:
+                waf_scan_attack_protection.objects.create(
+                    user_id=user_id,
+                    rule_name=data['rule_name'],
+                    rule_detail=data['rule_detail'],
+                    rule_module=data['rule_module'],
+                    statics_object=data['statics_object'],
+                    statics_time=data['statics_time'],
+                    statics_count=data['statics_count'],
+                    rule_action=data['rule_action'],
+                    action_value=data['action_value'],
+                    block_time=data['block_time'],
+                    status = data['status'],
+                    rule_order_time = data['rule_order_time']
+                )
+            waf_web_page_tamper_proof_data = waf_conf_data['waf_web_page_tamper_proof_data']
+            waf_web_page_tamper_proof.objects.filter(user_id=user_id).delete()
+            for data in waf_web_page_tamper_proof_data:
+                waf_web_page_tamper_proof.objects.create(
+                    user_id=user_id,
+                    rule_name=data['rule_name'],
+                    rule_detail=data['rule_detail'],
+                    rule_matchs=data['rule_matchs'],
+                    cache_page_url=data['cache_page_url'],
+                    cache_content_type=data['cache_content_type'],
+                    cache_page_content=data['cache_page_content'],
+                    status=data['status'],
+                    rule_order_time=data['rule_order_time']
+                )
+            waf_flow_black_ip_data = waf_conf_data['waf_flow_black_ip_data']
+
+            waf_flow_black_ip.objects.filter(user_id=user_id).delete()
+            for data in waf_flow_black_ip_data:
+                waf_flow_black_ip.objects.create(
+                    user_id=user_id,
+                    domain=data['domain'],
+                    ip=data['ip'],
+                    detail=data['detail'],
+                    ip_expire=data['ip_expire'],
+                    expire_time=data['expire_time'],
+                    block_action=data['block_action'],
+                    action_value=data['action_value']
+                )
+        except:
+            pass
         waf_domain.objects.filter(user_id=user_id).delete()
         for data in waf_domain_data:
             waf_domain.objects.create(
@@ -326,42 +379,44 @@ def waf_conf_load(request):
             )
         waf_flow_engine_protection.objects.filter(user_id=user_id).delete()
         for data in waf_flow_engine_protection_data:
-            waf_flow_engine_protection.objects.create(
-                user_id=user_id,
-                domain=data['domain'],
-                high_freq_cc_check=data['high_freq_cc_check'],
-                req_count=data['req_count'],
-                req_count_stat_time_period=data['req_count_stat_time_period'],
-                req_count_block_mode=data['req_count_block_mode'],
-                req_count_block_mode_extra_parameter=data['req_count_block_mode_extra_parameter'],
-                req_rate=data['req_rate'],
-                req_rate_block_mode=data['req_rate_block_mode'],
-                req_rate_block_mode_extra_parameter=data['req_rate_block_mode_extra_parameter'],
-                slow_cc_check=data['slow_cc_check'],
-                domain_rate=data['domain_rate'],
-                slow_cc_block_mode=data['slow_cc_block_mode'],
-                slow_cc_block_mode_extra_parameter=data['slow_cc_block_mode_extra_parameter'],
-                ip_count=data['ip_count'],
-                ip_count_stat_time_period=data['ip_count_stat_time_period'],
-                ip_count_block_mode=data['ip_count_block_mode'],
-                ip_count_block_mode_extra_parameter=data['ip_count_block_mode_extra_parameter'],
-                emergency_mode_check=data['emergency_mode_check'],
-                emergency_mode_block_mode=data['emergency_mode_block_mode'],
-                emergency_mode_block_mode_extra_parameter=data['emergency_mode_block_mode_extra_parameter']
-            )
+            if 'req_count_block_time' in data:
+                waf_flow_engine_protection.objects.create(
+                    user_id=user_id,
+                    domain=data['domain'],
+                    high_freq_cc_check=data['high_freq_cc_check'],
+                    req_count=data['req_count'],
+                    req_count_stat_time_period=data['req_count_stat_time_period'],
+                    req_count_block_mode=data['req_count_block_mode'],
+                    req_count_block_mode_extra_parameter=data['req_count_block_mode_extra_parameter'],
+                    req_rate=data['req_rate'],
+                    req_rate_block_mode=data['req_rate_block_mode'],
+                    req_rate_block_mode_extra_parameter=data['req_rate_block_mode_extra_parameter'],
+                    slow_cc_check=data['slow_cc_check'],
+                    domain_rate=data['domain_rate'],
+                    slow_cc_block_mode=data['slow_cc_block_mode'],
+                    slow_cc_block_mode_extra_parameter=data['slow_cc_block_mode_extra_parameter'],
+                    ip_count=data['ip_count'],
+                    ip_count_stat_time_period=data['ip_count_stat_time_period'],
+                    ip_count_block_mode=data['ip_count_block_mode'],
+                    ip_count_block_mode_extra_parameter=data['ip_count_block_mode_extra_parameter'],
+                    emergency_mode_check=data['emergency_mode_check'],
+                    emergency_mode_block_mode=data['emergency_mode_block_mode'],
+                    emergency_mode_block_mode_extra_parameter=data['emergency_mode_block_mode_extra_parameter']
+                )
         waf_flow_rule_protection.objects.filter(user_id=user_id).delete()
         for data in waf_flow_rule_protection_data:
-            waf_flow_rule_protection.objects.create(
-                user_id=user_id,
-                domain=data['domain'],
-                rule_name=data['rule_name'],
-                rule_detail=data['rule_detail'],
-                rule_matchs=data['rule_matchs'],
-                rule_action=data['rule_action'],
-                action_value=data['action_value'],
-                status=data['status'],
-                rule_order_time=data['rule_order_time']
-            )
+            if 'filter' in data:
+                waf_flow_rule_protection.objects.create(
+                    user_id=user_id,
+                    domain=data['domain'],
+                    rule_name=data['rule_name'],
+                    rule_detail=data['rule_detail'],
+                    rule_matchs=data['rule_matchs'],
+                    rule_action=data['rule_action'],
+                    action_value=data['action_value'],
+                    status=data['status'],
+                    rule_order_time=data['rule_order_time']
+                )
         waf_flow_white_rule.objects.filter(user_id=user_id).delete()
         for data in waf_flow_white_rule_data:
             waf_flow_white_rule.objects.create(
