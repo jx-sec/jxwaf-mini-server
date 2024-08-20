@@ -21,7 +21,7 @@ def waf_edit_sys_log_conf(request):
         sys_conf.objects.filter(user_id=user_id).update(
             log_conf_local_debug=log_conf_local_debug, log_conf_remote=log_conf_remote,
             log_ip=log_ip, log_port=log_port,
-            log_response=log_response,log_all=log_all)
+            log_response=log_response, log_all=log_all)
         return_result['result'] = True
         return_result['message'] = 'edit success'
         return JsonResponse(return_result, safe=False)
@@ -268,6 +268,7 @@ def waf_conf_load(request):
             for data in waf_scan_attack_protection_data:
                 waf_scan_attack_protection.objects.create(
                     user_id=user_id,
+                    domain=data['domain'],
                     rule_name=data['rule_name'],
                     rule_detail=data['rule_detail'],
                     rule_module=data['rule_module'],
@@ -277,14 +278,15 @@ def waf_conf_load(request):
                     rule_action=data['rule_action'],
                     action_value=data['action_value'],
                     block_time=data['block_time'],
-                    status = data['status'],
-                    rule_order_time = data['rule_order_time']
+                    status=data['status'],
+                    rule_order_time=data['rule_order_time']
                 )
             waf_web_page_tamper_proof_data = waf_conf_data['waf_web_page_tamper_proof_data']
             waf_web_page_tamper_proof.objects.filter(user_id=user_id).delete()
             for data in waf_web_page_tamper_proof_data:
                 waf_web_page_tamper_proof.objects.create(
                     user_id=user_id,
+                    domain=data['domain'],
                     rule_name=data['rule_name'],
                     rule_detail=data['rule_detail'],
                     rule_matchs=data['rule_matchs'],
@@ -326,17 +328,21 @@ def waf_conf_load(request):
             )
         waf_protection.objects.filter(user_id=user_id).delete()
         for data in waf_protection_data:
-            waf_protection.objects.create(
-                user_id=user_id,
-                domain=data['domain'],
-                web_engine_protection=data['web_engine_protection'],
-                web_rule_protection=data['web_rule_protection'],
-                web_white_rule=data['web_white_rule'],
-                flow_engine_protection=data['flow_engine_protection'],
-                flow_rule_protection=data['flow_rule_protection'],
-                flow_white_rule=data['flow_white_rule'],
-                flow_ip_region_block=data['flow_ip_region_block'],
-            )
+            if 'scan_attack_protection' in data:
+                waf_protection.objects.create(
+                    user_id=user_id,
+                    domain=data['domain'],
+                    web_engine_protection=data['web_engine_protection'],
+                    web_rule_protection=data['web_rule_protection'],
+                    scan_attack_protection=data['scan_attack_protection'],
+                    web_page_tamper_proof=data['web_page_tamper_proof'],
+                    web_white_rule=data['web_white_rule'],
+                    flow_engine_protection=data['flow_engine_protection'],
+                    flow_rule_protection=data['flow_rule_protection'],
+                    flow_white_rule=data['flow_white_rule'],
+                    flow_ip_region_block=data['flow_ip_region_block'],
+                    flow_black_ip=data['flow_black_ip']
+                )
         waf_web_engine_protection.objects.filter(user_id=user_id).delete()
         for data in waf_web_engine_protection_data:
             waf_web_engine_protection.objects.create(
@@ -388,7 +394,7 @@ def waf_conf_load(request):
                     req_count_stat_time_period=data['req_count_stat_time_period'],
                     req_count_block_mode=data['req_count_block_mode'],
                     req_count_block_mode_extra_parameter=data['req_count_block_mode_extra_parameter'],
-                    req_count_block_time = data['req_count_block_time'],
+                    req_count_block_time=data['req_count_block_time'],
                     req_rate=data['req_rate'],
                     req_rate_block_mode=data['req_rate_block_mode'],
                     req_rate_block_mode_extra_parameter=data['req_rate_block_mode_extra_parameter'],
