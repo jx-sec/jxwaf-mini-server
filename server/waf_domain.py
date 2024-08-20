@@ -90,10 +90,13 @@ def waf_get_domain_list(request):
                          'web_engine_protection': waf_protection_result.web_engine_protection,
                          'web_rule_protection': waf_protection_result.web_rule_protection,
                          'web_white_rule': waf_protection_result.web_white_rule,
+                         'scan_attack_protection': waf_protection_result.scan_attack_protection,
+                         'web_page_tamper_proof': waf_protection_result.web_page_tamper_proof,
                          'flow_engine_protection': waf_protection_result.flow_engine_protection,
                          'flow_rule_protection': waf_protection_result.flow_rule_protection,
                          'flow_white_rule': waf_protection_result.flow_white_rule,
                          'flow_ip_region_block': waf_protection_result.flow_ip_region_block,
+                         'flow_black_ip': waf_protection_result.flow_black_ip
                          }
                         )
         return_result['result'] = True
