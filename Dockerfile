@@ -5,7 +5,7 @@ COPY .  .
 
 #RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
+RUN cp -f settings-mysql.py jxwaf_base_server/settings.py
 EXPOSE 8000
 
 ENV HTTP=0.0.0.0:8000 \
