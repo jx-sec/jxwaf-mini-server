@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'jxwaf_base_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DATABASE_NAME', 'jxwaf_server'),  # 连接的数据库
-        'USER': os.environ.get('DATABASE_USER', 'root'),         # root 用户
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'jxwaf_rootpassword'),  # root 密码
-        'HOST': os.environ.get('DATABASE_HOST', 'mysql_db'),           # MySQL 服务名
-        'PORT': os.environ.get('DATABASE_PORT', '3306'),         # MySQL 默认端口
+        'NAME': os.environ.get('DATABASE_NAME', 'jxwaf_server'),  
+        'USER': os.environ.get('DATABASE_USER', 'root'),         
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'jxwaf_rootpassword'),  
+        'HOST': os.environ.get('DATABASE_HOST', 'mysql_db'),          
+        'PORT': os.environ.get('DATABASE_PORT', '3306'),         
     }
 }
 
