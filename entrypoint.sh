@@ -1,6 +1,6 @@
 #!/bin/sh
 
-while ! nc -z db 3306; do   
+while ! nc -z mysql_db 3306; do   
   sleep 1
 done
 
