@@ -1,6 +1,8 @@
 #!/bin/sh
 
-sleep 1
+while ! nc -z db 3306; do   
+  sleep 1
+done
 
 # 执行数据库迁移
 python manage.py migrate

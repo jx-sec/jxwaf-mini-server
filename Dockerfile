@@ -7,6 +7,7 @@ RUN echo "deb http://archive.debian.org/debian/ stretch main" > /etc/apt/sources
     echo "Acquire::Check-Valid-Until false;" >> /etc/apt/apt.conf.d/99update
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
+    netcat-openbsd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 #RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
