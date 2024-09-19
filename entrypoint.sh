@@ -1,8 +1,6 @@
 #!/bin/sh
 
-while ! nc -z mysql_db 3306; do   
-  sleep 0.1
-done
+sleep 1
 
 # 执行数据库迁移
 python manage.py migrate
