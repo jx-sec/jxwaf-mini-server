@@ -1,8 +1,10 @@
 #!/bin/sh
 
-while ! nc -z mysql_db 3306; do   
-  sleep 1
-done
+if [ "${CUSTOM_MYSQL_DB}" != "true" ]; then
+    while ! nc -z mysql_db 3306; do   
+        sleep 1
+    done
+fi
 
 # 执行数据库迁移
 python manage.py migrate
