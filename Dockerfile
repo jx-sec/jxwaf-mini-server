@@ -16,5 +16,5 @@ ENV HTTP=0.0.0.0:8000 \
     PROCESSES=4 \
     THREADS=2
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
