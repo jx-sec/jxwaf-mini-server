@@ -889,7 +889,10 @@ def soc_flow_report_attack_city_top(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
