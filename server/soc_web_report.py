@@ -13,6 +13,7 @@ def soc_web_report_attack_count_total(request):
     try:
         user_id = request.session['user_id']
         sys_conf_result = sys_conf.objects.get(user_id=user_id)
+
         if sys_conf_result.report_conf == 'false':
             return_result['result'] = False
             return_result['message'] = "ClickHouse connect is not configured"
@@ -21,7 +22,6 @@ def soc_web_report_attack_count_total(request):
         json_data = json.loads(request.body)
         time_zone = json_data['time_zone']
         current_time = datetime.now()
-
         time_ranges = {
             '30day': current_time - timedelta(days=30),
             '7day': current_time - timedelta(days=7),
@@ -36,16 +36,21 @@ def soc_web_report_attack_count_total(request):
 
         start_time = time_ranges[time_zone].strftime('%Y-%m-%d %H:%M:%S')
         domain_filter = ""
+
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
+
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
         req_sql = """
             SELECT COUNT(*)
             FROM jxlog  
-            WHERE  (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
+            WHERE (WafModule = 'web_engine_protection' OR WafModule = 'web_rule_protection')
             {domain_filter}
             {time_filter}
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -61,7 +66,6 @@ def soc_web_report_attack_count_total(request):
 
         result = client.execute(req_sql)
         web_attack_count = result[0][0] if result else 0
-
         return_result['result'] = True
         return_result['attack_count'] = web_attack_count
         return JsonResponse(return_result, safe=False)
@@ -78,6 +82,7 @@ def soc_web_report_attack_api_count_total(request):
     try:
         user_id = request.session['user_id']
         sys_conf_result = sys_conf.objects.get(user_id=user_id)
+
         if sys_conf_result.report_conf == 'false':
             return_result['result'] = False
             return_result['message'] = "ClickHouse connect is not configured"
@@ -101,16 +106,21 @@ def soc_web_report_attack_api_count_total(request):
 
         start_time = time_ranges[time_zone].strftime('%Y-%m-%d %H:%M:%S')
         domain_filter = ""
+
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
+
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
         req_sql = """
             SELECT COUNT(DISTINCT concat(Host, URI))
             FROM jxlog
-            WHERE (WafModule = 'web_engine_protection' or WafModule = 'web_rule_protection')
+            WHERE (WafModule = 'web_engine_protection' OR WafModule = 'web_rule_protection')
             {domain_filter}
             {time_filter}
         """.format(domain_filter=domain_filter, time_filter=time_filter)
@@ -126,7 +136,6 @@ def soc_web_report_attack_api_count_total(request):
 
         result = client.execute(req_sql)
         web_attack_count = result[0][0] if result else 0
-
         return_result['result'] = True
         return_result['attack_count'] = web_attack_count
         return JsonResponse(return_result, safe=False)
@@ -136,6 +145,8 @@ def soc_web_report_attack_api_count_total(request):
         return_result['message'] = str(e)
         return_result['errCode'] = 400
         return JsonResponse(return_result, safe=False)
+
+
 
 
 def soc_web_report_attack_ip_count_total(request):

@@ -38,7 +38,10 @@ def soc_flow_report_attack_count_total(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -103,7 +106,10 @@ def soc_flow_report_attack_api_count_total(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -168,7 +174,10 @@ def soc_flow_report_attack_ip_count_total(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -233,7 +242,10 @@ def soc_flow_report_attack_isocode_count_total(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -298,7 +310,10 @@ def soc_flow_report_attack_city_count_total(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -363,7 +378,10 @@ def soc_flow_report_attack_geoip(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -435,7 +453,10 @@ def soc_flow_report_attack_city_geoip(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -507,7 +528,10 @@ def soc_flow_report_attack_count_trend(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -589,7 +613,10 @@ def soc_flow_report_attack_api_top(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -655,7 +682,10 @@ def soc_flow_report_attack_type_top(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -721,7 +751,10 @@ def soc_flow_report_attack_ip_top(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
@@ -787,7 +820,10 @@ def soc_flow_report_attack_isocode_top(request):
         domain_filter = ""
         try:
             domain = json_data['domain']
-            domain_filter = "AND Host = '{}'".format(domain)
+            if domain.startswith('*'):
+                domain_filter = "AND Host LIKE '%{}'".format(domain[1:])
+            else:
+                domain_filter = "AND Host = '{}'".format(domain)
         except KeyError:
             pass
         time_filter = "AND toDateTime(RequestTime) >= toDateTime('{}')".format(start_time)
