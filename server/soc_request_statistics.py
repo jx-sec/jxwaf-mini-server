@@ -171,7 +171,7 @@ def soc_query_domain_request_statistics(request):
             COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass'), JxwafDevid, NULL)) AS jxwaf_devid_attack,
             COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass','watch'), JxwafDevid, NULL)) AS jxwaf_devid_intercepted        
         FROM jxlog
-        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host %(domain_condition)s
+        WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host {domain_condition}
         """.format(domain_condition=domain_condition)
 
         stats_results = client.execute(req_sql, query_params)
