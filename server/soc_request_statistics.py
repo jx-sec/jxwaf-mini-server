@@ -131,9 +131,11 @@ def soc_query_domain_request_statistics(request):
         domain = json_data['domain']
 
         if domain.startswith('*'):
-            domain_condition = "LIKE '%{}'".format(domain[1:])
+            domain_condition = "LIKE %(domain_value)s"
+            domain_value = '%{}'.format(domain[1:])
         else:
-            domain_condition = "= '{}'".format(domain)
+            domain_condition = "= %(domain_value)s"
+            domain_value = domain
 
         client = Client(host=sys_conf_result.report_conf_ch_host,
                         port=int(sys_conf_result.report_conf_ch_port),
@@ -142,7 +144,7 @@ def soc_query_domain_request_statistics(request):
                         database=sys_conf_result.report_conf_ch_database,
                         send_receive_timeout=30)
 
-        query_params = {'from_time': from_time, 'to_time': to_time, 'domain_condition': domain_condition}
+        query_params = {'from_time': from_time, 'to_time': to_time, 'domain_value': domain_value}
 
         req_sql = """
         SELECT
@@ -170,7 +172,7 @@ def soc_query_domain_request_statistics(request):
             COUNT(DISTINCT IF(JxwafDevid != '' AND WafModule NOT IN ('web_white_rule', 'flow_white_rule', '') AND WafAction NOT IN ('all_bypass', 'web_bypass', 'flow_bypass','watch'), JxwafDevid, NULL)) AS jxwaf_devid_intercepted        
         FROM jxlog
         WHERE toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s,0) AND toDateTime64(%(to_time)s, 0)  AND Host %(domain_condition)s
-        """
+        """.format(domain_condition=domain_condition)
 
         stats_results = client.execute(req_sql, query_params)
         stats = stats_results[0] if stats_results else None
@@ -313,9 +315,11 @@ def soc_query_domain_request_statistics_detail(request):
         domain = json_data['domain']
 
         if domain.startswith('*'):
-            domain_condition = "LIKE '%{}'".format(domain[1:])
+            domain_condition = "LIKE %(domain_value)s"
+            domain_value = '%{}'.format(domain[1:])
         else:
-            domain_condition = "= '{}'".format(domain)
+            domain_condition = "= %(domain_value)s"
+            domain_value = domain
 
         client = Client(host=sys_conf_result.report_conf_ch_host,
                         port=int(sys_conf_result.report_conf_ch_port),
@@ -324,7 +328,7 @@ def soc_query_domain_request_statistics_detail(request):
                         database=sys_conf_result.report_conf_ch_database,
                         send_receive_timeout=30)
 
-        query_params = {'from_time': from_time, 'to_time': to_time, 'domain_condition': domain_condition}
+        query_params = {'from_time': from_time, 'to_time': to_time, 'domain_value': domain_value}
 
         req_sql = """
         SELECT
@@ -344,13 +348,13 @@ def soc_query_domain_request_statistics_detail(request):
             jxlog  
         WHERE
             toDateTime64(RequestTime, 0) BETWEEN toDateTime64(%(from_time)s, 0) AND toDateTime64(%(to_time)s, 0)
-            AND Host %(domain_condition)s
+            AND Host {domain_condition}
             AND UpstreamAddr != '' 
         GROUP BY
             Host, UpstreamAddr
         ORDER BY
             Host, UpstreamAddr
-        """
+        """.format(domain_condition=domain_condition)
 
         stats_results = client.execute(req_sql, query_params)
 
